@@ -17,6 +17,7 @@ const config: Config = {
         'brand-blue': '#007DD9'
       },
       borderColor: {
+        'brand-blue': '#007DD9',
         'light-grey': '#DADADA'
       }
     },
