@@ -11,7 +11,8 @@ const config: Config = {
       backgroundImage: {},
       textColor: {
         'brand-blue': '#007DD9',
-        'dark-grey': '#656565'
+        'dark-grey': '#656565',
+        'light-grey': '#A7A7A7'
       },
       backgroundColor: {
         'brand-blue': '#007DD9',
@@ -19,7 +20,8 @@ const config: Config = {
       },
       borderColor: {
         'brand-blue': '#007DD9',
-        'light-grey': '#DADADA'
+        'light-grey': '#DADADA',
+        'lighter-grey': '#F2F2F2'
       }
     },
   },

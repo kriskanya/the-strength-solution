@@ -1,0 +1,8 @@
+.container {
+  background-image: url("../images/blue-blur-background.svg");
+  background-size: cover;
+}
+
+.setMaxHeight {
+  max-height: calc(100vh - 4.3rem);
+}
