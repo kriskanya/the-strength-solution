@@ -9,7 +9,7 @@ interface Props {
 
 export default function OAuthButton(props: Props) {
   return (
-    <div className="border bg-[#FFFFFF] rounded px-2 py-2.5">
+    <div className="flex justify-center items-center border bg-[#FFFFFF] rounded px-2 py-2.5 cursor-pointer">
       {
         props.type === 'google'
           ? <Image src={google} alt="google" className="inline-block" />

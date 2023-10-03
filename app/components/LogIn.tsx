@@ -1,14 +1,13 @@
 'use client'
 import { FormEvent, useState } from "react"
-import Link from "next/link"
 
 import OAuthButton from "@/app/ui/OAuthButton"
 import Divider from "@/app/ui/Divider"
 import CustomInput from "@/app/ui/CustomInput"
 import CustomButton from "@/app/ui/CustomButton"
-import classes from './CreateAccount.module.css'
+import classes from './LogIn.module.css'
 
-export default function CreateAccount() {
+export default function LogIn() {
   const [emailValue, setEmailValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
   function handleSubmit(event: FormEvent) {
@@ -22,13 +21,13 @@ export default function CreateAccount() {
   return (
     <form onSubmit={handleSubmit} className={`flex flex-col items-center justify-center ${classes.container}`}>
       <div>
-        <h2 className="inter font-bold text-2xl">Create an Account</h2>
+        <h2 className="inter font-bold text-2xl">Log In to Your Account</h2>
         <div className="flex gap-4 mt-5">
           <div style={{width: '204px'}}>
-            <OAuthButton label="Sign Up With Google" type="google" />
+            <OAuthButton label="Log In With Google" type="google" />
           </div>
           <div style={{width: '204px'}}>
-            <OAuthButton label="Sign Up With Facebook" type="facebook" />
+            <OAuthButton label="Log In With Facebook" type="facebook" />
           </div>
         </div>
         <div className="flex justify-center mt-6">
@@ -38,14 +37,9 @@ export default function CreateAccount() {
         </div>
         <div className="mt-4 flex flex-col gap-4">
           <CustomInput fieldName="email" type="text" placeholder="Enter your email" inputValue={emailValue} changeHandler={setEmailValue} />
-          <CustomInput fieldName="password" type="password" placeholder="Enter your password" inputValue={passwordValue} changeHandler={setPasswordValue} />
+          <CustomInput fieldName="password" type="password" placeholder="Enter your password" inputValue={passwordValue} changeHandler={setPasswordValue} showForgotPassword={true} />
         </div>
-        <CustomButton type="submit" label="Create Account" classes="bg-brand-blue h-12 mt-16" />
-        <div className="flex justify-center mt-5">
-          <p className="inter font-normal text-sm">
-            Already have an account? <Link className="underline text-brand-blue font-bold" href="log-in">Log in</Link>
-          </p>
-        </div>
+        <CustomButton type="submit" label="Log In" classes="bg-brand-blue h-12 mt-16" />
       </div>
     </form>
   )

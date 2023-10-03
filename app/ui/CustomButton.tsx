@@ -1,12 +1,13 @@
 interface Props {
   label: string,
-  classes: string
+  classes: string,
+  type?: 'submit' | 'button'
 }
 
 export default function CustomButton(props: Props) {
   return (
-    <div className={`flex justify-center items-center w-full rounded ${props.classes}`}>
+    <button type={props.type || 'button'} className={`flex justify-center items-center w-full rounded ${props.classes}`}>
       <p className="text-white">{props.label}</p>
-    </div>
+    </button>
   )
 }

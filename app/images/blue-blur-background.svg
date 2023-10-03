@@ -1,0 +1,24 @@
+<svg width="1440" height="778" viewBox="0 0 1440 778" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_273_5119)">
+        <ellipse cx="1380.5" cy="339" rx="307.5" ry="305" fill="url(#paint0_radial_273_5119)" fill-opacity="0.2"/>
+        <ellipse opacity="0.2" cx="201" cy="872.5" rx="391" ry="388.5" fill="url(#paint1_radial_273_5119)" fill-opacity="0.6"/>
+        <ellipse opacity="0.2" cx="66" cy="535" rx="269" ry="267" fill="url(#paint2_radial_273_5119)" fill-opacity="0.3"/>
+    </g>
+    <defs>
+        <radialGradient id="paint0_radial_273_5119" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1380.5 339) rotate(116.079) scale(297.478 299.886)">
+            <stop stop-color="#1071DA" stop-opacity="0.6"/>
+            <stop offset="1" stop-color="#1071DA" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="paint1_radial_273_5119" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(201 872.5) rotate(117.749) scale(361.45 363.989)">
+            <stop stop-color="#1071DA"/>
+            <stop offset="1" stop-color="#1071DA" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="paint2_radial_273_5119" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(66 535) rotate(117.774) scale(248.466 250.36)">
+            <stop stop-color="#8AF9F4"/>
+            <stop offset="1" stop-color="#10CEDA" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="clip0_273_5119">
+            <rect width="1440" height="778" fill="white"/>
+        </clipPath>
+    </defs>
+</svg>
