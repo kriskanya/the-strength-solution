@@ -26,7 +26,7 @@ export function GenderRadioButton(props: Props) {
         onChange={props.onChange}
         checked={props.checked}
       />
-      <div className={`flex justify-between items-center px-3 border ${borderColor} w-[201px] h-[48px] rounded`}>
+      <div className={`flex justify-between items-center px-3 border bg-white ${borderColor} w-[201px] h-[48px] rounded`}>
         <Image src={imgSrc} alt="male" />
         <span className="mr-auto inter font-medium text-sm pl-3 text-center">{capitalize(props.gender)}</span>
         {

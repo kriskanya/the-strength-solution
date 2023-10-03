@@ -20,7 +20,7 @@ export default function CreateAccount() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`flex flex-col items-center justify-center ${classes.container}`}>
+    <form onSubmit={handleSubmit} className={`flex flex-col items-center justify-center bg-off-white ${classes.container}`}>
       <div>
         <h2 className="inter font-bold text-2xl">Create an Account</h2>
         <div className="flex gap-4 mt-5">

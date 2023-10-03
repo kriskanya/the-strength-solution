@@ -1,8 +1,9 @@
 .container {
-  background-image: url("../images/blue-blur-background.svg");
+  background-image: url("../images/blue-blur-background-large.svg");
   background-size: cover;
 }
 
 .setMaxHeight {
   max-height: calc(100vh - 4.3rem);
+  overflow-y: hidden;
 }

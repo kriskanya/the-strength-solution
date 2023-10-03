@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function AuthNav() {
   return (
-    <div className="grid grid-cols-3 p-5 border-b border-light-grey">
+    <div className="grid grid-cols-3 p-5 border-b border-light-grey bg-off-white">
       <div className="ml-6">
         <Image src={backArrow} alt="back-arrow" />
       </div>
