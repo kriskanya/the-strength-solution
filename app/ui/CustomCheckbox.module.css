@@ -1,0 +1,26 @@
+.checkboxWrapper input[type="checkbox"] {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  /* creating a custom design */
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 4px;
+  margin-right: 0.5em;
+  border: 0.15em solid #007DD9;
+  outline: none;
+  cursor: pointer;
+}
+
+input.checked::before {
+  content: "\2714";
+  font-size: 1.2em;
+  color: #fff;
+  position: absolute;
+  top: -5px;
+}
+
+input.checked {
+  background-color: #007DD9;
+  position: relative;
+}

@@ -16,7 +16,7 @@ export function GenderRadioButton(props: Props) {
   const borderColor = props.checked ? 'border-brand-blue' : 'border-lighter-grey'
 
   return (
-    <label className="inter font-medium text-sm" htmlFor={props.gender}>
+    <label className="inter font-medium text-sm cursor-pointer" htmlFor={props.gender}>
       <input
         className="invisible"
         type="radio"

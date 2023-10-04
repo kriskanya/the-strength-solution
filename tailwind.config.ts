@@ -12,7 +12,8 @@ const config: Config = {
       textColor: {
         'brand-blue': '#007DD9',
         'dark-grey': '#656565',
-        'light-grey': '#A7A7A7'
+        'light-grey': '#A7A7A7',
+        'custom-black': '#111111'
       },
       backgroundColor: {
         'brand-blue': '#007DD9',

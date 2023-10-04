@@ -1,7 +1,8 @@
 'use client'
-import { GenderRadioButton } from '@/app/ui/GenderRadioButton'
 import { ChangeEvent, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { GenderRadioButton } from '@/app/ui/GenderRadioButton'
 import GenericInput from '@/app/ui/GenericInput'
 import CustomButton from '@/app/ui/CustomButton'
 import maleAvatar from '../images/male-avatar.svg'
@@ -24,8 +25,8 @@ export default function AboutYou() {
   return (
     <div className={`lg:grid lg:grid-cols-2 bg-off-white ${classes.setMaxHeight}`}>
       {/*left side*/}
-      <div className={`lg:flex lg:flex-col items-center m-24`}>
-        <div className={`h-4/6 relative`}>
+      <div className="lg:flex lg:flex-col items-center m-24">
+        <div className="h-4/6 relative">
           <h2 className="inter font-bold text-2xl">About You</h2>
           <p className="inter font-normal text-light-grey text-base mt-1">
             Please fill in your stats so we can initialize the dashboard
@@ -39,9 +40,9 @@ export default function AboutYou() {
             <GenericInput field="weight" />
             <GenericInput field="age" />
           </div>
-          <div className="w-36 lg:absolute lg:bottom-0">
+          <Link href="choose-workouts" className="w-36 lg:absolute lg:bottom-0">
             <CustomButton label="Next" classes="bg-brand-blue h-10 mt-16" textClasses="font-semibold text-sm" />
-          </div>
+          </Link>
         </div>
       </div>
       {/*right side*/}
