@@ -11,7 +11,8 @@ interface Props {
   type: 'text' | 'password',
   inputValue: string,
   changeHandler: Dispatch<SetStateAction<string>>
-  showForgotPassword?: boolean
+  showForgotPassword?: boolean,
+  required?: boolean
 }
 
 export default function CustomInput(props: Props) {
@@ -35,6 +36,7 @@ export default function CustomInput(props: Props) {
       </div>
       <div className="relative">
         <input
+          required={props.required}
           value={props.inputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) => props.changeHandler(event.target.value)}
           type={inputType}

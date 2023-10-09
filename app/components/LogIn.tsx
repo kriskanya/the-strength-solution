@@ -6,21 +6,39 @@ import Divider from "@/app/ui/Divider"
 import CustomInput from "@/app/ui/CustomInput"
 import CustomButton from "@/app/ui/CustomButton"
 import classes from './LogIn.module.css'
+import { Alert } from '@/app/ui/Alert'
+import { signIn } from 'next-auth/react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function LogIn() {
-  const [emailValue, setEmailValue] = useState('')
-  const [passwordValue, setPasswordValue] = useState('')
-  function handleSubmit(event: FormEvent) {
-    event.preventDefault()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState<string | null>(null)
 
-    console.log('submit', event)
-    console.log('email', emailValue)
-    console.log('pw', passwordValue)
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault()
+    try {
+      const res = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+        callbackUrl
+      })
+      console.log('Res', res)
+      if (!res?.error) {
+        router.push(callbackUrl)
+      } else {
+        setError('Invalid email or password')
+      }
+    } catch (err: any) {}
   }
 
   return (
     <form onSubmit={handleSubmit} className={`flex flex-col items-center justify-center bg-off-white ${classes.container}`}>
-      <div>
+      <div className="sm:w-[26.5em] w-full">
         <h2 className="inter font-bold text-2xl">Log In to Your Account</h2>
         <div className="flex gap-4 mt-5">
           <div style={{width: '204px'}}>
@@ -36,8 +54,11 @@ export default function LogIn() {
           <Divider />
         </div>
         <div className="mt-4 flex flex-col gap-4">
-          <CustomInput fieldName="email" type="text" placeholder="Enter your email" inputValue={emailValue} changeHandler={setEmailValue} />
-          <CustomInput fieldName="password" type="password" placeholder="Enter your password" inputValue={passwordValue} changeHandler={setPasswordValue} showForgotPassword={true} />
+          <CustomInput fieldName="email" required={true} type="text" placeholder="Enter your email" inputValue={email} changeHandler={setEmail} />
+          <CustomInput fieldName="password" required={true} type="password" placeholder="Enter your password" inputValue={password} changeHandler={setPassword} showForgotPassword={true} />
+        </div>
+        <div className="mt-6">
+          {error && <Alert>{error}</Alert>}
         </div>
         <CustomButton type="submit" label="Log In" classes="bg-brand-blue h-12 mt-16" />
       </div>
