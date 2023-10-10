@@ -1,5 +1,6 @@
 'use client'
 import { FormEvent, useState } from "react"
+import { useSession } from "next-auth/react";
 
 import OAuthButton from "@/app/ui/OAuthButton"
 import Divider from "@/app/ui/Divider"
@@ -8,15 +9,21 @@ import CustomButton from "@/app/ui/CustomButton"
 import classes from './LogIn.module.css'
 import { Alert } from '@/app/ui/Alert'
 import { signIn } from 'next-auth/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { redirect, useRouter, useSearchParams } from 'next/navigation'
+import { get, isEmpty, isPlainObject } from 'lodash-es'
 
 export default function LogIn() {
   const router = useRouter()
+  const session = useSession()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+
+  // if (isPlainObject(session) && !isEmpty(get(session, 'data.user'))) {
+  //   redirect('/dashboard')
+  // }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
@@ -27,7 +34,6 @@ export default function LogIn() {
         password,
         callbackUrl
       })
-      console.log('Res', res)
       if (!res?.error) {
         router.push(callbackUrl)
       } else {
