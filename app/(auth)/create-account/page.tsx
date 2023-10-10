@@ -1,5 +1,5 @@
-import AuthNav from "@/app/components/AuthNav";
-import CreateAccount from "@/app/components/CreateAccount";
+import AuthNav from "@/app/components/auth/AuthNav";
+import CreateAccount from "@/app/components/auth/CreateAccount";
 
 export default function Register() {
   return (

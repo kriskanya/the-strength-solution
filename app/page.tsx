@@ -1,7 +1,7 @@
-import LandingPageLeft from "@/app/components/LandingPageLeft";
-import LandingPageRight from "@/app/components/LandingPageRight";
+import LandingPageLeft from "@/app/components/home/LandingPageLeft";
+import LandingPageRight from "@/app/components/home/LandingPageRight";
 import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 
 export default async function Home() {
   const session = await getServerSession(authOptions)

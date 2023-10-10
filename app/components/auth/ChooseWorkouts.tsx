@@ -1,4 +1,4 @@
-import classes from '@/app/components/ChooseWorkouts.module.css'
+import classes from '@/app/components/auth/ChooseWorkouts.module.css'
 import CustomCheckbox from '@/app/ui/CustomCheckbox'
 import CustomButton from '@/app/ui/CustomButton'
 

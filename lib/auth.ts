@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { compare } from 'bcrypt'
 import { isString } from 'lodash-es'
-import NextAuth, { type NextAuthOptions } from 'next-auth'
+import { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'

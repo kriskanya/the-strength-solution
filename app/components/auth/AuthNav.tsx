@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import backArrow from '../icons/back-arrow.svg'
+import backArrow from '../../icons/back-arrow.svg'
 
 interface Props {
   path?: string

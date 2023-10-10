@@ -1,5 +1,5 @@
-import AuthNav from '@/app/components/AuthNav'
-import ChooseWorkouts from '@/app/components/ChooseWorkouts'
+import AuthNav from '@/app/components/auth/AuthNav'
+import ChooseWorkouts from '@/app/components/auth/ChooseWorkouts'
 
 export default function ChooseWorkoutsPerformed() {
   return (

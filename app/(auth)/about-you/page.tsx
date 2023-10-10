@@ -1,5 +1,5 @@
-import AuthNav from '@/app/components/AuthNav'
-import AboutYou from '@/app/components/AboutYou'
+import AuthNav from '@/app/components/auth/AuthNav'
+import AboutYou from '@/app/components/auth/AboutYou'
 
 export default function AboutYouInfo() {
   return (

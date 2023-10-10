@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { GenderRadioButton } from '@/app/ui/GenderRadioButton'
 import GenericInput from '@/app/ui/GenericInput'
 import CustomButton from '@/app/ui/CustomButton'
-import maleAvatar from '../images/male-avatar.svg'
-import femaleAvatar from '../images/female-avatar.svg'
-import blueBlur from '../images/blue-blur-background-small.svg'
+import maleAvatar from '../../images/male-avatar.svg'
+import femaleAvatar from '../../images/female-avatar.svg'
+import blueBlur from '../../images/blue-blur-background-small.svg'
 import classes from './AboutYou.module.css'
 
 export default function AboutYou() {

@@ -1,5 +1,5 @@
 .container {
-  background-image: url("../images/blue-blur-background-large.svg");
+  background-image: url("../../images/blue-blur-background-large.svg");
   background-size: cover;
   height: calc(100vh - 4.3rem);
 }
