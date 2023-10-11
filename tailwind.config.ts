@@ -14,18 +14,20 @@ const config: Config = {
         'dark-grey': '#656565',
         'light-grey': '#A7A7A7',
         'custom-black': '#111111',
-        'bright-white': '#FFFFFF',
+        'bright-white': '#FFFFFF'
       },
       backgroundColor: {
         'brand-blue': '#007DD9',
         'bright-white': '#FFFFFF',
         'off-white': '#FAFAFA',
-        'black-russian': '#1E1F23'
+        'black-russian': '#1E1F23',
+        'medium-grey': '#7D7D7D'
       },
       borderColor: {
         'brand-blue': '#007DD9',
         'light-grey': '#DADADA',
-        'lighter-grey': '#F2F2F2'
+        'lighter-grey': '#F2F2F2',
+        'bright-white': '#FFFFFF'
       }
     },
   },

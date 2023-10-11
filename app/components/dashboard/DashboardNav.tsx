@@ -12,7 +12,7 @@ export default function DashboardNav({ path }: Props ) {
   const router = useRouter()
 
   return (
-    <div className="grid grid-cols-2 py-5 px-12 border-b border-light-grey bg-black-russian">
+    <div className="grid grid-cols-2 py-5 px-12 bg-black-russian">
       <h2 className="inter font-extrabold text-base uppercase my-auto text-bright-white">The Strength Solution</h2>
       <div className="flex justify-end">
         <div className="w-44">

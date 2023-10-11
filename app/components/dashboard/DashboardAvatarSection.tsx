@@ -2,8 +2,12 @@ import Image from 'next/image'
 
 import FemaleAvatarFront from '@/app/components/dashboard/FemaleAvatarFront'
 import proficiencyLegend from '@/app/images/proficiency-legend.svg'
+import bgBlur from '@/app/images/blue-bg-blur-dashboard.svg'
 import { AvatarColorsFront, AvatarColorsRear } from '@/common/types'
 import FemaleAvatarRear from '@/app/components/dashboard/FemaleAvatarRear'
+import DashboardSidePanel from '@/app/components/dashboard/DashboardSidePanel'
+import classes from './DashboardAvatarSection.module.css'
+import RelativeStrengthBarGraph from '@/app/components/dashboard/RelativeStrengthBarGraph'
 
 export default function DashboardAvatarSection() {
   const grey = '#9396A3'
@@ -39,18 +43,25 @@ export default function DashboardAvatarSection() {
   }
 
   return (
-    <section className="bg-black-russian w-screen h-screen">
-      <div className="">
-        {/*<div className="ml-40">*/}
-        {/*  <FemaleAvatarFront colors={colorsFront} />*/}
-        {/*</div>*/}
-        {/*<div className="mt-">*/}
-        {/*  <Image src={proficiencyLegend} alt="legend"/>*/}
-        {/*</div>*/}
-        <div className="ml-40">
-          <FemaleAvatarRear colors={colorsRear} />
+    <>
+      <section className="bg-black-russian h-100 pb-2">
+        <div className={`grid ${classes.container}`}>
+          <Image src={bgBlur} alt="legend" className="absolute left-0 top-8" />
+          <div className="h-[522px] w-220px relative ml-28 mt-6">
+            <FemaleAvatarFront colors={colorsFront} />
+            <div className="absolute bottom-6 right-8">
+              <Image src={proficiencyLegend} alt="legend"/>
+            </div>
+          </div>
+          <div className="">
+            <FemaleAvatarRear colors={colorsRear} />
+          </div>
+          <DashboardSidePanel />
         </div>
-      </div>
-    </section>
+      </section>
+      <section>
+        <RelativeStrengthBarGraph />
+      </section>
+    </>
   )
 }
