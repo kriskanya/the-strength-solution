@@ -7,9 +7,6 @@ import { AvatarColorsFront, AvatarColorsRear } from '@/common/types'
 import FemaleAvatarRear from '@/app/components/dashboard/FemaleAvatarRear'
 import DashboardSidePanel from '@/app/components/dashboard/DashboardSidePanel'
 import classes from './DashboardAvatarSection.module.css'
-import RelativeStrengthBarGraph from '@/app/components/dashboard/RelativeStrengthBarGraph'
-import YouVsAverageBarGraph from '@/app/components/dashboard/YouVsAverageBarGraph'
-import StrengthStandardsTable from '@/app/components/dashboard/StrengthStandardsTable'
 
 export default function DashboardAvatarSection() {
   const grey = '#9396A3'
@@ -61,13 +58,6 @@ export default function DashboardAvatarSection() {
           </div>
           <DashboardSidePanel />
         </div>
-      </section>
-      <section className="grid grid-cols-2">
-        <RelativeStrengthBarGraph />
-        <YouVsAverageBarGraph />
-      </section>
-      <section>
-        <StrengthStandardsTable />
       </section>
     </>
   )
