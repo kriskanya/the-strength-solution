@@ -1,5 +1,5 @@
 export default function RelativeStrengthBarGraph() {
-  const MAX_BAR_WIDTH = 180 // in pixels
+  const MAX_BAR_WIDTH = 150 // in pixels
   const exercises = [
     { name: 'Push-Ups', proficiency: -500 },
     { name: 'Goblet Squat', proficiency: 20 },
@@ -16,15 +16,14 @@ export default function RelativeStrengthBarGraph() {
     const minWidth = 35
     const calculatedWidth = (Math.abs(input) / highestProficiency) * MAX_BAR_WIDTH
     const result = calculatedWidth + minWidth
-    // const result = calculatedWidth > minWidth ? calculatedWidth : minWidth
     return `${result}px`
   }
 
   return (
     <div className="px-10 py-7">
       <h3 className="uppercase">Relative Strengths and Weaknesses</h3>
-      <div className="grid grid-cols-2 mt-8">
-        <table>
+      <div className="mt-8">
+        <table className="w-full">
           <tbody>
             {
               exercises.map((exercise, i) => {

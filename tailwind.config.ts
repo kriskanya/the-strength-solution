@@ -19,6 +19,7 @@ const config: Config = {
         'brand-blue': '#007DD9',
         'bright-white': '#FFFFFF',
         'off-white': '#FAFAFA',
+        'light-grey': '#F2F2F2',
         'black-russian': '#1E1F23',
         'medium-grey': '#7D7D7D'
       },
