@@ -17,19 +17,20 @@ export default function DashboardAvatarSection() {
   const orange = '#F4B43B'
   const yellow = '#FCFF4B'
   const red = '#F25B28'
+  const blue = '#2E8EEC'
   const colorsFront: AvatarColorsFront['colors'] = {
-    traps: grey,
+    traps: yellow,
     delts: green,
-    pecs: green,
+    pecs: red,
     biceps: orange,
-    forearms: orange,
+    forearms: yellow,
     abs: orange,
     obliques: orange,
-    quads: orange,
-    calves: grey
+    quads: red,
+    calves: orange
   }
   const colorsRear: AvatarColorsRear['colors'] = {
-    calves: grey,
+    calves: orange,
     adductors: yellow,
     quads: orange,
     hamstrings: yellow,
@@ -38,8 +39,8 @@ export default function DashboardAvatarSection() {
     traps: red,
     lats: red,
     rotatorCuff: red,
-    forearms: red,
-    triceps: yellow,
+    forearms: yellow,
+    triceps: orange,
     delts: green,
     erectors: orange
   }

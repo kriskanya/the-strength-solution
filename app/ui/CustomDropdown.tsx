@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import downArrow from '@/app/icons/down-arrow.svg'
 import upArrow from '@/app/icons/up-arrow.svg'
-import { MouseEventHandler, useState } from 'react'
+import { useState } from 'react'
 import { capitalize, get } from 'lodash-es'
 
 export default function CustomDropdown() {
@@ -11,10 +11,6 @@ export default function CustomDropdown() {
   const [dropdownSelected, setDropdownSelected] = useState(false)
   const [selectedGender, setSelectedGender] = useState('male')
   const [itemHovered, setItemHovered] = useState('')
-
-  function onClick(event) {
-
-  }
 
   function mouseEnter(event: any) {
     const highlightedGender = get(event, `target.attributes['data-name'].value`, '')

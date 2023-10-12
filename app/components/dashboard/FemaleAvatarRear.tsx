@@ -1,18 +1,7 @@
 import Image from 'next/image'
 import head from '@/app/images/female-avatar/rear/head.svg'
-import neck from '@/app/images/female-avatar/front/neck-sternum.svg'
 import hands from '@/app/images/female-avatar/rear/hands.svg'
-import CalvesFemale from '@/app/images/female-avatar/front/calves'
-import AbsFemale from '@/app/images/female-avatar/front/abs'
-import BicepsFemale from '@/app/images/female-avatar/front/biceps'
-import DeltsFemale from '@/app/images/female-avatar/front/delts'
-import ForearmsFemale from '@/app/images/female-avatar/front/forearms'
-import ObliquesFemale from '@/app/images/female-avatar/front/obliques'
-import PecsFemale from '@/app/images/female-avatar/front/pecs'
-import QuadsFemale from '@/app/images/female-avatar/front/quads'
-import TrapsFemale from '@/app/images/female-avatar/front/traps'
 import { AvatarColorsRear } from '@/common/types'
-
 import TrapsFemaleRear from '@/app/images/female-avatar/rear/traps'
 import DeltsFemaleRear from '@/app/images/female-avatar/rear/delts'
 import SpinalErectorsFemale from '@/app/images/female-avatar/rear/spinal-erectors'
@@ -27,7 +16,7 @@ import LatsFemale from '@/app/images/female-avatar/rear/lats'
 import ObliquesFemaleRear from '@/app/images/female-avatar/rear/obliques'
 import GlutesFemale from '@/app/images/female-avatar/rear/glutes'
 
-export default function FemaleAvatarRear({colors}: AvatarColorsRear) {
+export default function FemaleAvatarRear({ colors }: AvatarColorsRear) {
   return (
     <div className="relative">
       <CalvesFemaleRear className="absolute top-[22.7em] -left-[.1em]" fill={colors.calves} />
