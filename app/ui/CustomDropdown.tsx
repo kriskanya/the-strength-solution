@@ -3,20 +3,65 @@
 import Image from 'next/image'
 import downArrow from '@/app/icons/down-arrow.svg'
 import upArrow from '@/app/icons/up-arrow.svg'
-import { useEffect, useRef, useState } from 'react'
-import { capitalize, get, isString } from 'lodash-es'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { capitalize, debounce, get, isString } from 'lodash-es'
+import classes from './CustomDropdown.module.css'
 
 interface Props {
   options: string[] | number[],
-  initialValue: string,
-  units?: string
+  initialValue: string | number,
+  dropdownHeight: string,
+  units?: string,
+  propClasses?: string,
 }
 
-export default function CustomDropdown({ options, initialValue, units }: Props) {
+export default function CustomDropdown({ options, initialValue, units, propClasses, dropdownHeight }: Props) {
   const [showDropdown, setShowDropdown] = useState(false)
   const [selectedOption, setSelectedOption] = useState(initialValue)
-  const [itemHovered, setItemHovered] = useState('')
-  const dropdown = useRef(null);
+  const [itemHovered, setItemHovered] = useState(initialValue)
+  const dropdown = useRef(null)
+  const searchRef = useRef('')
+  const searchDropdown = useCallback(debounce(searchList, 700, {}), []);
+
+  function searchList(searchValue: string) {
+    const regex = new RegExp(`^${ searchValue }`)
+    const optionFound = options.find(option => {
+      return regex.test(option+'')
+    })
+    if (optionFound) {
+      setSelectedOption(optionFound)
+      setItemHovered(optionFound)
+      const el = document.querySelector(`[data-name="${ optionFound }"]`)
+      el && el.scrollIntoView()
+    }
+    searchRef.current = ''
+  }
+
+  // listener for user searching a dropdown via the keyboard
+  useEffect(() => {
+    // only add the event listener when the dropdown is opened
+    if (!showDropdown) return;
+    function handleKeydown(event: any) {
+      if (event.keyCode !== 13) {
+        searchRef.current = searchRef.current + event.key
+        searchDropdown(searchRef.current)
+      }
+    }
+    window.addEventListener('keydown', handleKeydown);
+    return () => window.removeEventListener('keydown', handleKeydown);
+  }, [showDropdown, searchDropdown]);
+
+  // listener for the 'enter' keypress
+  useEffect(() => {
+    function handleKeydown(event: any) {
+      if (event.keyCode === 13) {
+        setSelectedOption(itemHovered)
+        setShowDropdown(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeydown);
+    return () => window.removeEventListener('keydown', handleKeydown);
+  }, [itemHovered]);
 
   function mouseEnter(event: any) {
     const itemHovered = get(event, `target.attributes['data-name'].value`, '')
@@ -38,16 +83,20 @@ export default function CustomDropdown({ options, initialValue, units }: Props) 
       }
     }
     window.addEventListener('click', handleClick);
-    // clean up
     return () => window.removeEventListener('click', handleClick);
   }, [showDropdown]);
 
   return (
-    <div className="cursor-pointer" ref={dropdown}>
+    <div className={`cursor-pointer ${ propClasses || '' }`} ref={dropdown}>
       <div className="w-[131px] h-[40px] border border-lighter-grey rounded flex justify-between bg-white select-none"
            onClick={() => setShowDropdown(!showDropdown)}
       >
-        <span className="mt-2 ml-2">{ isString(selectedOption) ? capitalize(selectedOption): selectedOption }</span>
+        {/*<input type="text" onChange={onTextChange} value={selectedOption} />*/}
+        <span className="mt-2 ml-2">{
+          isString(selectedOption)
+            ? `${ capitalize(selectedOption) } ${ units || '' }`
+            : `${ selectedOption } ${ units || '' }` }
+        </span>
         {
           showDropdown
             ? <Image src={upArrow} alt="up-arrow" className="mr-2" />
@@ -57,7 +106,7 @@ export default function CustomDropdown({ options, initialValue, units }: Props) 
       {
         showDropdown
           ? (
-            <div className="bg-white">
+            <div className={`bg-white ${ dropdownHeight } ${ classes.dropdownBody } overflow-y-scroll border-b border-l border-r border-lighter-grey`}>
               {
                 options.map((option, i) => {
                   return (
