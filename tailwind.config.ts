@@ -8,7 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {},
+      colors: {
+        'red-novice': '#F25B28',
+        'orange-intermediate': '#F4B43B',
+        'yellow-proficient': '#FCFF4B',
+        'green-advanced': '#4CD964',
+        'blue-elite': '#2E8EEC'
+      },
       textColor: {
         'brand-blue': '#007DD9',
         'dark-grey': '#656565',
