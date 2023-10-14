@@ -19,7 +19,7 @@ const config: Config = {
         'brand-blue': '#007DD9',
         'dark-grey': '#656565',
         'light-grey': '#A7A7A7',
-        'custom-black': '#111111',
+        'custom-black': '#111111'
       },
       backgroundColor: {
         'brand-blue': '#007DD9',
@@ -32,7 +32,7 @@ const config: Config = {
       borderColor: {
         'brand-blue': '#007DD9',
         'light-grey': '#DADADA',
-        'lighter-grey': '#F2F2F2',
+        'lighter-grey': '#F2F2F2'
       }
     },
   },

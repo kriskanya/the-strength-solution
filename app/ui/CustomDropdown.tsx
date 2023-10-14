@@ -26,7 +26,7 @@ export default function CustomDropdown({ options, initialValue, units, propClass
 
   function scrollToSelectedOption(name: string | number) {
     const el = document.querySelector(`[data-name="${ name }"]`)
-    el && el.scrollIntoView()
+    el && el.scrollIntoView({ block: 'nearest' })
   }
   function searchList(searchValue: string) {
     const regex = new RegExp(`^${ searchValue }`)
