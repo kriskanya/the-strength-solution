@@ -78,7 +78,7 @@ export default function CustomDropdown({ options, initialValue, units, propClass
     return () => window.removeEventListener('keydown', handleKeydown);
   }, [showDropdown, searchDropdown]);
 
-  // listener for the 'enter' button or up/down arrow keypress
+  // listener for the 'enter' or up/down arrow keypress
   useEffect(() => {
     if (!showDropdown) return;
     function handleKeydown(event: any) {
