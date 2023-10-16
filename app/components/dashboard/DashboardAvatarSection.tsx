@@ -7,6 +7,7 @@ import { AvatarColorsFront, AvatarColorsRear } from '@/common/types'
 import FemaleAvatarRear from '@/app/components/dashboard/FemaleAvatarRear'
 import DashboardSidePanel from '@/app/components/dashboard/DashboardSidePanel'
 import classes from './DashboardAvatarSection.module.css'
+import MaleAvatarFront from '@/app/components/dashboard/MaleAvatarFront'
 
 export default function DashboardAvatarSection() {
   const grey = '#9396A3'
@@ -33,7 +34,7 @@ export default function DashboardAvatarSection() {
     hamstrings: yellow,
     glutes: yellow,
     obliques: orange,
-    traps: red,
+    traps: yellow,
     lats: red,
     rotatorCuff: red,
     forearms: yellow,
@@ -48,7 +49,8 @@ export default function DashboardAvatarSection() {
         <div className={`grid ${classes.container}`}>
           <Image src={bgBlur} alt="legend" className="absolute left-0 top-8" />
           <div className="h-[522px] w-220px relative ml-28 mt-6">
-            <FemaleAvatarFront colors={colorsFront} />
+            {/*<FemaleAvatarFront colors={colorsFront} />*/}
+            <MaleAvatarFront colors={colorsFront} />
             <div className="absolute bottom-6 right-8">
               <Image src={proficiencyLegend} alt="legend"/>
             </div>
