@@ -1,5 +1,4 @@
 import Image from 'next/image'
-
 import { AvatarColorsFront } from '@/common/types'
 import AbsMale from '@/app/images/male-avatar/front/abs'
 import BicepsMale from '@/app/images/male-avatar/front/biceps'
@@ -30,7 +29,7 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
       <PecsMale className="absolute top-[5.4em] -left-[1.4em]" fill={colors.pecs} />
       <Image src={head} alt="" className="absolute -top-[.3em] left-2" />
       <DeltsMale className="absolute top-[5em] -left-[2.6em]" fill={colors.delts} />
-      <Image src={hands} alt="" className="absolute top-[13.9em] -left-[4.2em]" />
+      <Image src={hands} alt="" className="absolute top-[14em] -left-[4.2em]" />
     </div>
   )
 }
