@@ -1,5 +1,7 @@
 // todo: grab this from the db
 // need to figure out how these are calculated for the first graph
+import { Description, GenericObject } from '@/common/types'
+
 export const exercises = [
   { name: 'Push-Ups', proficiency: 15 },
   { name: 'Goblet Squat', proficiency: 30 },
@@ -16,6 +18,21 @@ const exercisesAverage = [
   { name: 'Chin-Ups', proficiency: 10 },
   { name: 'Goblet Squat', proficiency: 50 }
 ]
+
+export const maleAvatarFrontDescriptions: Description = {
+  traps: {},
+  delts: {},
+  pecs: { position: 'left-10 top-20', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  biceps: {},
+  forearms: {},
+  abs: {},
+  obliques: {},
+  quads: {},
+  calves: {},
+  neck: {},
+  hands: {},
+  head: {}
+}
 
 const highestProficiency = exercises.reduce((accumulator, current) => {
   const currentProficiency = Math.abs(current.proficiency)

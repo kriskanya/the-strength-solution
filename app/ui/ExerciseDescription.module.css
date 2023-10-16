@@ -1,0 +1,5 @@
+.container {
+  background-image: url('../images/info-box.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

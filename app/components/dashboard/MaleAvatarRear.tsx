@@ -32,7 +32,7 @@ export default function MaleAvatarRear({ colors }: AvatarColorsRear) {
       <RotatorCuffMaleRear className="absolute top-[7.7em] left-[.9em]" fill={colors.rotatorCuff}  />
       <SpinalErectorsMaleRear className="absolute top-[5.0em] left-[1em]" fill={colors.erectors}  />
       <TrapsMaleRear className="absolute top-[4.9em] left-[.6em]" fill={colors.traps} />
-      <Image src={head} alt="" className="absolute top-[.9em] left-11" />
+      <Image src={head} alt="" className="absolute top-[1em] left-11" />
       <DeltsMaleRear className="absolute top-[6em] -left-[.5em]" fill={colors.delts} />
     </div>
   )

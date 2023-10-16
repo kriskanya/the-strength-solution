@@ -1,5 +1,4 @@
 import CustomDropdown from '@/app/ui/CustomDropdown'
-import classes from './StrengthStandards.module.css'
 
 export default function StrengthStandardsTable() {
   const genders = ['male', 'female']
@@ -18,7 +17,7 @@ export default function StrengthStandardsTable() {
       </div>
 
       <div className="flex justify-center pb-20 px-[2.35em] rounded">
-        <table className={`w-full table-fixed border bg-white border-collapse ${classes.tableContainer}`} cellPadding="20">
+        <table className={`w-full table-fixed border bg-white border-collapse`} cellPadding="20">
           <thead className="">
             <tr className="">
               <th align="left" className="w-1/3 inter font-normal text-xs uppercase opacity-80 text-dark-grey">Workout Name</th>

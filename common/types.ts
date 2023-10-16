@@ -1,3 +1,7 @@
+export interface Description {
+  [key: string]: { position: string, text: string }
+}
+
 export interface AvatarColorsFront {
   colors: {
     traps: string,
@@ -8,7 +12,10 @@ export interface AvatarColorsFront {
     abs: string,
     obliques: string,
     quads: string,
-    calves: string
+    calves: string,
+    neck: string,
+    hands: string,
+    head: string
   }
 }
 

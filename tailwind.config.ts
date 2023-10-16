@@ -13,7 +13,8 @@ const config: Config = {
         'orange-intermediate': '#F4B43B',
         'yellow-proficient': '#FCFF4B',
         'green-advanced': '#4CD964',
-        'blue-elite': '#2E8EEC'
+        'blue-elite': '#2E8EEC',
+        'custom-black': '#111111'
       },
       textColor: {
         'brand-blue': '#007DD9',
