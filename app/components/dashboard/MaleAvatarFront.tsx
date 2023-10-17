@@ -29,10 +29,10 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
     position: ''
   })
   const [showDescription, setShowDescription] = useState(false)
-  const darkGrey = '#444751'
+  const DARK_GREY = '#444751'
 
   function hoverOverDescription(event: any) {
-    const res: any = {}
+    const newFillColors: any = {}
     const bodyPart = get(event, 'target.dataset.name')
 
     if (!bodyPart) return
@@ -44,10 +44,12 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
     }
     setDescription(obj)
     for (const key in fillColors) {
-      res[key] = darkGrey
+      newFillColors[key] = DARK_GREY
     }
     setShowDescription(true)
-    setFillColors(res)
+    newFillColors[bodyPart] = colors[bodyPart as keyof AvatarColorsFront['colors']]
+    setShowDescription(true)
+    setFillColors(newFillColors)
   }
 
   function handleLeave() {
@@ -55,11 +57,11 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
   }
 
   function resetAvatar() {
-    const res: any = {}
+    const newFillColors: any = {}
     for (const key in colors) {
-      res[key] = colors[key as keyof AvatarColorsFront['colors']]
+      newFillColors[key] = colors[key as keyof AvatarColorsFront['colors']]
     }
-    setFillColors(res)
+    setFillColors(newFillColors)
   }
 
   // listener for resetting the avatar if user's mouse leaves the area

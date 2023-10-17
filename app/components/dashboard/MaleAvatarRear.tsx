@@ -31,10 +31,10 @@ export default function MaleAvatarRear({ colors }: AvatarColorsRear) {
     position: ''
   })
   const [showDescription, setShowDescription] = useState(false)
-  const darkGrey = '#444751'
+  const DARK_GREY = '#444751'
 
   function hoverOverDescription(event: any) {
-    const res: any = {}
+    const newFillColors: any = {}
     const bodyPart = get(event, 'target.dataset.name')
 
     if (!bodyPart) return
@@ -46,10 +46,11 @@ export default function MaleAvatarRear({ colors }: AvatarColorsRear) {
     }
     setDescription(obj)
     for (const key in fillColors) {
-      res[key] = darkGrey
+      newFillColors[key] = DARK_GREY
     }
+    newFillColors[bodyPart] = colors[bodyPart as keyof AvatarColorsRear['colors']]
     setShowDescription(true)
-    setFillColors(res)
+    setFillColors(newFillColors)
   }
 
   function handleLeave() {
@@ -57,11 +58,11 @@ export default function MaleAvatarRear({ colors }: AvatarColorsRear) {
   }
 
   function resetAvatar() {
-    const res: any = {}
+    const newFillColors: any = {}
     for (const key in colors) {
-      res[key] = colors[key as keyof AvatarColorsRear['colors']]
+      newFillColors[key] = colors[key as keyof AvatarColorsRear['colors']]
     }
-    setFillColors(res)
+    setFillColors(newFillColors)
   }
 
   // listener for resetting the avatar if user's mouse leaves the area
@@ -109,15 +110,11 @@ export default function MaleAvatarRear({ colors }: AvatarColorsRear) {
       <div className={`${classes.glutesRight} w-[5.4em] h-[5.1em] absolute top-[14.7em] left-[3.7em]`} data-name="glutes" onMouseEnter={hoverOverDescription}></div>
       <div className={`${classes.quadsLeft} w-[6.5em] h-[7.4em] absolute top-[14.5em] -left-[1.6em]`} data-name="quads" onMouseEnter={hoverOverDescription}></div>
       <div className={`${classes.quadsRight} w-[6.5em] h-[7.4em] absolute top-[14.7em] left-[3.5em]`} data-name="glutes" onMouseEnter={hoverOverDescription}></div>
-
-
-
-      {/*<div className="w-[3.3em] h-[6.5em] absolute top-[8.2em] left-[.5em]" data-name="abs" onMouseEnter={hoverOverDescription}></div>*/}
-      {/*<div className="w-[2em] h-[8em] absolute top-[14em] -left-[1.5em]" data-name="quads" onMouseEnter={hoverOverDescription}></div>*/}
-      {/*<div className="w-[1.5em] h-[6.3em] absolute top-[15.7em] left-[.5em]" data-name="quads" onMouseEnter={hoverOverDescription}></div>*/}
-      {/*<div className="w-[2em] h-[8em] absolute top-[14em] left-[3.8em]" data-name="quads" onMouseEnter={hoverOverDescription}></div>*/}
-      {/*<div className="w-[2.5em] h-[6.3em] absolute top-[22em] -left-[1.2em]" data-name="calves" onMouseEnter={hoverOverDescription}></div>*/}
-      {/*<div className="w-[2.5em] h-[6.3em] absolute top-[22em] left-[3.5em]" data-name="calves" onMouseEnter={hoverOverDescription}></div>*/}
+      <div className={`${classes.hamstringsLeft} w-[6.5em] h-[7.4em] absolute top-[16.8em] -left-[.4em]`} data-name="hamstrings" onMouseEnter={hoverOverDescription}></div>
+      <div className={`${classes.hamstringsRight} w-[6.5em] h-[7.4em] absolute top-[17.0em] left-[2.2em]`} data-name="hamstrings" onMouseEnter={hoverOverDescription}></div>
+      <div className={`${classes.adductors} w-[6.5em] h-[7.4em] absolute top-[16.4em] left-[1em]`} data-name="adductors" onMouseEnter={hoverOverDescription}></div>
+      <div className={`${classes.calvesLeft} w-[6em] h-[11em] absolute top-[22em] -left-[1.2em]`} data-name="calves" onMouseEnter={hoverOverDescription}></div>
+      <div className={`${classes.calvesRight} w-[6em] h-[11em] absolute top-[22em] left-[3.7em]`} data-name="calves" onMouseEnter={hoverOverDescription}></div>
       {
         showDescription
           ? (

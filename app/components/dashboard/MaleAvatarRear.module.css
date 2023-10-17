@@ -53,3 +53,23 @@
 .quadsRight {
   clip-path: polygon(58% 18%, 50% 11%, 49% 30%, 64% 81%, 66% 47%);
 }
+
+.hamstringsLeft {
+  clip-path: polygon(72% 10%, 49% 100%, 37% 71%, 24% 88%, 20% 59%, 31% 19%, 40% 20%);
+}
+
+.hamstringsRight {
+  clip-path: polygon(60% 18%, 76% 17%, 84% 52%, 79% 87%, 65% 70%, 51% 99%, 31% 6%);
+}
+
+.calvesLeft {
+  clip-path: polygon(50% 0%, 68% 28%, 48% 77%, 34% 76%, 30% 28%);
+}
+
+.calvesRight {
+  clip-path: polygon(50% 0%, 71% 27%, 68% 75%, 48% 77%, 30% 28%);
+}
+
+.adductors {
+  clip-path: polygon(50% 10%, 61% 21%, 66% 50%, 62% 74%, 49% 36%, 37% 72%, 32% 46%, 37% 22%);
+}

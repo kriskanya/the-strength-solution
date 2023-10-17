@@ -33,7 +33,7 @@ export default function DashboardAvatarSection() {
   }
   const colorsRear: AvatarColorsRear['colors'] = {
     calves: orange,
-    adductors: yellow,
+    adductors: orange,
     quads: orange,
     hamstrings: yellow,
     glutes: yellow,
