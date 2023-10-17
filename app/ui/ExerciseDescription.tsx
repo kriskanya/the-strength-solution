@@ -16,8 +16,8 @@ export default function ExerciseDescription({ description, bodyPart }: Props) {
         </p>
         <hr className="mb-1 mt-3" />
         <p>
-          <span className="inter font-normal text-xs uppercase text-white opacity-30">Score:</span>
-          <span className="inter font-normal text-xs text-white ml-2">12</span>
+          <span className="inter font-normal text-xs uppercase text-white opacity-30">Reps:</span>
+          <span className="inter font-normal text-xs text-white ml-[1.1em]">12</span>
         </p>
         <p className="-mt-1">
           <span className="inter font-normal text-xs uppercase text-white opacity-30">Level:</span>

@@ -44,7 +44,9 @@ export default function DashboardAvatarSection() {
     forearms: yellow,
     triceps: orange,
     delts: green,
-    erectors: orange
+    erectors: orange,
+    hands: grey,
+    head: grey
   }
 
   return (

@@ -33,6 +33,8 @@ export interface AvatarColorsRear {
     forearms: string,
     triceps: string,
     delts: string,
-    erectors: string
+    erectors: string,
+    hands: string,
+    head: string
   }
 }

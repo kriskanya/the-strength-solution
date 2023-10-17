@@ -1,0 +1,55 @@
+.shoulderRight {
+  clip-path: polygon(12% 19%, 7% 49%, 12% 74%, 50% 100%, 41% 37%);
+}
+
+.shoulderLeft {
+  clip-path: polygon(56% 14%, 60% 45%, 54% 69%, 16% 100%, 19% 36%);
+}
+
+.rotatorCuffLeft {
+  clip-path: polygon(37% 4%, 7% 49%, 13% 66%, 27% 83%, 49% 74%);
+}
+
+.rotatorCuffRight {
+  clip-path: polygon(63% 0, 85% 48%, 79% 63%, 69% 81%, 45% 74%);
+}
+
+.latLeft {
+  clip-path: polygon(24% 19%, 38% 28%, 58% 26%, 74% 58%, 46% 90%, 31% 64%);
+}
+
+.latRight {
+  clip-path: polygon(41% 19%, 59% 25%, 75% 15%, 65% 66%, 51% 90%, 24% 58%);
+}
+
+.erectorsTop {
+  clip-path: polygon(43% 7%, 56% 7%, 64% 27%, 86% 36%, 86% 42%, 49% 100%, 15% 41%, 15% 34%, 36% 27%);
+}
+
+.erectorsBottom {
+  clip-path: polygon(48% 9%, 79% 40%, 79% 48%, 48% 84%, 19% 48%, 19% 39%);
+}
+
+.obliquesLeft {
+  clip-path: polygon(35% 10%, 56% 39%, 58% 56%, 32% 73%);
+}
+
+.obliquesRight {
+  clip-path: polygon(31% 9%, 9% 39%, 8% 57%, 34% 74%);
+}
+
+.glutesLeft {
+  clip-path: polygon(39% 7%, 64% 41%, 64% 52%, 37% 68%, 19% 65%, 27% 42%, 23% 15%);
+}
+
+.glutesRight {
+  clip-path: polygon(39% 7%, 14% 41%, 16% 53%, 29% 66%, 60% 72%, 51% 37%, 53% 13%);
+}
+
+.quadsLeft {
+  clip-path: polygon(49% 18%, 54% 13%, 55% 31%, 40% 81%, 40% 48%);
+}
+
+.quadsRight {
+  clip-path: polygon(58% 18%, 50% 11%, 49% 30%, 64% 81%, 66% 47%);
+}

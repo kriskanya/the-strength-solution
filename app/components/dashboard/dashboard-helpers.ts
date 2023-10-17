@@ -21,7 +21,7 @@ const exercisesAverage = [
 
 export const maleAvatarFrontDescriptions: Description = {
   traps: { position: 'left-11 top-10', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  delts: { position: '-right-10 top-16', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  delts: { position: 'left-24 top-16', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   pecs: { position: 'left-16 top-20', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   biceps: { position: '-right-14 top-28', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   forearms: { position: '-right-16 top-40', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
@@ -31,18 +31,18 @@ export const maleAvatarFrontDescriptions: Description = {
   calves: { position: '-right-6 top-96', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
 }
 
-export const maleAvatarRearDescriptions: Description = {
-  traps: { position: 'left-11 top-10', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  delts: { position: '-right-10 top-16', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  rotatorCuff: { position: '-right-10 top-16', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  lats: { position: 'left-16 top-20', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  erectors: { position: 'left-16 top-20', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  triceps: { position: '-right-14 top-28', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  forearms: { position: '-right-16 top-40', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+export const maleAvatarRearPositions: Description = {
+  traps: { position: 'left-24 top-14', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  delts: { position: 'left-32 top-20', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  rotatorCuff: { position: 'left-28 top-28', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  lats: { position: 'left-24 top-36', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  erectors: { position: 'left-20 top-20', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  triceps: { position: 'left-36 top-36', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  forearms: { position: 'left-40 top-48', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   abs: { position: 'right-0 top-40', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  obliques: { position: '-right-4 top-36', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  glutes: { position: '-right-4 top-56', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  quads: { position: '-right-4 top-56', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  obliques: { position: 'left-28 top-48', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  glutes: { position: 'left-24 top-56', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  quads: { position: 'left-28 top-60', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   calves: { position: '-right-6 top-96', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
 }
 
