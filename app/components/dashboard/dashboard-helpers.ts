@@ -1,6 +1,6 @@
 // todo: grab this from the db
 // need to figure out how these are calculated for the first graph
-import { Description, GenericObject } from '@/common/types'
+import { Description } from '@/common/types'
 
 export const exercises = [
   { name: 'Push-Ups', proficiency: 15 },
@@ -20,18 +20,15 @@ const exercisesAverage = [
 ]
 
 export const maleAvatarFrontDescriptions: Description = {
-  traps: {},
-  delts: {},
-  pecs: { position: 'left-10 top-20', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  biceps: {},
-  forearms: {},
-  abs: {},
-  obliques: {},
-  quads: {},
-  calves: {},
-  neck: {},
-  hands: {},
-  head: {}
+  traps: { position: 'left-11 top-10', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  delts: { position: '-right-10 top-16', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  pecs: { position: 'left-16 top-20', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  biceps: { position: '-right-14 top-28', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  forearms: { position: '-right-16 top-40', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  abs: { position: 'right-0 top-40', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  obliques: { position: '-right-4 top-36', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  quads: { position: '-right-4 top-56', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  calves: { position: '-right-6 top-96', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
 }
 
 const highestProficiency = exercises.reduce((accumulator, current) => {

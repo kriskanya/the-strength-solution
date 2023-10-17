@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react'
 import ExerciseDescription from '@/app/ui/ExerciseDescription'
 import { get } from 'lodash-es'
 import { maleAvatarFrontDescriptions } from '@/app/components/dashboard/dashboard-helpers'
+import classes from './MaleAvatarFront.module.css'
 
 export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
   const [fillColors, setFillColors] = useState(colors)
@@ -65,7 +66,6 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
   useEffect(() => {
     // only add the event listener when the description is shown
     if (showDescription) return;
-
     resetAvatar()
   }, [showDescription]);
 
@@ -85,8 +85,23 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
       <DeltsMale className="absolute top-[5em] -left-[2.6em]" fill={fillColors.delts} />
       <HandsMale className="absolute top-[14em] -left-[4.2em]" fill={fillColors.hands} />
 
-      <div className="w-[5.2em] h-[2em] absolute top-[6em] -left-[.6em]" data-name="pecs" onMouseEnter={hoverOverDescription}></div>
-
+      {/*hover-over areas*/}
+      <div className="w-[3em] h-[1.5em] absolute top-[4em] -left-[.6em]" data-name="traps" onMouseEnter={hoverOverDescription}></div>
+      <div className={`${classes.shoulderLeft} w-[4.8em] h-[2.7em] absolute top-[5.2em] -left-[4.4em]`} data-name="delts" onMouseEnter={hoverOverDescription}></div>
+      <div className={`${classes.shoulderRight} w-[4.8em] h-[2.7em] absolute top-[5.2em] left-[4em]`} data-name="delts" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[5.2em] h-[2.3em] absolute top-[5.8em] -left-[.6em]" data-name="pecs" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2em] h-[3.2em] absolute top-[7.5em] -left-[3em]" data-name="biceps" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2em] h-[3.2em] absolute top-[7.5em] left-[5.4em]" data-name="biceps" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2em] h-[3.8em] absolute top-[10.5em] -left-[3.3em]" data-name="forearms" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2em] h-[4.1em] absolute top-[10.5em] left-[6.1em]" data-name="forearms" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[3.3em] h-[6.5em] absolute top-[8.2em] left-[.5em]" data-name="abs" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[1.5em] h-[5em] absolute top-[8.2em] -left-[1em]" data-name="obliques" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[1.5em] h-[5em] absolute top-[8.2em] left-[3.7em]" data-name="obliques" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2em] h-[8em] absolute top-[14em] -left-[1.5em]" data-name="quads" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[1.5em] h-[6.3em] absolute top-[15.7em] left-[.5em]" data-name="quads" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2em] h-[8em] absolute top-[14em] left-[3.8em]" data-name="quads" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2.5em] h-[6.3em] absolute top-[22em] -left-[1.2em]" data-name="calves" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2.5em] h-[6.3em] absolute top-[22em] left-[3.5em]" data-name="calves" onMouseEnter={hoverOverDescription}></div>
       {
         showDescription
           ? (

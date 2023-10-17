@@ -1,0 +1,7 @@
+.shoulderLeft {
+  clip-path: polygon(100% 0, 39% 100%, 38% 0);
+}
+
+.shoulderRight {
+  clip-path: polygon(0 0, 52% 100%, 52% 0);
+}
