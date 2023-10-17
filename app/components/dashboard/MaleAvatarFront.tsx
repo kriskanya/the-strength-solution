@@ -105,7 +105,7 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
       {
         showDescription
           ? (
-            <div className={`absolute ${ description?.position }`}>
+            <div className={`absolute ${ description?.position } z-10`}>
               <ExerciseDescription description={description?.text} bodyPart={description?.bodyPart} />
             </div>
           )

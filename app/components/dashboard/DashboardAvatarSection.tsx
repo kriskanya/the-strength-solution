@@ -55,7 +55,7 @@ export default function DashboardAvatarSection() {
           <div className="w-220px relative ml-28 mt-6">
             {/*<FemaleAvatarFront colors={colorsFront} />*/}
             <MaleAvatarFront colors={colorsFront} />
-            <div className="absolute bottom-6 right-20">
+            <div className="absolute bottom-6 right-20 z-0">
               <Image src={proficiencyLegend} alt="legend"/>
             </div>
           </div>
