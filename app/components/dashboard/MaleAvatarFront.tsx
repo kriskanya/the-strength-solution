@@ -18,7 +18,7 @@ import TrapsMale from '@/app/images/male-avatar/front/traps'
 import { useEffect, useState } from 'react'
 import ExerciseDescription from '@/app/ui/ExerciseDescription'
 import { get } from 'lodash-es'
-import { maleAvatarFrontDescriptions } from '@/app/components/dashboard/dashboard-helpers'
+import { maleAvatarFrontPositions } from '@/app/components/dashboard/dashboard-helpers'
 import classes from './MaleAvatarFront.module.css'
 
 export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
@@ -39,8 +39,8 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
 
     const obj = {
       bodyPart,
-      text: maleAvatarFrontDescriptions[bodyPart]?.text,
-      position: maleAvatarFrontDescriptions[bodyPart]?.position
+      text: maleAvatarFrontPositions[bodyPart]?.text,
+      position: maleAvatarFrontPositions[bodyPart]?.position
     }
     setDescription(obj)
     for (const key in fillColors) {

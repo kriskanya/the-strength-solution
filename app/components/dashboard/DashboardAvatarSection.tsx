@@ -55,15 +55,15 @@ export default function DashboardAvatarSection() {
         <div className={`hidden h-[522px] xl:grid ${classes.container}`}>
           <Image src={bgBlur} alt="legend" className="absolute left-0 top-8" />
           <div className="w-220px relative ml-28 mt-6">
-            {/*<FemaleAvatarFront colors={colorsFront} />*/}
-            <MaleAvatarFront colors={colorsFront} />
+            <FemaleAvatarFront colors={colorsFront} />
+            {/*<MaleAvatarFront colors={colorsFront} />*/}
             <div className="absolute bottom-6 right-20 z-0">
               <Image src={proficiencyLegend} alt="legend"/>
             </div>
           </div>
           <div className="">
-            {/*<FemaleAvatarRear colors={colorsRear} />*/}
-            <MaleAvatarRear colors={colorsRear} />
+            <FemaleAvatarRear colors={colorsRear} />
+            {/*<MaleAvatarRear colors={colorsRear} />*/}
           </div>
           <DashboardSidePanel />
         </div>
