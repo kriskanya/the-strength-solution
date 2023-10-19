@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { hash } from 'bcrypt'
+import { standardsMale1417 } from './seed/pushups-male[14-17]'
+import { standardSeedValues } from './seed/standards'
 
 const prisma = new PrismaClient()
 
@@ -15,7 +17,16 @@ async function main() {
       password
     }
   })
-  console.log({ user })
+
+
+
+  const migrationAlreadyRun = await prisma.standard.findFirst()
+
+  if (migrationAlreadyRun) return
+
+  await prisma.standard.createMany({
+    data: standardSeedValues()
+  })
 }
 main()
   .then(() => prisma.$disconnect())

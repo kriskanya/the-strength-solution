@@ -19,3 +19,35 @@ model User {
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
+
+model Standard {
+  id         Int       @id @default(autoincrement())
+  exercise   String
+  level      Level
+  weight     Int
+  reps       Int
+  gender     Gender
+  age        Int
+  operator   Operator  @default(EQUAL_TO)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+enum Level {
+  NOVICE
+  INTERMEDIATE
+  PROFICIENT
+  ADVANCED
+  ELITE
+}
+
+enum Operator {
+  GREATER_THAN
+  LESS_THAN
+  EQUAL_TO
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
