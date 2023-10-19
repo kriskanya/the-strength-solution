@@ -29,11 +29,12 @@ export default function DashboardAvatarSection() {
     calves: orange,
     neck: grey,
     hands: grey,
-    head: grey
+    head: grey,
+    hair: grey
   }
   const colorsRear: AvatarColorsRear['colors'] = {
-    calves: orange,
-    adductors: orange,
+    calves: red,
+    adductors: red,
     quads: orange,
     hamstrings: yellow,
     glutes: yellow,

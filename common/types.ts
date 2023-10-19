@@ -15,7 +15,8 @@ export interface AvatarColorsFront {
     calves: string,
     neck: string,
     hands: string,
-    head: string
+    head: string,
+    hair?: string
   }
 }
 
