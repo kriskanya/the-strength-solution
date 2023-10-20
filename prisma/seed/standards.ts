@@ -25,7 +25,7 @@ function addAgeToFileContents(fileContents: StrengthStandard[], ages: number[]) 
 export function standardSeedValues() {
   return fs.readdirSync(`${__dirname}/dips`)
     .map(fileName => {
-      // grab content between brackets in filename; e.g., dips-male[18-23].ts => '18-23'
+      // grab content between brackets in filename; e.g., dips-male[18-23].ts => ['18-23']
       const match = fileName.match(/(?<=\[).+?(?=\])/g)
 
       if (_.isNull(match) || _.isUndefined(match) || !match) return
