@@ -1,6 +1,6 @@
 import { Level, Operator, Gender } from '@prisma/client'
 
-export const standardsMale24To39 = [
+export const pushupsMale24To39 = [
   { weight: 110, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.MALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
   { weight: 110, reps: 14,  level: Level.INTERMEDIATE, age: 0, gender: Gender.MALE, exercise: 'pushUp' },
   { weight: 110, reps: 41,  level: Level.PROFICIENT,   age: 0, gender: Gender.MALE, exercise: 'pushUp' },

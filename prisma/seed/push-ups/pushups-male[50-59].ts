@@ -1,23 +1,23 @@
 import { Level, Operator, Gender } from '@prisma/client'
 
-export const standardsMale40To49 = [
+export const pushupsMale40To49 = [
   { weight: 110, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.MALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
   { weight: 110, reps: 12,  level: Level.INTERMEDIATE, age: 0, gender: Gender.MALE, exercise: 'pushUp' },
   { weight: 110, reps: 34,  level: Level.PROFICIENT,   age: 0, gender: Gender.MALE, exercise: 'pushUp' },
   { weight: 110, reps: 61,  level: Level.ADVANCED,     age: 0, gender: Gender.MALE, exercise: 'pushUp' },
-  { weight: 110, reps: 92,  level: Level.ELITE,       age: 0, gender: Gender.MALE, exercise: 'pushUp' },
+  { weight: 110, reps: 92,  level: Level.ELITE,        age: 0, gender: Gender.MALE, exercise: 'pushUp' },
 
   { weight: 120, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.MALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
   { weight: 120, reps: 12,  level: Level.INTERMEDIATE, age: 0, gender: Gender.MALE, exercise: 'pushUp' },
   { weight: 120, reps: 34,  level: Level.PROFICIENT,   age: 0, gender: Gender.MALE, exercise: 'pushUp' },
   { weight: 120, reps: 61,  level: Level.ADVANCED,     age: 0, gender: Gender.MALE, exercise: 'pushUp' },
-  { weight: 120, reps: 90,  level: Level.ELITE,       age: 0, gender: Gender.MALE, exercise: 'pushUp' },
+  { weight: 120, reps: 90,  level: Level.ELITE,        age: 0, gender: Gender.MALE, exercise: 'pushUp' },
 
   { weight: 130, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.MALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
   { weight: 130, reps: 13,  level: Level.INTERMEDIATE, age: 0, gender: Gender.MALE, exercise: 'pushUp' },
   { weight: 130, reps: 34,  level: Level.PROFICIENT,   age: 0, gender: Gender.MALE, exercise: 'pushUp' },
   { weight: 130, reps: 59,  level: Level.ADVANCED,     age: 0, gender: Gender.MALE, exercise: 'pushUp' },
-  { weight: 130, reps: 87,  level: Level.ELITE,       age: 0, gender: Gender.MALE, exercise: 'pushUp' },
+  { weight: 130, reps: 87,  level: Level.ELITE,        age: 0, gender: Gender.MALE, exercise: 'pushUp' },
 
   { weight: 140, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.MALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
   { weight: 140, reps: 14,  level: Level.INTERMEDIATE, age: 0, gender: Gender.MALE, exercise: 'pushUp' },
