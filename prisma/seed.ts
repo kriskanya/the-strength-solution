@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client'
 import { hash } from 'bcrypt'
-import { standardsMale1417 } from '@/prisma/seed/push-ups/pushups-male[14-17]'
 import { standardSeedValues } from './seed/standards'
 
 const prisma = new PrismaClient()

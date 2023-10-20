@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "npx prisma db seed"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -15,7 +16,8 @@
     "@prisma/client": "^5.4.1",
     "@types/lodash-es": "^4.17.9",
     "bcrypt": "^5.1.1",
-    "lodash-es": "^4.17.21",
+    "lodash": "^4.17.21",
+    "lodash-es": "4.17.21",
     "next": "13.5.3",
     "next-auth": "^4.23.2",
     "react": "18.2.0",
