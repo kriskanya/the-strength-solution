@@ -22,11 +22,11 @@
   clip-path: polygon(44% 20%, 64% 25%, 55% 54%, 60% 82%, 54% 87%, 48% 99%, 40% 74%, 27% 55%);
 }
 
-.erectorsTop {
+.rhomboids {
   clip-path: polygon(27% 14%, 79% 13%, 69% 60%, 53% 90%, 37% 61%);
 }
 
-.erectorsBottom {
+.erectors {
   clip-path: polygon(50% 14%, 66% 29%, 65% 48%, 77% 60%, 48% 71%, 21% 59%, 34% 48%, 32% 28%);
 }
 
@@ -46,11 +46,11 @@
   clip-path: polygon(28% 13%, 49% 16%, 60% 43%, 58% 78%, 44% 87%, 19% 88%, 9% 66%, 9% 30%);
 }
 
-.quadsLeft {
+.hamstringsTopLeft {
   clip-path: polygon(35% 34%, 48% 39%, 35% 66%, 33% 89%, 26% 99%, 19% 48%, 22% 16%);
 }
 
-.quadsRight {
+.hamstringsTopRight {
   clip-path: polygon(53% 14%, 54% 59%, 51% 99%, 44% 91%, 40% 59%, 33% 39%, 46% 30%);
 }
 

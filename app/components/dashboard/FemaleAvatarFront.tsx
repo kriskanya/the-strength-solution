@@ -26,7 +26,8 @@ export default function FemaleAvatarFront({ colors } : AvatarColorsFront) {
   const [description, setDescription] = useState({
     bodyPart: '',
     text: '',
-    position: ''
+    position: '',
+    name: ''
   })
   const [showDescription, setShowDescription] = useState(false)
   const DARK_GREY = '#444751'
@@ -40,7 +41,8 @@ export default function FemaleAvatarFront({ colors } : AvatarColorsFront) {
     const obj = {
       bodyPart,
       text: femaleAvatarFrontPositions[bodyPart]?.text,
-      position: femaleAvatarFrontPositions[bodyPart]?.position
+      position: femaleAvatarFrontPositions[bodyPart]?.position,
+      name: femaleAvatarFrontPositions[bodyPart]?.name
     }
     setDescription(obj)
     for (const key in fillColors) {
@@ -107,7 +109,7 @@ export default function FemaleAvatarFront({ colors } : AvatarColorsFront) {
         showDescription
           ? (
             <div className={`absolute ${ description?.position } z-10`}>
-              <ExerciseDescription description={description?.text} bodyPart={description?.bodyPart} />
+              <ExerciseDescription description={description?.text} bodyPart={description?.bodyPart} name={description?.name} />
             </div>
           )
           : ''

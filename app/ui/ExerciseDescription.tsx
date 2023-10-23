@@ -3,14 +3,15 @@ import { capitalize } from 'lodash-es'
 
 interface Props {
   description: string,
-  bodyPart: string
+  bodyPart: string,
+  name: string
 }
 
-export default function ExerciseDescription({ description, bodyPart }: Props) {
+export default function ExerciseDescription({ description, name }: Props) {
   return (
     <div className="">
       <div className={`w-[333px] h-[159px] opacity-90 rounded-lg ${classes.container} pl-8 pr-3 pt-3`}>
-        <h2 className="inter font-semibold text-base text-white">{ capitalize(bodyPart) }</h2>
+        <h2 className="inter font-semibold text-base text-white">{ name }</h2>
         <p className="inter font-normal text-xs leading-4 text-white opacity-70 mt-1">
           {description}
         </p>

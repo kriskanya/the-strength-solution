@@ -1,5 +1,5 @@
 export interface Description {
-  [key: string]: { position: string, text: string }
+  [key: string]: { position: string, name: string, text: string }
 }
 
 export interface AvatarColorsFront {
@@ -35,6 +35,8 @@ export interface AvatarColorsRear {
     triceps: string,
     delts: string,
     erectors: string,
+    lowerTraps: string
+    rhomboids: string,
     hands: string,
     head: string
   }

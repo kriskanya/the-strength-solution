@@ -8,10 +8,10 @@ export default function YouVsAverageBarGraph() {
   return (
     <div className="px-10 py-7">
       <div className="flex justify-between">
-        <h3 className="uppercase">You Vs Average</h3>
+        <h3 className="uppercase">Your Current Strength Vs Proficient Level</h3>
         <div>
           <div className="h-[12px] w-[12px] bg-light-grey inline-block"></div>
-          <p className="inline-block ml-3">Average</p>
+          <p className="inline-block ml-3">Proficient</p>
         </div>
       </div>
 
