@@ -1,0 +1,111 @@
+import { Level, Operator, Gender } from '@prisma/client'
+
+export const invertedRowFemale80To89 = [
+  { weight: 90, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 90, reps: 0,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 90, reps: 5,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 90, reps: 11,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 90, reps: 17,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 100, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 100, reps: 1,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 100, reps: 5,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 100, reps: 11,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 100, reps: 16,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 110, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 110, reps: 1,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 110, reps: 5,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 110, reps: 11,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 110, reps: 16,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 120, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 120, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 120, reps: 6,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 120, reps: 11,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 120, reps: 16,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 130, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 130, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 130, reps: 6,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 130, reps: 11,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 130, reps: 16,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 140, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 140, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 140, reps: 6,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 140, reps: 10,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 140, reps: 15,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 150, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 150, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 150, reps: 6,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 150, reps: 10,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 150, reps: 15,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 160, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 160, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 160, reps: 6,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 160, reps: 10,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 160, reps: 14,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 170, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 170, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 170, reps: 5,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 170, reps: 10,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 170, reps: 14,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 180, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 180, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 180, reps: 5,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 180, reps: 9,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 180, reps: 14,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 190, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 190, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 190, reps: 5,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 190, reps: 9,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 190, reps: 14,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 200, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 200, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 200, reps: 5,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 200, reps: 9,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 200, reps: 13,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 210, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 210, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 210, reps: 5,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 210, reps: 8,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 210, reps: 12,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 220, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 220, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 220, reps: 5,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 220, reps: 8,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 220, reps: 12,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 230, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 230, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 230, reps: 4,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 230, reps: 8,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 230, reps: 11,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 240, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 240, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 240, reps: 4,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 240, reps: 8,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 240, reps: 11,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 250, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 250, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 250, reps: 4,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 250, reps: 7,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 250, reps: 11,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+
+  { weight: 260, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'invertedRow', operator: Operator.LESS_THAN },
+  { weight: 260, reps: 2,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 260, reps: 4,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 260, reps: 7,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+  { weight: 260, reps: 11,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'invertedRow' },
+]

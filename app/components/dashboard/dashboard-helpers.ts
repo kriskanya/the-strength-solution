@@ -64,7 +64,7 @@ export const femaleAvatarRearPositions: Description = {
   delts: { position: 'left-32 top-20',      name: 'Posterior Deltoids', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   lats: { position: 'left-24 top-36',       name: 'Latissimus Dorsi', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   rhomboids: { position: 'left-20 top-20',  name: 'Rhomboids/Mid-lower Traps', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  erectors: { position: 'left-20 top-20',   name: 'Erector Spinae', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
+  erectors: { position: 'left-16 top-44',   name: 'Erector Spinae', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   triceps: { position: 'left-36 top-36',    name: 'Triceps', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   forearms: { position: 'left-40 top-48',   name: 'Forearms', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
   abs: { position: 'right-0 top-40',        name: 'Abs', text: 'Small explanation. Lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },

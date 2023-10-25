@@ -1,0 +1,111 @@
+import { Level, Operator, Gender } from '@prisma/client'
+
+export const pushupsFemale14To17 = [
+  { weight: 90, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 90, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 90, reps: 17,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 90, reps: 35,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 90, reps: 54,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 100, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 100, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 100, reps: 17,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 100, reps: 33,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 100, reps: 51,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 110, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 110, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 110, reps: 17,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 110, reps: 32,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 110, reps: 49,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 120, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 120, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 120, reps: 17,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 120, reps: 31,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 120, reps: 47,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 130, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 130, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 130, reps: 17,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 130, reps: 30,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 130, reps: 45,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 140, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 140, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 140, reps: 16,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 140, reps: 29,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 140, reps: 44,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 150, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 150, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 150, reps: 15,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 150, reps: 28,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 150, reps: 42,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 160, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 160, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 160, reps: 15,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 160, reps: 27,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 160, reps: 40,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 170, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 170, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 170, reps: 14,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 170, reps: 25,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 170, reps: 38,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 180, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 180, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 180, reps: 13,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 180, reps: 24,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 180, reps: 37,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 190, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 190, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 190, reps: 13,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 190, reps: 23,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 190, reps: 35,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 200, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 200, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 200, reps: 12,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 200, reps: 23,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 200, reps: 34,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 210, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 210, reps: 3,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 210, reps: 11,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 210, reps: 22,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 210, reps: 33,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 220, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 220, reps: 3,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 220, reps: 11,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 220, reps: 21,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 220, reps: 31,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 230, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 230, reps: 3,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 230, reps: 10,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 230, reps: 20,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 230, reps: 30,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 240, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 240, reps: 3,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 240, reps: 10,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 240, reps: 19,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 240, reps: 30,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 250, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 250, reps: 3,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 250, reps: 10,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 250, reps: 18,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 250, reps: 28,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+
+  { weight: 260, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pushUp', operator: Operator.LESS_THAN },
+  { weight: 260, reps: 3,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 260, reps: 10,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 260, reps: 18,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+  { weight: 260, reps: 27,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pushUp' },
+]
