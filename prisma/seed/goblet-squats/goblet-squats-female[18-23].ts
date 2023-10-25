@@ -1,0 +1,111 @@
+import { Level, Operator, Gender } from '@prisma/client'
+
+export const gobletSquatsFemale18To23 = [
+  { weight: 90, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 90, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 90, reps: 29,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 90, reps: 65,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 90, reps: 107,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 100, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 100, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 100, reps: 29,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 100, reps: 62,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 100, reps: 102,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 110, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 110, reps: 6,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 110, reps: 29,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 110, reps: 60,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 110, reps: 98,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 120, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 120, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 120, reps: 29,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 120, reps: 59,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 120, reps: 93,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 130, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 130, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 130, reps: 29,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 130, reps: 57,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 130, reps: 90,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 140, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 140, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 140, reps: 28,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 140, reps: 55,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 140, reps: 86,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 150, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 150, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 150, reps: 27,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 150, reps: 53,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 150, reps: 83,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 160, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 160, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 160, reps: 26,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 160, reps: 51,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 160, reps: 80,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 170, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 170, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 170, reps: 26,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 170, reps: 50,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 170, reps: 77,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 180, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 180, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 180, reps: 26,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 180, reps: 50,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 180, reps: 77,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 190, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 190, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 190, reps: 25,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 190, reps: 47,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 190, reps: 72,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 200, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 200, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 200, reps: 24,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 200, reps: 46,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 200, reps: 70,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 210, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 210, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 210, reps: 24,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 210, reps: 44,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 210, reps: 68,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 220, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 220, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 220, reps: 23,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 220, reps: 43,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 220, reps: 66,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 230, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 230, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 230, reps: 22,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 230, reps: 42,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 230, reps: 64,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 240, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 240, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 240, reps: 22,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 240, reps: 40,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 240, reps: 62,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 250, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 250, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 250, reps: 21,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 250, reps: 40,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 250, reps: 60,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+
+  { weight: 260, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats', operator: Operator.LESS_THAN },
+  { weight: 260, reps: 7,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 260, reps: 21,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 260, reps: 39,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+  { weight: 260, reps: 59,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'gobletSquats' },
+]

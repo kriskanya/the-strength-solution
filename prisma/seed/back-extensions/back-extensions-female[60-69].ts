@@ -1,0 +1,111 @@
+import { Level, Operator, Gender } from '@prisma/client'
+
+export const backExtensionsFemale60To69 = [
+  { weight: 90, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 90, reps: 3,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 90, reps: 15,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 90, reps: 30,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 90, reps: 46,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 100, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 100, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 100, reps: 15,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 100, reps: 29,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 100, reps: 45,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 110, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 110, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 110, reps: 15,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 110, reps: 28,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 110, reps: 43,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 120, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 120, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 120, reps: 14,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 120, reps: 28,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 120, reps: 41,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 130, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 130, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 130, reps: 14,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 130, reps: 27,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 130, reps: 40,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 140, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 140, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 140, reps: 14,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 140, reps: 26,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 140, reps: 39,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 150, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 150, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 150, reps: 14,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 150, reps: 25,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 150, reps: 37,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 160, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 160, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 160, reps: 14,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 160, reps: 24,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 160, reps: 36,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 170, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 170, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 170, reps: 13,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 170, reps: 23,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 170, reps: 35,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 180, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 180, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 180, reps: 12,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 180, reps: 23,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 180, reps: 33,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 190, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 190, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 190, reps: 12,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 190, reps: 22,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 190, reps: 32,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 200, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 200, reps: 5,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 200, reps: 12,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 200, reps: 21,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 200, reps: 31,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 210, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 210, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 210, reps: 12,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 210, reps: 21,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 210, reps: 30,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 220, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 220, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 220, reps: 11,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 220, reps: 20,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 220, reps: 29,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 230, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 230, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 230, reps: 10,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 230, reps: 19,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 230, reps: 28,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 240, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 240, reps: 4,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 240, reps: 10,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 240, reps: 19,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 240, reps: 27,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 250, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 250, reps: 3,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 250, reps: 10,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 250, reps: 18,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 250, reps: 26,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+
+  { weight: 260, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'backExtensions', operator: Operator.LESS_THAN },
+  { weight: 260, reps: 3,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 260, reps: 10,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 260, reps: 17,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+  { weight: 260, reps: 26,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'backExtensions' },
+]

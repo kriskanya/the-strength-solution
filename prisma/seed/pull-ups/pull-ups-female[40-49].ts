@@ -86,8 +86,8 @@ export const pullUpsFemale40To49 = [
   { weight: 220, reps: 13,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pullUps' },
 
   { weight: 230, reps: 1,   level: Level.NOVICE,       age: 0, gender: Gender.FEMALE, exercise: 'pullUps', operator: Operator.LESS_THAN },
-  { weight: 230, reps: 1,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pullUps' },
-  { weight: 230, reps: 3,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pullUps', operator: Operator.LESS_THAN },
+  { weight: 230, reps: 1,  level: Level.INTERMEDIATE, age: 0, gender: Gender.FEMALE, exercise: 'pullUps', operator: Operator.LESS_THAN },
+  { weight: 230, reps: 3,  level: Level.PROFICIENT,   age: 0, gender: Gender.FEMALE, exercise: 'pullUps' },
   { weight: 230, reps: 8,  level: Level.ADVANCED,     age: 0, gender: Gender.FEMALE, exercise: 'pullUps' },
   { weight: 230, reps: 12,  level: Level.ELITE,        age: 0, gender: Gender.FEMALE, exercise: 'pullUps' },
 
