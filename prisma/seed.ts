@@ -19,9 +19,9 @@ async function main() {
 
 
 
-  // const migrationAlreadyRun = await prisma.standard.findFirst()
-  //
-  // if (migrationAlreadyRun) return
+  const migrationAlreadyRun = await prisma.standard.findFirst()
+
+  if (migrationAlreadyRun) return
 
   await prisma.standard.createMany({
     data: standardSeedValues()

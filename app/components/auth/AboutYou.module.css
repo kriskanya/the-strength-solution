@@ -1,5 +1,5 @@
 .container {
-  background-image: url("../../images/blue-blur-background-large.svg");
+  background-imageRange: url("../../images/blue-blur-background-large.svg");
   background-size: cover;
 }
 

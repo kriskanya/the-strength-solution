@@ -22,13 +22,12 @@ model User {
 
 model Standard {
   id         Int       @id @default(autoincrement())
-  exercise   String
+  exercise   ExerciseName
   level      Level
-  weight     Int
+  weight     WeightRange
   reps       Int
   gender     Gender
-  age        Int
-  operator   Operator  @default(EQUAL_TO)
+  ageRange   AgeRange
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
@@ -41,13 +40,56 @@ enum Level {
   ELITE
 }
 
-enum Operator {
-  GREATER_THAN
-  LESS_THAN
-  EQUAL_TO
-}
-
 enum Gender {
   MALE
   FEMALE
+}
+
+enum ExerciseName {
+  BACK_EXTENSION
+  CHIN_UP
+  DIP
+  GOBLET_SQUAT
+  INVERTED_ROW
+  PULL_UP
+  PUSH_UP
+  BROAD_JUMP
+  HANG
+}
+
+enum AgeRange {
+  FOURTEEN_TO_SEVENTEEN      @map(name: "14-17")
+  EIGHTEEN_TO_TWENTY_THREE   @map(name: "18-23")
+  TWENTY_FOUR_TO_THIRTY_NINE @map(name: "24-39")
+  FORTY_TO_FORTY_NINE        @map(name: "40-49")
+  FIFTY_TO_FIFTY_NINE        @map(name: "50-59")
+  SIXTY_TO_SIXTY_NINE        @map(name: "60-69")
+  SEVENTY_TO_SEVENTY_NINE    @map(name: "70-79")
+  EIGHTY_TO_EIGHTY_NINE      @map(name: "80-89")
+}
+
+enum WeightRange {
+  NINETY              @map(name: "90-99")
+  ONE_HUNDRED         @map(name: "100-109")
+  ONE_HUNDRED_TEN     @map(name: "110-119")
+  ONE_HUNDRED_TWENTY  @map(name: "120-129")
+  ONE_HUNDRED_THIRTY  @map(name: "130-139")
+  ONE_HUNDRED_FORTY   @map(name: "140-149")
+  ONE_HUNDRED_FIFTY   @map(name: "150-159")
+  ONE_HUNDRED_SIXTY   @map(name: "160-169")
+  ONE_HUNDRED_SEVENTY @map(name: "170-179")
+  ONE_HUNDRED_EIGHTY  @map(name: "180-189")
+  ONE_HUNDRED_NINETY  @map(name: "190-199")
+  TWO_HUNDRED         @map(name: "200-209")
+  TWO_HUNDRED_TEN     @map(name: "210-219")
+  TWO_HUNDRED_TWENTY  @map(name: "220-229")
+  TWO_HUNDRED_THIRTY  @map(name: "230-239")
+  TWO_HUNDRED_FORTY   @map(name: "240-249")
+  TWO_HUNDRED_FIFTY   @map(name: "250-259")
+  TWO_HUNDRED_SIXTY   @map(name: "260-269")
+  TWO_HUNDRED_SEVENTY @map(name: "270-279")
+  TWO_HUNDRED_EIGHTY  @map(name: "280-289")
+  TWO_HUNDRED_NINETY  @map(name: "290-299")
+  THREE_HUNDRED       @map(name: "300-309")
+  THREE_HUNDRED_TEN   @map(name: "310-319")
 }
