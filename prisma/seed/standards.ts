@@ -6,7 +6,7 @@ const { parse } = require('csv-parse');
 
 const records: StrengthStandardRecord[] = [];
 
-interface StrengthStandardRecord {
+export interface StrengthStandardRecord {
   weight: WeightRange,
   startRepRange: number,
   endRepRange: number,
@@ -86,8 +86,6 @@ function isNumeric(str: string) {
   return /^-?\d+$/.test(str)
 }
 
-// if both novice and intermediate are < 1, novice should be 0 and intermediate should be 1
-
 function determineRepRange(start: string, end?: string): { startRepRange: number, endRepRange: number } {
   let startRepRange, endRepRange, startIncludesOperator, endIncludesOperator
   if (start.includes('<')) {
@@ -99,6 +97,7 @@ function determineRepRange(start: string, end?: string): { startRepRange: number
     end = stripOperator(end)
   }
 
+  // if both novice and intermediate are < 1, novice should be 0 and intermediate should be 1
   if (startIncludesOperator && endIncludesOperator) {
     return { startRepRange: 0, endRepRange: 1 }
   }
@@ -109,11 +108,10 @@ function determineRepRange(start: string, end?: string): { startRepRange: number
   return { startRepRange: +start, endRepRange }
 }
 
-// { weight: WeightRange.NINETY, startReps: 1, endReps: 4, level: Level.NOVICE, ageRange: AgeRange.EIGHTEEN_TO_TWENTY_THREE, gender: Gender.FEMALE, exercise: ExerciseName.BACK_EXTENSION },
-
 function createDBInsert(records: any) {
   let result: StrengthStandardRecord[] = []
   let exerciseName: string, gender: string, ageRange: string, bodyWeight: string
+
   records.forEach((record: string[]) => {
     const headerSection = record.find((r: any) => r.includes('STANDARD') || r.includes('STANDARDS'))
     const dataSection = record.every((r: any) => isNumeric(r))
@@ -139,38 +137,27 @@ function createDBInsert(records: any) {
       result = [...result, ...fiveProficiencies]
     }
   })
-  const res = result
-  debugger
   return result
 }
 
-export function standardSeedValues() {
-// Initialize the parser
+export async function standardSeedValues() {
+  // Initialize the parser
   const parser = parse({
     delimiter: ','
+  })
+
+  return new Promise((resolve, reject) => {
+    fs.createReadStream(fileName)
+      .pipe(parser)
+      .on('readable', function(){
+        let record;
+        while ((record = parser.read()) !== null) {
+          records.push(record);
+        }
+      })
+      .on("error", (error: any) => reject(error))
+      .on("end", () => {
+        resolve(createDBInsert(records))
+      });
   });
-// Use the readable stream api to consume records
-  parser.on('readable', function(){
-    let record;
-    while ((record = parser.read()) !== null) {
-      records.push(record);
-    }
-  });
-// Catch any error
-  parser.on('error', function(err: any){
-    console.error(err.message);
-  });
-
-  parser.on('end', function() {
-    createDBInsert(records)
-  });
-
-// open the file and pipe it into the parser
-  fs.createReadStream(fileName).pipe(parser);
-
-
-  return []
-
 }
-
-
