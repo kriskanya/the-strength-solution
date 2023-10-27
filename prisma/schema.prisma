@@ -25,7 +25,8 @@ model Standard {
   exercise   ExerciseName
   level      Level
   weight     WeightRange
-  reps       Int
+  startRepRange  Int
+  endRepRange    Int
   gender     Gender
   ageRange   AgeRange
   createdAt  DateTime  @default(now())
