@@ -62,8 +62,8 @@ const BODYWEIGHT_RANGES: any = {
 }
 
 const GENDER: any = {
-  'MALE': Gender.MALE,
-  'FEMALE': Gender.FEMALE
+  'FEMALE': Gender.FEMALE,
+  'MALE': Gender.MALE
 }
 
 const EXERCISE_NAME: any = {
@@ -83,16 +83,24 @@ function stripOperator(str: string) {
 
 function isNumeric(str: string) {
   str = stripOperator(str)
-  return /^-?\d+$/.test(str);
+  return /^-?\d+$/.test(str)
 }
 
+// if both novice and intermediate are < 1, novice should be 0 and intermediate should be 1
+
 function determineRepRange(start: string, end?: string): { startRepRange: number, endRepRange: number } {
-  let startRepRange, endRepRange
+  let startRepRange, endRepRange, startIncludesOperator, endIncludesOperator
   if (start.includes('<')) {
+    startIncludesOperator = true
     start = stripOperator(start)
   }
   if (end?.includes('<')) {
+    endIncludesOperator = true
     end = stripOperator(end)
+  }
+
+  if (startIncludesOperator && endIncludesOperator) {
+    return { startRepRange: 0, endRepRange: 1 }
   }
 
   if (!end) endRepRange = 1000
@@ -107,7 +115,7 @@ function createDBInsert(records: any) {
   let result: StrengthStandardRecord[] = []
   let exerciseName: string, gender: string, ageRange: string, bodyWeight: string
   records.forEach((record: string[]) => {
-    const headerSection = record.find((r: any) => r.includes('STANDARDS'))
+    const headerSection = record.find((r: any) => r.includes('STANDARD') || r.includes('STANDARDS'))
     const dataSection = record.every((r: any) => isNumeric(r))
     if (headerSection) {
       // need to find which exercise name, gender, and age range is in the header
@@ -120,12 +128,12 @@ function createDBInsert(records: any) {
         const { startRepRange, endRepRange } = determineRepRange(r, record[i+1])
         return {
           exercise: EXERCISE_NAME[exerciseName],
+          gender: GENDER[gender],
+          ageRange: AGE_RANGES[ageRange],
           weight: BODYWEIGHT_RANGES[bodyWeight],
           startRepRange,
           endRepRange,
           level: LEVEL[i],
-          ageRange: AGE_RANGES[ageRange],
-          gender: GENDER[gender]
         }
       })
       result = [...result, ...fiveProficiencies]
