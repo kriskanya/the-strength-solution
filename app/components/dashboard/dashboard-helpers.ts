@@ -1,6 +1,6 @@
 // todo: grab this from the db
 // need to figure out how these are calculated for the first graph
-import { Description } from '@/common/types'
+import { Description } from '@/common/frontend-types'
 
 export const exercises = [
   { name: 'Push-Ups', proficiency: 15 },

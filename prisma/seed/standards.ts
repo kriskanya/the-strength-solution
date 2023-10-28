@@ -1,80 +1,17 @@
 const _ = require('lodash')
-import { AgeRange, ExerciseName, Gender, Level, WeightRange } from '@prisma/client'
-const fs = require('fs');
-const fileName = `${__dirname}/exercise_standards.csv`;
-const { parse } = require('csv-parse');
+const fs = require('fs')
+const { parse } = require('csv-parse')
+import {
+  AGE_RANGES,
+  BODYWEIGHT_RANGES,
+  EXERCISE_NAME,
+  GENDER,
+  LEVEL,
+  StrengthStandardRecord
+} from '@/common/backend-types'
+const fileName = `${__dirname}/exercise_standards.csv`
 
 const records: StrengthStandardRecord[] = [];
-
-export interface StrengthStandardRecord {
-  weight: WeightRange,
-  startRepRange: number,
-  endRepRange: number,
-  level: Level,
-  ageRange: AgeRange,
-  gender: Gender,
-  exercise: ExerciseName
-}
-
-const LEVEL: any = {
-  0: Level.NOVICE,
-  1: Level.INTERMEDIATE,
-  2: Level.PROFICIENT,
-  3: Level.ADVANCED,
-  4: Level.ELITE
-}
-
-const AGE_RANGES: any = {
-  '14-17': AgeRange.FOURTEEN_TO_SEVENTEEN,
-  '18-23': AgeRange.EIGHTEEN_TO_TWENTY_THREE,
-  '24-39': AgeRange.TWENTY_FOUR_TO_THIRTY_NINE,
-  '40-49': AgeRange.FORTY_TO_FORTY_NINE,
-  '50-59': AgeRange.FIFTY_TO_FIFTY_NINE,
-  '60-69': AgeRange.SIXTY_TO_SIXTY_NINE,
-  '70-79': AgeRange.SEVENTY_TO_SEVENTY_NINE,
-  '80-89': AgeRange.EIGHTY_TO_EIGHTY_NINE
-}
-
-const BODYWEIGHT_RANGES: any = {
-  '90': WeightRange.NINETY,
-  '100': WeightRange.ONE_HUNDRED,
-  '110': WeightRange.ONE_HUNDRED_TEN,
-  '120': WeightRange.ONE_HUNDRED_TWENTY,
-  '130': WeightRange.ONE_HUNDRED_THIRTY,
-  '140': WeightRange.ONE_HUNDRED_FORTY,
-  '150': WeightRange.ONE_HUNDRED_FIFTY,
-  '160': WeightRange.ONE_HUNDRED_SIXTY,
-  '170': WeightRange.ONE_HUNDRED_SEVENTY,
-  '180': WeightRange.ONE_HUNDRED_EIGHTY,
-  '190': WeightRange.ONE_HUNDRED_NINETY,
-  '200': WeightRange.TWO_HUNDRED,
-  '210': WeightRange.TWO_HUNDRED_TEN,
-  '220': WeightRange.TWO_HUNDRED_TWENTY,
-  '230': WeightRange.TWO_HUNDRED_THIRTY,
-  '240': WeightRange.TWO_HUNDRED_FORTY,
-  '250': WeightRange.TWO_HUNDRED_FIFTY,
-  '260': WeightRange.TWO_HUNDRED_SIXTY,
-  '270': WeightRange.TWO_HUNDRED_SEVENTY,
-  '280': WeightRange.TWO_HUNDRED_EIGHTY,
-  '290': WeightRange.TWO_HUNDRED_NINETY,
-  '300': WeightRange.THREE_HUNDRED,
-  '310': WeightRange.THREE_HUNDRED_TEN
-}
-
-const GENDER: any = {
-  'FEMALE': Gender.FEMALE,
-  'MALE': Gender.MALE
-}
-
-const EXERCISE_NAME: any = {
-  'PUSH-UP': ExerciseName.PUSH_UP,
-  'INVERTED ROW': ExerciseName.INVERTED_ROW,
-  'DIP': ExerciseName.DIP,
-  'CHIN-UP': ExerciseName.CHIN_UP,
-  'PULL-UP': ExerciseName.PULL_UP,
-  'GOBLET SQUAT': ExerciseName.GOBLET_SQUAT,
-  'BACK EXTENSIONS': ExerciseName.BACK_EXTENSION
-}
 
 function stripOperator(str: string) {
   str = str.replace(/</g,"")
@@ -121,6 +58,7 @@ function createDBInsert(records: any) {
       gender       = _.get(Object.keys(GENDER).filter((pattern)        => new RegExp(pattern).test(headerSection)), '[0]')
       ageRange     = _.get(Object.keys(AGE_RANGES).filter((pattern)    => new RegExp(pattern).test(headerSection)), '[0]')
     } else if (dataSection) {
+      // need to fix bodyweight here, as BODYWEIGHT_RANGES has been updated
       bodyWeight = record.shift() as string
       const fiveProficiencies: StrengthStandardRecord[] = record.map((r, i) => {
         const { startRepRange, endRepRange } = determineRepRange(r, record[i+1])

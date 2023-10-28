@@ -24,7 +24,7 @@ model Standard {
   id         Int       @id @default(autoincrement())
   exercise   ExerciseName
   level      Level
-  weight     WeightRange
+  weight     WeightRange  // need to change this to bodyWeight
   startRepRange  Int
   endRepRange    Int
   gender     Gender

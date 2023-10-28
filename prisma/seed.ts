@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 const _ = require('lodash')
 import { hash } from 'bcrypt'
-import { standardSeedValues, StrengthStandardRecord } from './seed/standards'
+import { standardSeedValues } from './seed/standards'
+import { StrengthStandardRecord } from '@/common/backend-types'
 
 const prisma = new PrismaClient()
 

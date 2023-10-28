@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { AvatarColorsRear } from '@/common/types'
+import { AvatarColorsRear } from '@/common/frontend-types'
 import TrapsFemaleRear from '@/app/images/female-avatar/rear/traps'
 import DeltsFemaleRear from '@/app/images/female-avatar/rear/delts'
 import RhomboidsFemale from '@/app/images/female-avatar/rear/spinal-erectors'

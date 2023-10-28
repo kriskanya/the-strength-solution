@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { AvatarColorsRear } from '@/common/types'
+import { AvatarColorsRear } from '@/common/frontend-types'
 import CalvesMaleRear from '@/app/images/male-avatar/rear/calves'
 import DeltsMaleRear from '@/app/images/male-avatar/rear/delts'
 import ForearmsMaleRear from '@/app/images/male-avatar/rear/forearms'
