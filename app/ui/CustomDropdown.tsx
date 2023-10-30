@@ -10,12 +10,14 @@ import classes from './CustomDropdown.module.css'
 interface Props {
   options: string[] | number[],
   initialValue: string | number,
+  setValue?: any,
   dropdownHeight: string,
   units?: string,
   propClasses?: string,
+  type: 'gender' | 'weight' | 'age'
 }
 
-export default function CustomDropdown({ options, initialValue, units, propClasses, dropdownHeight }: Props) {
+export default function CustomDropdown({ options, initialValue, setValue, units, propClasses, dropdownHeight, type }: Props) {
   const [showDropdown, setShowDropdown] = useState(false)
   const [selectedOption, setSelectedOption] = useState<string | number>(initialValue)
   const [itemHovered, setItemHovered] = useState(initialValue)
@@ -51,6 +53,10 @@ export default function CustomDropdown({ options, initialValue, units, propClass
         if (options.indexOf(newSelection) === -1) return
         setSelectedOption(newSelection)
         setItemHovered(newSelection)
+
+        // const el = document.querySelectorAll(`.option`)
+        // console.log('el', el)
+
         break
       }
       case 'down': {
@@ -86,8 +92,10 @@ export default function CustomDropdown({ options, initialValue, units, propClass
         setSelectedOption(itemHovered)
         setShowDropdown(false)
       } else if (event.keyCode === 38) {
+        event.preventDefault()
         selectDropdownItem('up')
       } else if (event.keyCode === 40) {
+        event.preventDefault()
         selectDropdownItem('down')
       }
     }
@@ -104,6 +112,7 @@ export default function CustomDropdown({ options, initialValue, units, propClass
     const option = get(event, `target.attributes['data-name'].value`, '')
     setSelectedOption(option)
     setShowDropdown(false)
+    setValue({ [type]: option })
   }
 
   // listener for closing the dropdown if the user clicks outside of it
@@ -148,7 +157,7 @@ export default function CustomDropdown({ options, initialValue, units, propClass
               {
                 options.map((option, i) => {
                   return (
-                    <p className={`${ itemHovered == option ? 'bg-brand-blue text-white' : '' } w-[131px] px-2 py-2`}
+                    <p className={`option ${ itemHovered == option ? 'bg-brand-blue text-white' : '' } w-[131px] px-2 py-2`}
                        data-name={option}
                        onMouseEnter={mouseEnter}
                        onMouseLeave={() => setItemHovered('')}

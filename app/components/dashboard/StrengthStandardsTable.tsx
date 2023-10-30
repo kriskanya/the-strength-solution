@@ -1,18 +1,46 @@
+'use client'
+
 import CustomDropdown from '@/app/ui/CustomDropdown'
+import { useEffect, useState } from 'react'
 
 export default function StrengthStandardsTable() {
+  const [selectedValues, setSelectedValues] = useState({
+    gender: 'female', weight: 150, age: 25
+  })
+  const weight: { [key: string]: number[] } = {
+    male: Array.from({length: 201}, (_, i) => i + 110),
+    female: Array.from({length: 171}, (_, i) => i + 90)
+  }
+  const [weightOptions, setWeightOptions] = useState(weight.female)
   const genders = ['male', 'female']
-  const weight = Array.from({length: 200}, (_, i) => i + 90)
   const age = Array.from({length: 76}, (_, i) => i + 14)
+
+  function setDropdownValue(obj: { [key: string]: string | number }) {
+    setSelectedValues({...selectedValues, ...obj})
+  }
+
+  useEffect(() => {
+    (async () => {
+      setWeightOptions(weight[selectedValues.gender])
+      const res = await fetch('/api/standards?gender=MALE&age=14&bodyWeight=130&exerciseName=DIPS', {
+        method: 'GET'
+      })
+      console.log(res)
+    })();
+
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, [selectedValues]);
 
   return (
     <div className="bg-light-grey">
       <div className="px-10 pt-10 pb-5 flex justify-between">
         <h3 className="uppercase my-auto">Strength Standards</h3>
         <div className="flex">
-          <CustomDropdown options={genders} initialValue="female" dropdownHeight="h-[5.1em]" />
-          <CustomDropdown options={weight} initialValue={150} units="lbs" propClasses="ml-4" dropdownHeight="h-[10em]" />
-          <CustomDropdown options={age} initialValue={27} units="years" propClasses="ml-4" dropdownHeight="h-[10em]" />
+          <CustomDropdown type="gender" options={genders} initialValue={selectedValues.gender} setValue={setDropdownValue} dropdownHeight="h-[5.1em]" />
+          <CustomDropdown type="weight" options={weightOptions} initialValue={selectedValues.weight} setValue={setDropdownValue} units="lbs" propClasses="ml-4" dropdownHeight="h-[10em]" />
+          <CustomDropdown type="age"    options={age} initialValue={selectedValues.age} setValue={setDropdownValue} propClasses="ml-4" units="years"  dropdownHeight="h-[10em]" />
         </div>
       </div>
 
