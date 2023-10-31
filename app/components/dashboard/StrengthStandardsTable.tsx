@@ -2,8 +2,11 @@
 
 import CustomDropdown from '@/app/ui/CustomDropdown'
 import { useEffect, useState } from 'react'
+import { startCase } from 'lodash-es'
+import { Standard } from '@prisma/client'
 
 export default function StrengthStandardsTable() {
+  const [standards, setStandards] = useState<{ [key:string]: Standard[] }>({})
   const [selectedValues, setSelectedValues] = useState({
     gender: 'female', weight: 150, age: 25
   })
@@ -19,18 +22,22 @@ export default function StrengthStandardsTable() {
     setSelectedValues({...selectedValues, ...obj})
   }
 
-  useEffect(() => {
-    (async () => {
-      setWeightOptions(weight[selectedValues.gender])
-      const res = await fetch('/api/standards?gender=MALE&age=14&bodyWeight=130&exerciseName=DIPS', {
-        method: 'GET'
-      })
-      console.log(res)
-    })();
+  const fetchStandards = async () => {
+    const { gender, weight, age } = selectedValues
+    try {
+      const exerciseNames = 'DIP, PUSH_UP, INVERTED_ROW, PULL_UP, CHIN_UP'
+      const res = await fetch(
+        `/api/standards?gender=${gender}&age=${age}&bodyWeight=${weight}&exerciseNames=${exerciseNames}`
+      )
+      const data = await res.json()
+      setStandards(data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-    return () => {
-      // this now gets called when the component unmounts
-    };
+  useEffect(() => {
+    fetchStandards()
   }, [selectedValues]);
 
   return (
@@ -82,34 +89,30 @@ export default function StrengthStandardsTable() {
             </tr>
           </thead>
           <tbody>
-            <tr className="h-12 border-b border-lighter-grey">
-              <td className="inter font-medium text-sm">Push-Ups</td>
-              <td>1 rep</td>
-              <td>3 reps</td>
-              <td>4 reps</td>
-              <td>4 reps</td>
-              <td>5 reps</td>
-            </tr>
-            <tr className="h-12 border-b border-lighter-grey">
-              <td className="inter font-medium text-sm">Inverted Row</td>
-              <td>1 rep</td>
-              <td>3 reps</td>
-              <td>4 reps</td>
-              <td>4 reps</td>
-              <td>5 reps</td>
-            </tr>
-            <tr className="h-12">
-              <td className="inter font-medium text-sm">Pull-Ups</td>
-              <td>1 rep</td>
-              <td>3 reps</td>
-              <td>4 reps</td>
-              <td>4 reps</td>
-              <td>5 reps</td>
-            </tr>
+            <>
+              {(() => {
+                const arr = []
+                for (const [exerciseName, standardsRecords] of Object.entries(standards)) {
+                  const el = (
+                    <tr className="h-12 border-b border-lighter-grey" key={exerciseName}>
+                      <td className="inter font-medium text-sm">{startCase(exerciseName)}</td>
+                      {
+                        standardsRecords.map((record, i) => {
+                          return (
+                            <td key={i}>{record.startRepRange} { record.startRepRange === 1 ? 'rep' : 'reps' }</td>
+                          )
+                        })
+                      }
+                    </tr>
+                  )
+                  arr.push(el)
+                }
+                return arr
+              })()}
+            </>
           </tbody>
         </table>
       </div>
-
     </div>
   )
 }

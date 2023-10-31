@@ -1,5 +1,5 @@
 .container {
-  background-imageRange: url("../../images/trainer-graphic.svg");
+  background-image: url("../../images/trainer-graphic.svg");
   background-size: cover;
   background-color: #cccccc;
 }
