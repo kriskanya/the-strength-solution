@@ -14,7 +14,8 @@ const config: Config = {
         'yellow-proficient': '#FCFF4B',
         'green-advanced': '#4CD964',
         'blue-elite': '#2E8EEC',
-        'custom-black': '#111111'
+        'custom-black': '#111111',
+        'light-blue': '#D2E5F2',
       },
       textColor: {
         'brand-blue': '#007DD9',

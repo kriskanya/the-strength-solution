@@ -20,7 +20,7 @@ export const determineRange = (ranges: string[], inputValue: string) => {
 
 /**
  * @param records
- * @return { PUSH_UP: [Standard, Standard, ...] }
+ * @return { PUSH_UP: Standard[], PULL_UP: Standard[], ... }
  */
 export const groupDataByExercise = (records: Standard[]) => {
   const obj: { [key: string]: Standard[] } = {}

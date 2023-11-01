@@ -1,9 +1,8 @@
 import Image from 'next/image'
 import questionMark from '@/app/icons/question-mark.svg'
-import ellipseBlack from '@/app/images/ellipse-black.svg'
-import ellipseBlue from '@/app/images/ellipse-blue.svg'
 import { CustomChip } from '@/app/ui/CustomChip'
 import { capitalize } from 'lodash-es'
+import UpdateStatusDialog from '@/app/ui/UpdateStatsDialog'
 
 export default function DashboardSidePanel() {
   const proficiencyLevels: { [key: string]: string } = {
@@ -22,28 +21,9 @@ export default function DashboardSidePanel() {
 
   return (
     <div>
-      {/*strength level*/}
-      <div className="align-top h-[194px] w-[319px] px-5 py-5 border border-white border-opacity-10 rounded-lg inline-block">
-        <p className="inter font-normal text-white text-xs opacity-50 capitalize inline-block">
-          Strength Level
-        </p>
-        <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
-        <div className="mt-8 relative">
-          <div>
-            <p className="inter font-semibold text-lg leading-6 text-white">Intermediate</p>
-            <p className="inter font-normal text-white text-xs opacity-50 capitalize mt-1">SCORE:</p>
-
-            {/*todo: make image dynamic based on score*/}
-            <Image src={ellipseBlack} alt="" className="absolute right-6 -top-3" />
-            <p className="inter font-semibold text-lg leading-6 text-white absolute right-[2.6em] top-[.9em]">13.2</p>
-            <Image src={ellipseBlue} alt="" className="absolute right-0 -top-8" />
-          </div>
-        </div>
-      </div>
-
-      <div className="inline-block ml-4">
+      <div className="flex justify-between w-[35.1em]">
         {/*strongest lift*/}
-        <div className="h-[88px] w-[227px] px-5 py-3 border border-white border-opacity-10 rounded-lg">
+        <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
           <p className="inter font-normal text-white text-xs opacity-50 capitalize inline-block">
             Strongest Lift
           </p>
@@ -52,7 +32,7 @@ export default function DashboardSidePanel() {
         </div>
 
         {/*weakest lift*/}
-        <div className="h-[88px] w-[227px] mt-4 px-5 py-3 border border-white border-opacity-10 rounded-lg">
+        <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
           <p className="inter font-normal text-white text-xs opacity-50 capitalize inline-block">
             Weakest Lift
           </p>
