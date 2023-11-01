@@ -36,12 +36,12 @@ export default function AboutYou() {
             <GenderRadioButton gender="male" checked={selectedGender.male} onChange={onChangeGender} />
             <GenderRadioButton gender="female" checked={selectedGender.female} onChange={onChangeGender} />
           </div>
-          <div className="mt-5 md:flex md:gap-5">
-            <GenericInput field="weight" />
-            <GenericInput field="age" />
-          </div>
+          {/*<div className="mt-5 md:flex md:gap-5">*/}
+          {/*  <GenericInput field="weight" />*/}
+          {/*  <GenericInput field="age" />*/}
+          {/*</div>*/}
           <Link href="choose-workouts" className="w-36 lg:absolute lg:bottom-0">
-            <CustomButton label="Next" classes="bg-brand-blue h-10 mt-16" textClasses="font-semibold text-sm" />
+            <CustomButton label="Next" classes="bg-brand-blue h-10 mt-16" textClasses="font-semibold text-sm text-white" />
           </Link>
         </div>
       </div>

@@ -28,13 +28,13 @@ export default function ChooseWorkouts() {
           {
             exercises.map(({name, checked}, i) => {
               return (
-                <CustomCheckbox checked={checked} label={name} id="push-ups" key={i} />
+                <CustomCheckbox checked={checked} label={name} id={i+''} key={i} />
               )
             })
           }
         </div>
         <div className="w-36 lg:absolute lg:bottom-0">
-          <CustomButton label="Confirm" classes="bg-brand-blue h-10 mt-16" textClasses="font-semibold text-sm" />
+          <CustomButton label="Confirm" classes="bg-brand-blue h-10 mt-16" textClasses="font-semibold text-sm text-white" />
         </div>
       </div>
     </div>

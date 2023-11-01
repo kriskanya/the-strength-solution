@@ -1,4 +1,3 @@
-'use client'
 import { capitalize } from 'lodash-es'
 
 interface Props {
@@ -7,26 +6,27 @@ interface Props {
   onChange: (event: any) => void
 }
 
-export function UpdateStatsTab(props: Props) {
-  const selected = 'border-light-blue'
-  const notSelected = 'border-lighter-grey bg-light-blue'
-  const conditionalClasses = props.checked ? selected : notSelected
-  const zIndex = props.checked ? 'z-10' : ''
-  const margin = props.tabName === 'workouts' ? '-mr-1.5' : '-ml-1.5'
+export function UpdateStatsTab({ tabName, checked, onChange }: Props) {
+  const selected = 'border-light-blue bg-white'
+  const notSelected = 'border-lighter-grey bg-blue-50'
+  const conditionalClasses = checked ? selected : notSelected
+  const zIndex = checked ? 'z-10' : ''
+  const margin = tabName === 'workouts' ? '-mr-1.5' : '-ml-3'
+  const opacity = checked ? '' : 'opacity-70'
 
   return (
-    <label className={`inter font-medium text-sm cursor-pointer ${zIndex} ${margin}`} htmlFor={props.tabName}>
+    <label className={`inter font-medium text-sm cursor-pointer ${zIndex} ${margin}`} htmlFor={tabName}>
       <input
         className="invisible"
         type="radio"
-        name={props.tabName}
-        id={props.tabName}
-        value={props.tabName}
-        onChange={props.onChange}
-        checked={props.checked}
+        name={tabName}
+        id={tabName}
+        value={tabName}
+        onChange={onChange}
+        checked={checked}
       />
-      <div className={`flex justify-between items-center px-3 border bg-white ${conditionalClasses} w-[201px] h-[40px] rounded-lg`}>
-        <span className={`mr-auto inter font-medium text-sm pl-5 text-center`}>{capitalize(props.tabName)}</span>
+      <div className={`flex justify-between items-center px-3 border ${conditionalClasses} w-[201px] h-[40px] rounded-lg`}>
+        <span className={`mr-auto inter font-medium text-sm text-center pl-5 ${opacity}`}>{capitalize(tabName)}</span>
       </div>
     </label>
   )

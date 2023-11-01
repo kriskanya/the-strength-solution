@@ -12,7 +12,7 @@ export default function LandingPageLeft() {
           Train your body and track your proficiency with bodyweight exercises
         </p>
         <Link href="create-account">
-          <CustomButton label="Get Started" classes="bg-brand-blue h-12 mt-16" />
+          <CustomButton label="Get Started" classes="bg-brand-blue h-12 mt-16" textClasses="text-white" />
         </Link>
         <p className="inter font-normal text-dark-grey text-sm mt-5">
           By continuing you agree to the <Link className="text-brand-blue underline" href="privacy-policy">Privacy Policy</Link> and <Link

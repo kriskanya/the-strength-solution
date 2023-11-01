@@ -1,7 +1,6 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import DashboardNav from '@/app/components/dashboard/DashboardNav'
-import FemaleAvatarFront from '@/app/components/dashboard/FemaleAvatarFront'
 import DashboardAvatarSection from '@/app/components/dashboard/DashboardAvatarSection'
 import DashboardGraphsSection from '@/app/components/dashboard/DashboardGraphsSection'
 

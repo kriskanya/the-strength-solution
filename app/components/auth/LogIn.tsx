@@ -66,7 +66,7 @@ export default function LogIn() {
         <div className="mt-6">
           {error && <Alert>{error}</Alert>}
         </div>
-        <CustomButton type="submit" label="Log In" classes="bg-brand-blue h-12 mt-16" />
+        <CustomButton type="submit" label="Log In" classes="bg-brand-blue h-12 mt-16" textClasses="text-white" />
       </div>
     </form>
   )

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import questionMark from '@/app/icons/question-mark.svg'
 import { CustomChip } from '@/app/ui/CustomChip'
 import { capitalize } from 'lodash-es'
-import UpdateStatusDialog from '@/app/ui/UpdateStatsDialog'
+import UpdateStatusDialog from '@/app/components/dashboard/UpdateStatsDialog'
 
 export default function DashboardSidePanel() {
   const proficiencyLevels: { [key: string]: string } = {

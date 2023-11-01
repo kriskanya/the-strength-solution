@@ -64,7 +64,7 @@ export default function CreateAccount() {
         <div className="mt-6">
           {error && <Alert>{error}</Alert>}
         </div>
-        <CustomButton type="submit" label="Create Account" classes="bg-brand-blue h-12 mt-16" />
+        <CustomButton type="submit" label="Create Account" classes="bg-brand-blue h-12 mt-16" textClasses="text-white" />
         <div className="flex justify-center mt-5">
           <p className="inter font-normal text-sm">
             Already have an account? <Link className="underline text-brand-blue font-bold" href="log-in">Log in</Link>

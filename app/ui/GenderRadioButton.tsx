@@ -20,7 +20,7 @@ export function GenderRadioButton(props: Props) {
       <input
         className="invisible"
         type="radio"
-        name={props.gender}
+        name="gender"
         id={props.gender}
         value={props.gender}
         onChange={props.onChange}
