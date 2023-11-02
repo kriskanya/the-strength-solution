@@ -1,7 +1,7 @@
 import { capitalize } from 'lodash-es'
 
 interface Props {
-  tabName: 'workouts' | 'stats',
+  tabName: 'exercises' | 'stats',
   checked: boolean,
   onChange: (event: any) => void
 }
@@ -11,7 +11,7 @@ export function UpdateStatsTab({ tabName, checked, onChange }: Props) {
   const notSelected = 'border-lighter-grey bg-blue-50'
   const conditionalClasses = checked ? selected : notSelected
   const zIndex = checked ? 'z-10' : ''
-  const margin = tabName === 'workouts' ? '-mr-1.5' : '-ml-3'
+  const margin = tabName === 'exercises' ? '-mr-1.5' : '-ml-3'
   const opacity = checked ? '' : 'opacity-70'
 
   return (

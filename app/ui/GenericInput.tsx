@@ -13,8 +13,8 @@ export default function GenericInput({ field, value, onChange }: Props) {
       <input
         className="px-3 border border-lighter-grey w-[201px] h-[48px] rounded"
         type="text"
-        name="weight"
-        id="weight"
+        name={field}
+        id={field}
         value={value}
         onChange={onChange}
       />

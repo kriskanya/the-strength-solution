@@ -1,18 +1,21 @@
 'use client'
 import Image from 'next/image'
+import { useState } from 'react'
+
 import CustomButton from '@/app/ui/CustomButton'
 import sampleProfilePic from '@/app/images/sample-profile-pic.png'
 import UpdateStatusDialog from '@/app/components/dashboard/UpdateStatsDialog'
-import { useRef } from 'react'
 
 export default function DashboardNav() {
-  const childRef = useRef()
+  const [isOpen, setIsOpen] = useState(false)
 
-  function
+  function openDialog() {
+    setIsOpen(true)
+  }
 
   return (
     <div className="grid grid-cols-2 py-5 px-12 bg-black-russian">
-      <UpdateStatusDialog ref={childRef} />
+      <UpdateStatusDialog isOpen={isOpen} setIsOpen={setIsOpen} />
       <h2 className="inter font-extrabold text-base uppercase my-auto text-white">The Strength Solution</h2>
       <div className="flex justify-end">
         <div className="w-44">

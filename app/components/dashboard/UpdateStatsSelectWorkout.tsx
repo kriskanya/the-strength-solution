@@ -16,7 +16,7 @@ export default function UpdateStatusSelectWorkout() {
 
   return (
     <div className={``}>
-      <div className={`w-10/12 h-4/6 mx-auto relative`}>
+      <div className={`h-4/6 mx-auto relative`}>
         <div className="flex justify-center flex-wrap gap-5 mt-10">
           {
             exercises.map(({name, checked}, i) => {

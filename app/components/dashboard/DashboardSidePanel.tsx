@@ -2,7 +2,6 @@ import Image from 'next/image'
 import questionMark from '@/app/icons/question-mark.svg'
 import { CustomChip } from '@/app/ui/CustomChip'
 import { capitalize } from 'lodash-es'
-import UpdateStatusDialog from '@/app/components/dashboard/UpdateStatsDialog'
 
 export default function DashboardSidePanel() {
   const proficiencyLevels: { [key: string]: string } = {
@@ -18,33 +17,33 @@ export default function DashboardSidePanel() {
     { name: 'Bench Press', reps: 2, level: 'novice' }
   ]
 
-
   return (
-    <div>
-      <div className="flex justify-between w-[35.1em]">
-        {/*strongest lift*/}
-        <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
-          <p className="inter font-normal text-white text-xs opacity-50 capitalize inline-block">
-            Strongest Lift
-          </p>
-          <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
-          <p className="inter font-semibold text-lg leading-6 text-white mt-1">Deadlift</p>
+    <div className="flex items-center">
+      <div>
+        <div className="flex justify-between w-[35.1em]">
+          {/*strongest lift*/}
+          <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
+            <p className="inter font-normal text-white text-xs opacity-50 capitalize inline-block">
+              Strongest Lift
+            </p>
+            <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
+            <p className="inter font-semibold text-lg leading-6 text-white mt-1">Deadlift</p>
+          </div>
+
+          {/*weakest lift*/}
+          <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
+            <p className="inter font-normal text-white text-xs opacity-50 capitalize inline-block">
+              Weakest Lift
+            </p>
+            <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
+            <p className="inter font-semibold text-lg leading-6 text-white mt-1">Back Squat</p>
+          </div>
         </div>
 
-        {/*weakest lift*/}
-        <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
-          <p className="inter font-normal text-white text-xs opacity-50 capitalize inline-block">
-            Weakest Lift
-          </p>
-          <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
-          <p className="inter font-semibold text-lg leading-6 text-white mt-1">Back Squat</p>
-        </div>
-      </div>
-
-      {/*exercise list*/}
-      <div className="w-[35.1em] mt-3 px-5 py-5 border border-white border-opacity-10 rounded-lg">
-        <table className="w-full">
-          <tbody>
+        {/*exercise list*/}
+        <div className="w-[35.1em] mt-3 px-5 py-5 border border-white border-opacity-10 rounded-lg">
+          <table className="w-full">
+            <tbody>
             <tr>
               <th align="left" className="inter font-normal text-white text-xs opacity-50 capitalize">Exercise</th>
               <th align="center" className="inter font-normal text-white text-xs opacity-50 capitalize">Reps</th>
@@ -65,8 +64,9 @@ export default function DashboardSidePanel() {
                 )
               })
             }
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )

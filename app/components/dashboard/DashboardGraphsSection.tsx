@@ -7,15 +7,15 @@ import PageFooter from '@/app/components/dashboard/PageFooter'
 export default function DashboardGraphsSection() {
   return (
     <>
-      {/*<section className="grid grid-cols-2">*/}
-      {/*  <RelativeStrengthBarGraph />*/}
-      {/*  <YouVsAverageBarGraph />*/}
-      {/*</section>*/}
       <section>
         <StrengthStandardsTable />
       </section>
       <section className="bg-light-grey pb-16">
         <StrengthClassifications />
+      </section>
+      <section className="grid grid-cols-2">
+        <RelativeStrengthBarGraph />
+        <YouVsAverageBarGraph />
       </section>
       <PageFooter />
     </>

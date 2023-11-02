@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { AvatarColorsRear } from '@/common/frontend-types'
 import TrapsFemaleRear from '@/app/images/female-avatar/rear/traps'
 import DeltsFemaleRear from '@/app/images/female-avatar/rear/delts'
-import RhomboidsFemale from '@/app/images/female-avatar/rear/spinal-erectors'
+import RhomboidsFemale from '@/app/images/female-avatar/rear/rhomboids'
 import ForearmsFemaleRear from '@/app/images/female-avatar/rear/forearms'
 import RotatorCuffFemale from '@/app/images/female-avatar/rear/rotator-cuff'
 import QuadsFemaleRear from '@/app/images/female-avatar/rear/quads'
@@ -22,6 +22,7 @@ import { femaleAvatarRearPositions } from '@/app/components/dashboard/dashboard-
 import ExerciseDescription from '@/app/ui/ExerciseDescription'
 import HeadFemaleRear from '@/app/images/female-avatar/rear/head'
 import HandsFemaleRear from '@/app/images/female-avatar/rear/hands'
+import SpinalErectorsFemale from '@/app/images/female-avatar/rear/spinal-erectors'
 
 export default function FemaleAvatarRear({ colors }: AvatarColorsRear) {
   const [fillColors, setFillColors] = useState(colors)
@@ -80,8 +81,9 @@ export default function FemaleAvatarRear({ colors }: AvatarColorsRear) {
       <QuadsFemaleRear className="absolute top-[17.4em] -left-[.1em]" fill={fillColors.hamstrings} />
       <HamstringsFemale className="absolute top-[19.3em] left-[.6em]" fill={fillColors.hamstrings} />
       <HipAdductorsFemale className="absolute top-[18.5em] left-[1.5em]" fill={fillColors.adductors} />
+      <ObliquesFemaleRear className="absolute top-[13.8em] left-[.5em]" fill={fillColors.obliques} />
       <GlutesFemale className="absolute top-[15.2em] left-[0em]" fill={fillColors.glutes} />
-      <ObliquesFemaleRear className="absolute top-[5em] left-[.3em]" fill={fillColors.obliques} />
+      <SpinalErectorsFemale className="absolute top-[12em] left-[1.5em]" fill={fillColors.erectors} />
       <TrapsFemaleRear className="absolute top-[5.0em] left-[.5em]" fill={fillColors.traps} />
       <HeadFemaleRear className="absolute top-[.9em] left-3" fill={fillColors.head} />
       <LatsFemale className="absolute top-[9.9em] left-[.72em]" fill={fillColors.lats} />
