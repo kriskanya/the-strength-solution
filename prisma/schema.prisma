@@ -10,24 +10,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// todo: make model and column names snake_case
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
   password  String?
   firstName String?
   lastName  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  stats     UserStats? @relation(fields: [statsId], references: [id]) // a User has-one UserStats
+  statsId   Int?       @unique
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   ExercisePerformed ExercisePerformed?
+}
+
+model UserStats {
+  id        Int      @id @default(autoincrement())
+  gender    Gender
+  weight    Int
+  age       Int
+
+  user      User? // a UserStats record belongs-to one User
 }
 
 model Standard {
   id                Int                @id @default(autoincrement())
   exercise          ExerciseName
   level             Level
-  weight            WeightRange // todo: need to change this to bodyWeight
+  bodyWeight        BodyWeightRange
   startRepRange     Int
   endRepRange       Int
   gender            Gender
@@ -35,16 +46,16 @@ model Standard {
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
 
-  ExercisePerformed ExercisePerformed?
+  ExercisePerformed ExercisePerformed? // a Standard belongs-to one ExercisePerformed
 }
 
 model ExercisePerformed {
   id            Int      @id @default(autoincrement())
   reps          Int
-  standard      Standard @relation(fields: [standardId], references: [id])
-  standardId    Int      @unique // relation scalar field (used in the `@relation` attribute above)
+  standard      Standard? @relation(fields: [standardId], references: [id]) // an ExercisePerformed has one Standard
+  standardId    Int?      @unique
   user          User     @relation(fields: [userId], references: [id])
-  userId        Int      @unique // relation scalar field (used in the `@relation` attribute above)
+  userId        Int      @unique
   datePerformed DateTime
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -86,7 +97,7 @@ enum AgeRange {
   EIGHTY_TO_EIGHTY_NINE      @map(name: "80-89")
 }
 
-enum WeightRange {
+enum BodyWeightRange {
   NINETY              @map(name: "90-99")
   ONE_HUNDRED         @map(name: "100-109")
   ONE_HUNDRED_TEN     @map(name: "110-119")

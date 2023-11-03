@@ -8,7 +8,8 @@ import {
   GENDER,
   LEVEL,
   StrengthStandardRecord
-} from '@/common/backend-types'
+} from '../../common/backend-types'
+import { determineRange } from '../../common/standards-helpers'
 const fileName = `${__dirname}/exercise_standards.csv`
 
 const records: StrengthStandardRecord[] = [];
@@ -24,7 +25,7 @@ function isNumeric(str: string) {
 }
 
 function determineRepRange(start: string, end?: string): { startRepRange: number, endRepRange: number } {
-  let startRepRange, endRepRange, startIncludesOperator, endIncludesOperator
+  let startRepRange , endRepRange, startIncludesOperator, endIncludesOperator
   if (start.includes('<')) {
     startIncludesOperator = true
     start = stripOperator(start)
@@ -53,20 +54,19 @@ function createDBInsert(records: any) {
     const headerSection = record.find((r: any) => r.includes('STANDARD') || r.includes('STANDARDS'))
     const dataSection = record.every((r: any) => isNumeric(r))
     if (headerSection) {
-      // need to find which exercise name, gender, and age range is in the header
+      // find which exercise name, gender, and age range is in the header
       exerciseName = _.get(Object.keys(EXERCISE_NAME).filter((pattern) => new RegExp(pattern).test(headerSection)), '[0]')
       gender       = _.get(Object.keys(GENDER).filter((pattern)        => new RegExp(pattern).test(headerSection)), '[0]')
       ageRange     = _.get(Object.keys(AGE_RANGES).filter((pattern)    => new RegExp(pattern).test(headerSection)), '[0]')
     } else if (dataSection) {
-      // need to fix bodyweight here, as BODYWEIGHT_RANGES has been updated
-      bodyWeight = record.shift() as string
+      const bodyWeight = determineRange(BODYWEIGHT_RANGES, record.shift() as string) as any
       const fiveProficiencies: StrengthStandardRecord[] = record.map((r, i) => {
         const { startRepRange, endRepRange } = determineRepRange(r, record[i+1])
         return {
           exercise: EXERCISE_NAME[exerciseName],
           gender: GENDER[gender],
           ageRange: AGE_RANGES[ageRange],
-          weight: BODYWEIGHT_RANGES[bodyWeight],
+          bodyWeight: BODYWEIGHT_RANGES[bodyWeight],
           startRepRange,
           endRepRange,
           level: LEVEL[i],

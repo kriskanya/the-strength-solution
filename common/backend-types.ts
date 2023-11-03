@@ -1,7 +1,7 @@
-import { AgeRange, ExerciseName, Gender, Level, WeightRange } from '@prisma/client'
+import { AgeRange, ExerciseName, Gender, Level, BodyWeightRange } from '@prisma/client'
 
 export interface StrengthStandardRecord {
-  weight: WeightRange,
+  bodyWeight: BodyWeightRange,
   startRepRange: number,
   endRepRange: number,
   level: Level,
@@ -32,29 +32,29 @@ export const AGE_RANGES: any = {
 }
 
 export const BODYWEIGHT_RANGES: any = {
-  '90-99': WeightRange.NINETY,
-  '100-109': WeightRange.ONE_HUNDRED,
-  '110-119': WeightRange.ONE_HUNDRED_TEN,
-  '120-129': WeightRange.ONE_HUNDRED_TWENTY,
-  '130-139': WeightRange.ONE_HUNDRED_THIRTY,
-  '140-149': WeightRange.ONE_HUNDRED_FORTY,
-  '150-159': WeightRange.ONE_HUNDRED_FIFTY,
-  '160-169': WeightRange.ONE_HUNDRED_SIXTY,
-  '170-179': WeightRange.ONE_HUNDRED_SEVENTY,
-  '180-189': WeightRange.ONE_HUNDRED_EIGHTY,
-  '190-199': WeightRange.ONE_HUNDRED_NINETY,
-  '200-209': WeightRange.TWO_HUNDRED,
-  '210-219': WeightRange.TWO_HUNDRED_TEN,
-  '220-229': WeightRange.TWO_HUNDRED_TWENTY,
-  '230-239': WeightRange.TWO_HUNDRED_THIRTY,
-  '240-249': WeightRange.TWO_HUNDRED_FORTY,
-  '250-259': WeightRange.TWO_HUNDRED_FIFTY,
-  '260-269': WeightRange.TWO_HUNDRED_SIXTY,
-  '270-279': WeightRange.TWO_HUNDRED_SEVENTY,
-  '280-289': WeightRange.TWO_HUNDRED_EIGHTY,
-  '290-299': WeightRange.TWO_HUNDRED_NINETY,
-  '300-309': WeightRange.THREE_HUNDRED,
-  '310-319': WeightRange.THREE_HUNDRED_TEN
+  '90-99'  : BodyWeightRange.NINETY,
+  '100-109': BodyWeightRange.ONE_HUNDRED,
+  '110-119': BodyWeightRange.ONE_HUNDRED_TEN,
+  '120-129': BodyWeightRange.ONE_HUNDRED_TWENTY,
+  '130-139': BodyWeightRange.ONE_HUNDRED_THIRTY,
+  '140-149': BodyWeightRange.ONE_HUNDRED_FORTY,
+  '150-159': BodyWeightRange.ONE_HUNDRED_FIFTY,
+  '160-169': BodyWeightRange.ONE_HUNDRED_SIXTY,
+  '170-179': BodyWeightRange.ONE_HUNDRED_SEVENTY,
+  '180-189': BodyWeightRange.ONE_HUNDRED_EIGHTY,
+  '190-199': BodyWeightRange.ONE_HUNDRED_NINETY,
+  '200-209': BodyWeightRange.TWO_HUNDRED,
+  '210-219': BodyWeightRange.TWO_HUNDRED_TEN,
+  '220-229': BodyWeightRange.TWO_HUNDRED_TWENTY,
+  '230-239': BodyWeightRange.TWO_HUNDRED_THIRTY,
+  '240-249': BodyWeightRange.TWO_HUNDRED_FORTY,
+  '250-259': BodyWeightRange.TWO_HUNDRED_FIFTY,
+  '260-269': BodyWeightRange.TWO_HUNDRED_SIXTY,
+  '270-279': BodyWeightRange.TWO_HUNDRED_SEVENTY,
+  '280-289': BodyWeightRange.TWO_HUNDRED_EIGHTY,
+  '290-299': BodyWeightRange.TWO_HUNDRED_NINETY,
+  '300-309': BodyWeightRange.THREE_HUNDRED,
+  '310-319': BodyWeightRange.THREE_HUNDRED_TEN
 }
 
 export const GENDER: any = {

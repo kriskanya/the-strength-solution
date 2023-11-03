@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { type NextRequest, NextResponse } from 'next/server'
 import { AGE_RANGES, BODYWEIGHT_RANGES } from '@/common/backend-types'
-import { determineRange, groupDataByExercise } from '@/app/api/standards/standards-helpers'
+import { determineRange, groupDataByExercise } from '@/common/standards-helpers'
 const _ = require('lodash')
 
 export async function GET(request: NextRequest) {
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const bodyWeightRange = determineRange(BODYWEIGHT_RANGES, bodyWeight)
     const exerciseNames      = searchParams.get('exerciseNames')
 
-    const sql = `SELECT * FROM "Standard" WHERE "ageRange"='${ageRange}' AND weight='${bodyWeightRange}' AND gender='${_.upperCase(gender)}' AND exercise = ANY('{${exerciseNames}}');`
+    const sql = `SELECT * FROM "Standard" WHERE "ageRange"='${ageRange}' AND "bodyWeight"='${bodyWeightRange}' AND gender='${_.upperCase(gender)}' AND exercise = ANY('{${exerciseNames}}');`
     const standards = await prisma.$queryRawUnsafe(sql)
 
     const standardsGroupedByExercise = groupDataByExercise(standards)
