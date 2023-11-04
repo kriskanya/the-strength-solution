@@ -1,10 +1,14 @@
-import { PrismaClient } from '@prisma/client'
+/**
+ * @/` paths don't seem to work when importing into this file, likely because
+ * of the --compiler-options {"module":"CommonJS"} flag
+ */
+
 const _ = require('lodash')
 import { hash } from 'bcrypt'
 import { standardSeedValues } from './seed/standards'
 import { StrengthStandardRecord } from '@/common/backend-types'
 
-const prisma = new PrismaClient()
+import { prisma } from '../lib/prisma'
 
 function checkIfEmpty(seedValues: StrengthStandardRecord[]) {
   if (_.isEmpty(seedValues)) return

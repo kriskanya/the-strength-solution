@@ -4,7 +4,7 @@ import GenericInput from '@/app/ui/GenericInput'
 interface Props {
   userStats: {
     gender: { male: boolean, female: boolean },
-    weight: number,
+    bodyWeight: number,
     age: number
   },
   onChangeStat: (event: any) => void
@@ -20,7 +20,7 @@ export default function UpdateUserStats({ userStats, onChangeStat }: Props) {
           <GenderRadioButton gender="female" checked={userStats.gender.female} onChange={onChangeStat} />
         </div>
         <div className="mt-5 md:flex md:gap-6">
-          <GenericInput field="weight" value={userStats.weight} onChange={onChangeStat} />
+          <GenericInput field="bodyWeight" value={userStats.bodyWeight} onChange={onChangeStat} />
           <GenericInput field="age" value={userStats.age} onChange={onChangeStat} />
         </div>
       </div>

@@ -71,3 +71,10 @@ export const EXERCISE_NAME: any = {
   'GOBLET SQUAT': ExerciseName.GOBLET_SQUAT,
   'BACK EXTENSIONS': ExerciseName.BACK_EXTENSION
 }
+
+export interface ProfilePayload {
+  email: string
+  gender: Gender,
+  bodyWeight: number,
+  age: number
+}

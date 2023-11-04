@@ -16,8 +16,8 @@ model User {
   password  String?
   firstName String?
   lastName  String?
-  stats     UserStats? @relation(fields: [statsId], references: [id]) // a User has-one UserStats
-  statsId   Int?       @unique
+  profile   Profile?   @relation(fields: [profileId], references: [id]) // a User has-a Profile
+  profileId Int?       @unique
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -25,13 +25,14 @@ model User {
   ExercisePerformed ExercisePerformed?
 }
 
-model UserStats {
-  id        Int      @id @default(autoincrement())
-  gender    Gender
-  weight    Int
-  age       Int
+model Profile {
+  id         Int      @id @default(autoincrement())
+  gender     Gender
+  bodyWeight Int
+  age        Int
+  exercises  ExerciseName[] // should this be its own table?; i.e., { name: 'PUSH-UP', descripton: '' }
 
-  user      User? // a UserStats record belongs-to one User
+  user       User? // a Profile record belongs-to a User
 }
 
 model Standard {
@@ -46,19 +47,19 @@ model Standard {
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
 
-  ExercisePerformed ExercisePerformed? // a Standard belongs-to one ExercisePerformed
+  ExercisePerformed ExercisePerformed? // a Standard belongs-to an ExercisePerformed
 }
 
 model ExercisePerformed {
-  id            Int      @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   reps          Int
-  standard      Standard? @relation(fields: [standardId], references: [id]) // an ExercisePerformed has one Standard
+  standard      Standard? @relation(fields: [standardId], references: [id]) // an ExercisePerformed has-a Standard
   standardId    Int?      @unique
-  user          User     @relation(fields: [userId], references: [id])
-  userId        Int      @unique
+  user          User      @relation(fields: [userId], references: [id])
+  userId        Int       @unique
   datePerformed DateTime
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 enum Level {

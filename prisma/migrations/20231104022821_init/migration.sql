@@ -20,7 +20,7 @@ CREATE TABLE "User" (
     "password" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
-    "statsId" INTEGER,
+    "profileId" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -28,13 +28,14 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "UserStats" (
+CREATE TABLE "Profile" (
     "id" SERIAL NOT NULL,
     "gender" "Gender" NOT NULL,
-    "weight" INTEGER NOT NULL,
+    "bodyWeight" INTEGER NOT NULL,
     "age" INTEGER NOT NULL,
+    "exercises" "ExerciseName"[],
 
-    CONSTRAINT "UserStats_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -70,7 +71,7 @@ CREATE TABLE "ExercisePerformed" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_statsId_key" ON "User"("statsId");
+CREATE UNIQUE INDEX "User_profileId_key" ON "User"("profileId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ExercisePerformed_standardId_key" ON "ExercisePerformed"("standardId");
@@ -79,7 +80,7 @@ CREATE UNIQUE INDEX "ExercisePerformed_standardId_key" ON "ExercisePerformed"("s
 CREATE UNIQUE INDEX "ExercisePerformed_userId_key" ON "ExercisePerformed"("userId");
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_statsId_fkey" FOREIGN KEY ("statsId") REFERENCES "UserStats"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "User" ADD CONSTRAINT "User_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ExercisePerformed" ADD CONSTRAINT "ExercisePerformed_standardId_fkey" FOREIGN KEY ("standardId") REFERENCES "Standard"("id") ON DELETE SET NULL ON UPDATE CASCADE;

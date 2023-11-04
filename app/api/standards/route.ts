@@ -1,8 +1,10 @@
-import { prisma } from '@/lib/prisma'
-import { type NextRequest, NextResponse } from 'next/server'
-import { AGE_RANGES, BODYWEIGHT_RANGES } from '@/common/backend-types'
-import { determineRange, groupDataByExercise } from '@/common/standards-helpers'
 const _ = require('lodash')
+import { type NextRequest, NextResponse } from 'next/server'
+
+import { prisma } from '@/lib/prisma'
+import { AGE_RANGES, BODYWEIGHT_RANGES, StrengthStandardRecord } from '@/common/backend-types'
+import { determineRange, groupDataByExercise } from '@/common/standards-helpers'
+import { Standard } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,7 +17,7 @@ export async function GET(request: NextRequest) {
     const exerciseNames      = searchParams.get('exerciseNames')
 
     const sql = `SELECT * FROM "Standard" WHERE "ageRange"='${ageRange}' AND "bodyWeight"='${bodyWeightRange}' AND gender='${_.upperCase(gender)}' AND exercise = ANY('{${exerciseNames}}');`
-    const standards = await prisma.$queryRawUnsafe(sql)
+    const standards: Standard[] = await prisma.$queryRawUnsafe(sql)
 
     const standardsGroupedByExercise = groupDataByExercise(standards)
 

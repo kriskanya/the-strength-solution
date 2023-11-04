@@ -7,6 +7,7 @@ import { UpdateStatsTab } from '@/app/ui/UpdateStatsTab'
 import UpdateStatusSelectWorkout from '@/app/components/dashboard/UpdateStatsSelectWorkout'
 import CustomButton from '@/app/ui/CustomButton'
 import UpdateUserStats from '@/app/components/dashboard/UpdateUserStats'
+import { useSession } from 'next-auth/react'
 
 interface Props {
   isOpen: boolean,
@@ -17,8 +18,9 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen }: Props ) {
   const [selectedTab, setSelectedTab] = useState({ workouts: false, stats: true })
   // todo: this should come from db
   const [userStats, setUserStats] = useState({
-    gender: { male: true, female: false }, weight: 200, age: 27 }
+    gender: { male: true, female: false }, bodyWeight: 200, age: 27 }
   )
+  const session = useSession()
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
@@ -26,6 +28,29 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen }: Props ) {
       setSelectedTab({ workouts: true, stats: false })
     } else {
       setSelectedTab({ workouts: false, stats: true })
+    }
+  }
+
+  const saveChanges = async () => {
+    try {
+      const email = get(session, 'data.user.email')
+      const body = {
+        email,
+        gender: userStats.gender.male ? 'male' : 'female',
+        bodyWeight: userStats.bodyWeight,
+        age: userStats.age
+      }
+      const res = await fetch(`/api/profile`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      const data = await res.json()
+      console.log(data)
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -42,7 +67,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen }: Props ) {
           stats.gender = { male: false, female: true }
         }
         break
-      case 'weight':
+      case 'bodyWeight':
       case 'age':
         stats[fieldName] = +value
         break
@@ -89,6 +114,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen }: Props ) {
                   label="Save Changes"
                   classes="bg-brand-blue h-10 mt-16"
                   textClasses="font-semibold text-sm text-white"
+                  onClick={saveChanges}
                 />
               </div>
             </div>
