@@ -55,7 +55,7 @@ export default function StrengthStandardsTable() {
         <table className={`w-full table-fixed border bg-white border-collapse`} cellPadding="20">
           <thead className="">
             <tr className="">
-              <th align="left" className="w-1/3 inter font-normal text-xs uppercase opacity-80 text-dark-grey">Workout Name</th>
+              <th align="left" className="w-1/3 inter font-normal text-xs uppercase opacity-80 text-dark-grey">Exercise Name</th>
               <th align="left" className="inter font-normal text-xs uppercase opacity-80 text-dark-grey">
                 <div className="flex items-center">
                   <div className="w-[12px] h-[12px] bg-red-novice"></div>

@@ -23,10 +23,12 @@ export const determineRange = (ranges: string[], inputValue: string) => {
  * @return { PUSH_UP: Standard[], PULL_UP: Standard[], ... }
  */
 export const groupDataByExercise = (records: Standard[]) => {
-  const obj: { [key: string]: Standard[] } = {}
-  records.forEach(record => {
-    if (!obj[record.exercise]) obj[record.exercise] = []
-    obj[record.exercise].push(record)
-  })
-  return obj
+  // const obj: { [key: string]: Standard[] } = {}
+  // records.forEach(record => {
+  //   if (!obj[record.exercise]) obj[record.exercise] = []
+  //   obj[record.exercise].push(record)
+  // })
+  // return obj
+
+  return {}
 }

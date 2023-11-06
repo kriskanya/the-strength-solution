@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
     const bodyWeight: string = searchParams.get('bodyWeight') as string
     const bodyWeightRange = determineRange(BODYWEIGHT_RANGES, bodyWeight)
     const exerciseNames      = searchParams.get('exerciseNames')
+    // need to get Exercise ids
 
     const sql = `SELECT * FROM "Standard" WHERE "ageRange"='${ageRange}' AND "bodyWeight"='${bodyWeightRange}' AND gender='${_.upperCase(gender)}' AND exercise = ANY('{${exerciseNames}}');`
     const standards: Standard[] = await prisma.$queryRawUnsafe(sql)

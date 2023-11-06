@@ -19,10 +19,10 @@ model User {
   profile   Profile?   @relation(fields: [profileId], references: [id]) // a User has-a Profile
   profileId Int?       @unique
 
+  ExercisePerformed ExercisePerformed?
+
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-
-  ExercisePerformed ExercisePerformed?
 }
 
 model Profile {
@@ -30,34 +30,66 @@ model Profile {
   gender     Gender
   bodyWeight Int
   age        Int
-  exercises  ExerciseName[] // should this be its own table?; i.e., { name: 'PUSH-UP', descripton: '' }
 
-  user       User? // a Profile record belongs-to a User
+  user       User? // a Profile belongs-to a User
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+// many-to-many join table
+// model ExercisesOnProfiles {
+//   profile       Profile     @relation(fields: [profileId], references: [id])
+//   profileId     Int // relation scalar field (used in the `@relation` attribute above)
+//   exercise   Exercise @relation(fields: [exerciseId], references: [id])
+//   exerciseId Int // relation scalar field (used in the `@relation` attribute above)
+//
+//   createdAt DateTime   @default(now())
+//   updatedAt DateTime   @updatedAt
+//
+//   @@id([profileId, exerciseId])
+// }
+
+model Exercise {
+  id          Int      @id @default(autoincrement())
+  name        ExerciseName
+  displayName String
+  description String
+
+  standards   Standard[] // an Exercise belongs-to-many Standards
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Standard {
   id                Int                @id @default(autoincrement())
-  exercise          ExerciseName
+
+  exercise          Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId        Int // a Standard has-an Exercise
+
   level             Level
   bodyWeight        BodyWeightRange
   startRepRange     Int
   endRepRange       Int
   gender            Gender
   ageRange          AgeRange
+
+  ExercisePerformed ExercisePerformed? // a Standard belongs-to an ExercisePerformed - should this be many ExercisesPerformed?
+
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
-
-  ExercisePerformed ExercisePerformed? // a Standard belongs-to an ExercisePerformed
 }
 
 model ExercisePerformed {
   id            Int       @id @default(autoincrement())
   reps          Int
-  standard      Standard? @relation(fields: [standardId], references: [id]) // an ExercisePerformed has-a Standard
+  standard      Standard? @relation(fields: [standardId], references: [id]) // an ExercisePerformed has-a a Standard
   standardId    Int?      @unique
   user          User      @relation(fields: [userId], references: [id])
   userId        Int       @unique
   datePerformed DateTime
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }

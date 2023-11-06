@@ -7,7 +7,7 @@ export interface StrengthStandardRecord {
   level: Level,
   ageRange: AgeRange,
   gender: Gender,
-  exercise: ExerciseName
+  exerciseId: number
 }
 
 /* mapping values -> ENUMs */
@@ -72,9 +72,25 @@ export const EXERCISE_NAME: any = {
   'BACK EXTENSIONS': ExerciseName.BACK_EXTENSION
 }
 
+export const EXERCISE_METADATA: any = {
+  'PUSH-UP': { displayName: 'Push-Ups', description: '' },
+  'INVERTED ROW': { displayName: 'Inverted Rows', description: '' },
+  'DIP': { displayName: 'Dips', description: '' },
+  'CHIN-UP': { displayName: 'Chin-Ups', description: '' },
+  'PULL-UP': { displayName: 'Pull-Ups', description: '' },
+  'GOBLET SQUAT': { displayName: 'Goblet Squats', description: '' },
+  'BACK EXTENSIONS': { displayName: 'Back Extensions', description: '' }
+}
+
 export interface ProfilePayload {
   email: string
   gender: Gender,
   bodyWeight: number,
   age: number
+}
+
+export interface ExerciseRecordPayload {
+  name: ExerciseName,
+  displayName: string,
+  description: string
 }

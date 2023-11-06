@@ -5,12 +5,12 @@
 
 const _ = require('lodash')
 import { hash } from 'bcrypt'
-import { standardSeedValues } from './seed/standards'
-import { StrengthStandardRecord } from '@/common/backend-types'
+import { createExerciseSeedValues, createStandardSeedValues } from './seed/standards'
+import { ExerciseRecordPayload, StrengthStandardRecord } from '@/common/backend-types'
 
 import { prisma } from '../lib/prisma'
 
-function checkIfEmpty(seedValues: StrengthStandardRecord[]) {
+function checkIfSomeFieldsEmpty(seedValues: StrengthStandardRecord[]) {
   if (_.isEmpty(seedValues)) return
 
   let emptyFields: any = []
@@ -44,17 +44,25 @@ async function main() {
 
   if (migrationAlreadyRun) return
 
-  const seedValues: StrengthStandardRecord[] = await standardSeedValues() as StrengthStandardRecord[]
-  const seedValuesInvalid = checkIfEmpty(seedValues)
+  return prisma.$transaction(async (tx) => {
+    const exerciseSeedValues: ExerciseRecordPayload[] = createExerciseSeedValues()
+    await tx.exercise.createMany({
+      data: exerciseSeedValues
+    })
+    const exerciseRecords = await tx.exercise.findMany()
 
-  if (_.isArray(seedValuesInvalid) && seedValuesInvalid.length > 0) {
-    console.error('Issues with seed data', seedValuesInvalid)
-    return
-  }
+    const seedValues: StrengthStandardRecord[] = await createStandardSeedValues(exerciseRecords)
+    const seedValuesInvalid = checkIfSomeFieldsEmpty(seedValues)
 
-  console.log('Seeding DB')
-  await prisma.standard.createMany({
-    data: seedValues
+    if (_.isArray(seedValuesInvalid) && seedValuesInvalid.length > 0) {
+      console.error('Issues with seed data', seedValuesInvalid)
+      return
+    }
+
+    console.log('Seeding DB')
+    await tx.standard.createMany({
+      data: seedValues
+    })
   })
 }
 main()

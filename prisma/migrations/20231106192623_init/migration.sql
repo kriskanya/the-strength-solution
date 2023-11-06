@@ -33,15 +33,28 @@ CREATE TABLE "Profile" (
     "gender" "Gender" NOT NULL,
     "bodyWeight" INTEGER NOT NULL,
     "age" INTEGER NOT NULL,
-    "exercises" "ExerciseName"[],
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
+CREATE TABLE "Exercise" (
+    "id" SERIAL NOT NULL,
+    "name" "ExerciseName" NOT NULL,
+    "displayName" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Exercise_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Standard" (
     "id" SERIAL NOT NULL,
-    "exercise" "ExerciseName" NOT NULL,
+    "exerciseId" INTEGER NOT NULL,
     "level" "Level" NOT NULL,
     "bodyWeight" "BodyWeightRange" NOT NULL,
     "startRepRange" INTEGER NOT NULL,
@@ -81,6 +94,9 @@ CREATE UNIQUE INDEX "ExercisePerformed_userId_key" ON "ExercisePerformed"("userI
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Standard" ADD CONSTRAINT "Standard_exerciseId_fkey" FOREIGN KEY ("exerciseId") REFERENCES "Exercise"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ExercisePerformed" ADD CONSTRAINT "ExercisePerformed_standardId_fkey" FOREIGN KEY ("standardId") REFERENCES "Standard"("id") ON DELETE SET NULL ON UPDATE CASCADE;

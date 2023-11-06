@@ -1,3 +1,5 @@
+import { Exercise, ExerciseName } from '@prisma/client'
+
 const _ = require('lodash')
 const fs = require('fs')
 const { parse } = require('csv-parse')
@@ -7,7 +9,9 @@ import {
   EXERCISE_NAME,
   GENDER,
   LEVEL,
-  StrengthStandardRecord
+  StrengthStandardRecord,
+  EXERCISE_METADATA,
+  ExerciseRecordPayload
 } from '../../common/backend-types'
 import { determineRange } from '../../common/standards-helpers'
 const fileName = `${__dirname}/exercise_standards.csv`
@@ -46,9 +50,56 @@ function determineRepRange(start: string, end?: string): { startRepRange: number
   return { startRepRange: +start, endRepRange }
 }
 
-function createDBInsert(records: any) {
+export function createExerciseSeedValues() {
+  let records: ExerciseRecordPayload[] = []
+  for (let [key, value] of Object.entries(EXERCISE_NAME)) {
+    const record = {
+      name        : value,
+      displayName : EXERCISE_METADATA[key]?.displayName,
+      description : EXERCISE_METADATA[key]?.description
+    } as ExerciseRecordPayload
+    records = [...records, record]
+  }
+  return records
+}
+
+/**
+ * Sets exercise 'name' as the object key, so that associating it with a Standard will be easier
+ * @param exerciseRecords => [{
+ *   "id": 15,
+ *   "name": "PUSH_UP",
+ *   "displayName": "Push-Ups",
+ *   "description": "",
+ *   "createdAt": "2023-11-06T19:37:55.002Z",
+ *   "updatedAt": "2023-11-06T19:37:55.002Z"
+ * },
+ * ...
+ * ]
+ * @returns
+ * {
+ *   PUSH_UP: {
+ *     "id": 43,
+ *     "name": "PUSH_UP",
+ *     "displayName": "Push-Ups",
+ *     "description": "",
+ *     "createdAt": "2023-11-06T19:46:37.633Z",
+ *     "updatedAt": "2023-11-06T19:46:37.633Z"
+ *   },
+ *   ...
+ * }
+ */
+function createExerciseRecordsObject(exerciseRecords: Exercise[]) {
+  return exerciseRecords.reduce((acc: { [key: string]: Exercise }, curr: Exercise) => {
+    acc[curr.name] = curr
+    return acc
+  }, {})
+}
+
+function createDBInsert(records: any, exerciseRecords: Exercise[]) {
   let result: StrengthStandardRecord[] = []
   let exerciseName: string, gender: string, ageRange: string, bodyWeight: string
+
+  const exercisesMappedToName = createExerciseRecordsObject(exerciseRecords)
 
   records.forEach((record: string[]) => {
     const headerSection = record.find((r: any) => r.includes('STANDARD') || r.includes('STANDARDS'))
@@ -62,8 +113,9 @@ function createDBInsert(records: any) {
       const bodyWeight = determineRange(BODYWEIGHT_RANGES, record.shift() as string) as any
       const fiveProficiencies: StrengthStandardRecord[] = record.map((r, i) => {
         const { startRepRange, endRepRange } = determineRepRange(r, record[i+1])
+        const exerciseId = exercisesMappedToName[EXERCISE_NAME[exerciseName]]?.id
         return {
-          exercise: EXERCISE_NAME[exerciseName],
+          exerciseId,
           gender: GENDER[gender],
           ageRange: AGE_RANGES[ageRange],
           bodyWeight: BODYWEIGHT_RANGES[bodyWeight],
@@ -78,7 +130,7 @@ function createDBInsert(records: any) {
   return result
 }
 
-export async function standardSeedValues() {
+export async function createStandardSeedValues(exerciseRecords: Exercise[]): Promise<StrengthStandardRecord[]> {
   // Initialize the parser
   const parser = parse({
     delimiter: ','
@@ -95,7 +147,7 @@ export async function standardSeedValues() {
       })
       .on("error", (error: any) => reject(error))
       .on("end", () => {
-        resolve(createDBInsert(records))
+        resolve(createDBInsert(records, exerciseRecords))
       });
   });
 }
