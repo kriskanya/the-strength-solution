@@ -70,7 +70,6 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-
         return {
           id: user.id + '',
           email: user.email,
@@ -145,10 +144,12 @@ export const authOptions: NextAuthOptions = {
           email: profile.email,
           firstName,
           lastName,
+          fullName: profile.name
         },
         update: {
           firstName,
           lastName,
+          fullName: profile.name
         },
       })
       return true
