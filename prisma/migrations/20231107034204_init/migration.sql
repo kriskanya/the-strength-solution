@@ -20,6 +20,8 @@ CREATE TABLE "User" (
     "password" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
+    "fullName" TEXT,
+    "imageUrl" TEXT,
     "profileId" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

@@ -6,6 +6,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
 import { User } from '@prisma/client'
+import _ from 'lodash'
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
@@ -91,10 +92,32 @@ export const authOptions: NextAuthOptions = {
         }
       }
     },
-    jwt: ({ token, user }) => {
+    jwt: async ({ token, user }) => {
       // console.log('JWT Callback', { token, user })
       if (user) {
         const u = user as unknown as User
+        const fullName = _.get(user, 'name', '')
+        const imageUrl = _.get(user, 'image', '')
+        let firstName = '', lastName = ''
+        if (user.name) {
+          const splitFullName = user.name.split(' ')
+          firstName = _.get(splitFullName, '[0]', '')
+          lastName = _.get(splitFullName, '[1]', '')
+        }
+
+        if (user.email) {
+          await prisma.user.upsert({
+            where: { email: user.email },
+            update: {},
+            create: {
+              email: user.email,
+              firstName,
+              lastName,
+              fullName,
+              imageUrl
+            }
+          })
+        }
         return {
           ...token,
           id: u.id
