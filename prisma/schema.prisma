@@ -51,15 +51,15 @@ model Profile {
 // }
 
 model Exercise {
-  id          Int      @id @default(autoincrement())
-  name        ExerciseName
-  displayName String
-  description String
+  id           Int      @id @default(autoincrement())
+  exerciseName ExerciseName
+  displayName  String
+  description  String
 
-  standards   Standard[] // an Exercise belongs-to-many Standards
+  standards    Standard[] // an Exercise belongs-to-many Standards
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model Standard {

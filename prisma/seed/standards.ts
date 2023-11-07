@@ -54,7 +54,7 @@ export function createExerciseSeedValues() {
   let records: ExerciseRecordPayload[] = []
   for (let [key, value] of Object.entries(EXERCISE_NAME)) {
     const record = {
-      name        : value,
+      exerciseName : value,
       displayName : EXERCISE_METADATA[key]?.displayName,
       description : EXERCISE_METADATA[key]?.description
     } as ExerciseRecordPayload
@@ -90,7 +90,7 @@ export function createExerciseSeedValues() {
  */
 function createExerciseRecordsObject(exerciseRecords: Exercise[]) {
   return exerciseRecords.reduce((acc: { [key: string]: Exercise }, curr: Exercise) => {
-    acc[curr.name] = curr
+    acc[curr.exerciseName] = curr
     return acc
   }, {})
 }

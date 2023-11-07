@@ -2,7 +2,7 @@
 
 import CustomDropdown from '@/app/ui/CustomDropdown'
 import { useEffect, useState } from 'react'
-import { startCase } from 'lodash-es'
+import { get, startCase } from 'lodash-es'
 import { Standard } from '@prisma/client'
 
 export default function StrengthStandardsTable() {
@@ -95,7 +95,7 @@ export default function StrengthStandardsTable() {
                 for (const [exerciseName, standardsRecords] of Object.entries(standards)) {
                   const el = (
                     <tr className="h-12 border-b border-lighter-grey" key={exerciseName}>
-                      <td className="inter font-medium text-sm">{startCase(exerciseName)}</td>
+                      <td className="inter font-medium text-sm">{get(standardsRecords, '[0].displayName')}</td>
                       {
                         standardsRecords.map((record, i) => {
                           return (

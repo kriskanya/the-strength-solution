@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 import { prisma } from '@/lib/prisma'
 import { AGE_RANGES, BODYWEIGHT_RANGES, StrengthStandardRecord } from '@/common/backend-types'
-import { determineRange, groupDataByExercise } from '@/common/standards-helpers'
+import { determineRange, formatStringsForQuery, groupDataByExercise } from '@/common/standards-helpers'
 import { Standard } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
@@ -14,10 +14,13 @@ export async function GET(request: NextRequest) {
     const ageRange = determineRange(AGE_RANGES, age)
     const bodyWeight: string = searchParams.get('bodyWeight') as string
     const bodyWeightRange = determineRange(BODYWEIGHT_RANGES, bodyWeight)
-    const exerciseNames      = searchParams.get('exerciseNames')
-    // need to get Exercise ids
+    const exerciseNames: string      = searchParams.get('exerciseNames') as string
 
-    const sql = `SELECT * FROM "Standard" WHERE "ageRange"='${ageRange}' AND "bodyWeight"='${bodyWeightRange}' AND gender='${_.upperCase(gender)}' AND exercise = ANY('{${exerciseNames}}');`
+    const sqlGetExercises = `SELECT * FROM "Exercise" WHERE "exerciseName" IN (${ formatStringsForQuery(exerciseNames) })`
+    const exerciseRecords = await prisma.$queryRawUnsafe(sqlGetExercises)
+    const exerciseIds = _.map(exerciseRecords, 'id')
+
+    const sql = `SELECT * FROM "Standard" INNER JOIN "Exercise" ON "Standard"."exerciseId" = "Exercise".id WHERE "ageRange"='${ageRange}' AND "bodyWeight"='${bodyWeightRange}' AND gender='${_.upperCase(gender)}' AND "exerciseId" IN (` + exerciseIds + `);`
     const standards: Standard[] = await prisma.$queryRawUnsafe(sql)
 
     const standardsGroupedByExercise = groupDataByExercise(standards)

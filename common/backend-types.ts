@@ -90,7 +90,7 @@ export interface ProfilePayload {
 }
 
 export interface ExerciseRecordPayload {
-  name: ExerciseName,
+  exerciseName: ExerciseName,
   displayName: string,
   description: string
 }
