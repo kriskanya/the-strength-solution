@@ -11,77 +11,83 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  email     String     @unique
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
   password  String?
   firstName String?
   lastName  String?
   fullName  String?
   imageUrl  String?
 
-  profile   Profile?   @relation(fields: [profileId], references: [id]) // a User has-a Profile
-  profileId Int?       @unique
+  profile   Profile? @relation(fields: [profileId], references: [id]) // a User has-a Profile
+  profileId Int?     @unique
 
   ExercisePerformed ExercisePerformed?
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Profile {
-  id         Int      @id @default(autoincrement())
+  id         Int    @id @default(autoincrement())
   gender     Gender
   bodyWeight Int
   age        Int
 
-  user       User? // a Profile belongs-to a User
+  user User? // a Profile belongs-to a User
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  ExercisesOnProfiles ExercisesOnProfiles[]
+
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
 }
 
-// many-to-many join table
-// model ExercisesOnProfiles {
-//   profile       Profile     @relation(fields: [profileId], references: [id])
-//   profileId     Int // relation scalar field (used in the `@relation` attribute above)
-//   exercise   Exercise @relation(fields: [exerciseId], references: [id])
-//   exerciseId Int // relation scalar field (used in the `@relation` attribute above)
-//
-//   createdAt DateTime   @default(now())
-//   updatedAt DateTime   @updatedAt
-//
-//   @@id([profileId, exerciseId])
-// }
+// join table - user chooses which exercises he performs
+model ExercisesOnProfiles {
+  profile    Profile  @relation(fields: [profileId], references: [id])
+  profileId  Int // relation scalar field (used in the `@relation` attribute above)
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId Int // relation scalar field (used in the `@relation` attribute above)
+
+  active     Boolean // indicates whether or not the user selected this exercise as one he performs
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@id([profileId, exerciseId])
+}
 
 model Exercise {
-  id           Int      @id @default(autoincrement())
+  id           Int          @id @default(autoincrement())
   exerciseName ExerciseName
   displayName  String
   description  String
 
-  standards    Standard[] // an Exercise belongs-to-many Standards
+  standards Standard[] // an Exercise belongs-to-many Standards
 
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  ExercisesOnProfiles ExercisesOnProfiles[]
+
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
 }
 
 model Standard {
-  id                Int                @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  exercise          Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId        Int // a Standard has-an Exercise
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId Int // a Standard has-an Exercise
 
-  level             Level
-  bodyWeight        BodyWeightRange
-  startRepRange     Int
-  endRepRange       Int
-  gender            Gender
-  ageRange          AgeRange
+  level         Level
+  bodyWeight    BodyWeightRange
+  startRepRange Int
+  endRepRange   Int
+  gender        Gender
+  ageRange      AgeRange
 
-  ExercisePerformed ExercisePerformed? // a Standard belongs-to an ExercisePerformed - should this be many ExercisesPerformed?
+  ExercisePerformed ExercisePerformed[] // a Standard belongs-to many ExercisesPerformed
 
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ExercisePerformed {
@@ -96,6 +102,8 @@ model ExercisePerformed {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
+
+// ENUMS
 
 enum Level {
   NOVICE
