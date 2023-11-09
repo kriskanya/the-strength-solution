@@ -28,7 +28,6 @@ export default function LogIn() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
     try {
-      const a = session
       // if user does not have a profileId, send them to the about-you page
       // if user has filled in gender, weight, and age, send them to choose-exercises
       // if user has filled in exercises, send them to the dashboard
@@ -39,8 +38,12 @@ export default function LogIn() {
         password,
         callbackUrl
       })
-      debugger
-      if (!res?.error) {
+
+      const profileId = get(session, 'userData.profileId')
+
+      if (!profileId) {
+        router.push('about-you')
+      } else if (!res?.error) {
         router.push(callbackUrl)
       } else {
         setError('Invalid email or password')

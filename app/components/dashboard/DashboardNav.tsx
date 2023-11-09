@@ -1,23 +1,37 @@
 'use client'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import CustomButton from '@/app/ui/CustomButton'
 import UpdateStatusDialog from '@/app/components/dashboard/UpdateStatsDialog'
 import { useSession } from 'next-auth/react'
+import { get } from 'lodash-es'
 
 export default function DashboardNav() {
   const [isOpen, setIsOpen] = useState(false)
+  const [userStats, setUserStats] = useState({
+    gender: { male: true, female: false }, bodyWeight: 180, age: 27 }
+  )
 
   const { data: session } = useSession()
 
-  function openDialog() {
-    setIsOpen(true)
+  const openDialog = async () => {
+    const profileId = get(session, 'userData.profileId')
+    try {
+      const res = await fetch(`/api/profile/${profileId}`)
+      const data = await res.json()
+      const { age, bodyWeight, gender }: { age: number, bodyWeight: number, gender: 'MALE' | 'FEMALE' } = data
+      const stats = { gender: { male: gender === 'MALE', female: gender === 'FEMALE' }, bodyWeight, age }
+      setUserStats(stats)
+      setIsOpen(true)
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
     <div className="grid grid-cols-2 py-5 px-12 bg-black-russian">
-      <UpdateStatusDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+      <UpdateStatusDialog isOpen={isOpen} setIsOpen={setIsOpen} userStats={userStats} setUserStats={setUserStats} />
       <h2 className="inter font-extrabold text-base uppercase my-auto text-white">The Strength Solution</h2>
       <div className="flex justify-end">
         <div className="w-44">

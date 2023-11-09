@@ -1,7 +1,6 @@
 'use client'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { GenderRadioButton } from '@/app/ui/GenderRadioButton'
 import GenericInput from '@/app/ui/GenericInput'
 import CustomButton from '@/app/ui/CustomButton'
@@ -9,48 +8,119 @@ import maleAvatar from '../../images/male-avatar.svg'
 import femaleAvatar from '../../images/female-avatar.svg'
 import blueBlur from '../../images/blue-blur-background-small.svg'
 import classes from './AboutYou.module.css'
+import { cloneDeep, get } from 'lodash-es'
+import { useSession } from 'next-auth/react'
+import { Alert } from '@/app/ui/Alert'
+import { useRouter } from 'next/navigation'
 
 export default function AboutYou() {
-  const [selectedGender, setSelectedGender] = useState({ male: true, female: false })
+  const { data: session } = useSession()
+  const router = useRouter()
+  const [userStats, setUserStats] = useState({
+    gender: { male: true, female: false }, bodyWeight: 0, age: 0 }
+  )
+  const [error, setError] = useState<string | null>(null)
 
-  function onChangeGender(event: ChangeEvent<HTMLInputElement>) {
-    const { name } = event.target
-    if (name === 'male') {
-      setSelectedGender({ male: true, female: false })
-    } else {
-      setSelectedGender({ male: false, female: true })
+  const fetchProfileInformation = async () => {
+    const profileId = get(session, 'userData.profileId')
+
+    try {
+      const res = await fetch(`/api/profile/${profileId}`)
+      const data = await res.json()
+      const { age, bodyWeight, gender }: { age: number, bodyWeight: number, gender: 'MALE' | 'FEMALE' } = data
+      const stats = { gender: { male: gender === 'MALE', female: gender === 'FEMALE' }, bodyWeight, age }
+      setUserStats(stats)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    if (session?.user) {
+      fetchProfileInformation()
+    }
+  }, [session]);
+
+  function onChangeStat(event: ChangeEvent<HTMLInputElement>) {
+    const { value } = event.target
+    const fieldName = get(event, 'target.name')
+    const stats = cloneDeep(userStats)
+
+    switch (fieldName) {
+      case 'gender':
+        if (value === 'male') {
+          stats.gender = { male: true, female: false }
+        } else if (value === 'female') {
+          stats.gender = { male: false, female: true }
+        }
+        break
+      case 'bodyWeight':
+      case 'age':
+        stats[fieldName] = +value
+        break
+    }
+    setUserStats(stats)
+  }
+
+  const saveChanges = async (event: FormEvent) => {
+    event.preventDefault()
+    try {
+      const userId = get(session, 'userData.id')
+      const body = {
+        userId: userId,
+        gender: userStats.gender.male ? 'male' : 'female',
+        bodyWeight: userStats.bodyWeight,
+        age: userStats.age
+      }
+      const res = await fetch(`/api/profile`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      router.push('/choose-workouts')
+    } catch (err: any) {
+      setError(err?.message || 'There was an issue setting your stats')
+      setTimeout(() => setError(null), 5000)
+      console.log(err);
     }
   }
 
   return (
-    <div className={`lg:grid lg:grid-cols-2 bg-off-white ${classes.setMaxHeight}`}>
-      {/*left side*/}
-      <div className="lg:flex lg:flex-col items-center m-24">
-        <div className="h-4/6 relative">
-          <h2 className="inter font-bold text-2xl">About You</h2>
-          <p className="inter font-normal text-light-grey text-base mt-1">
-            Please fill in your stats so we can initialize the dashboard
-          </p>
-          <p className="mt-10 -mb-4 inter font-medium text-sm">Your gender</p>
-          <div className="md:flex md:gap-5">
-            <GenderRadioButton gender="male" checked={selectedGender.male} onChange={onChangeGender} />
-            <GenderRadioButton gender="female" checked={selectedGender.female} onChange={onChangeGender} />
+    <form onSubmit={saveChanges}>
+      <div className={`lg:grid lg:grid-cols-2 bg-off-white ${classes.setMaxHeight}`}>
+        {/*left side*/}
+        <div className="lg:flex lg:flex-col items-center m-24">
+          <div className="h-4/6 relative">
+            <h2 className="inter font-bold text-2xl">About You</h2>
+            <p className="inter font-normal text-light-grey text-base mt-1">
+              Please fill in your stats so we can initialize the dashboard
+            </p>
+            <p className="mt-10 -mb-4 inter font-medium text-sm">Your gender</p>
+            <div className="md:flex md:gap-5">
+              <GenderRadioButton gender="male" checked={userStats.gender.male} onChange={onChangeStat} />
+              <GenderRadioButton gender="female" checked={userStats.gender.female} onChange={onChangeStat} />
+            </div>
+            <div className="mt-5 md:flex md:gap-5">
+              <GenericInput field="bodyWeight" value={userStats.bodyWeight} onChange={onChangeStat} />
+              <GenericInput field="age" value={userStats.age} onChange={onChangeStat} />
+            </div>
+            <div className="mt-6">
+              {error && <Alert>{ error }</Alert>}
+            </div>
+            <div className="w-36 lg:absolute lg:bottom-0">
+              <CustomButton type="submit" label="Next" classes="bg-brand-blue h-10 mt-16" textClasses="font-semibold text-sm text-white" />
+            </div>
           </div>
-          {/*<div className="mt-5 md:flex md:gap-5">*/}
-          {/*  <GenericInput field="weight" />*/}
-          {/*  <GenericInput field="age" />*/}
-          {/*</div>*/}
-          <Link href="choose-workouts" className="w-36 lg:absolute lg:bottom-0">
-            <CustomButton label="Next" classes="bg-brand-blue h-10 mt-16" textClasses="font-semibold text-sm text-white" />
-          </Link>
+        </div>
+        {/*right side*/}
+        <div className="relative w-full h-screen hidden lg:block">
+          <Image src={maleAvatar} alt="male-avatar" className="absolute top-48 left-4 z-10" />
+          <Image src={femaleAvatar} alt="female-avatar" className="absolute left-56 top-24 z-10" />
+          <Image src={blueBlur} alt="" className="absolute right-30 top-24" />
         </div>
       </div>
-      {/*right side*/}
-      <div className="relative w-full h-screen hidden lg:block">
-        <Image src={maleAvatar} alt="male-avatar" className="absolute top-48 left-4 z-10" />
-        <Image src={femaleAvatar} alt="female-avatar" className="absolute left-56 top-24 z-10" />
-        <Image src={blueBlur} alt="" className="absolute right-30 top-24" />
-      </div>
-    </div>
+    </form>
   )
 }

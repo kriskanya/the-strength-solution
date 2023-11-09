@@ -41,3 +41,9 @@ export interface AvatarColorsRear {
     head: string
   }
 }
+
+export interface UserStats {
+  gender: { male: boolean, female: boolean },
+  bodyWeight: number,
+  age: number
+}

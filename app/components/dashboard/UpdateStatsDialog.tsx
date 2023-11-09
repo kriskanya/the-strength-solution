@@ -1,5 +1,4 @@
-'use client'
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { cloneDeep, get } from 'lodash-es'
 import { Dialog } from '@headlessui/react'
 
@@ -8,18 +7,19 @@ import UpdateStatusSelectWorkout from '@/app/components/dashboard/UpdateStatsSel
 import CustomButton from '@/app/ui/CustomButton'
 import UpdateUserStats from '@/app/components/dashboard/UpdateUserStats'
 import { useSession } from 'next-auth/react'
+import { UserStats } from '@/common/frontend-types'
+import { Alert } from '@/app/ui/Alert'
 
 interface Props {
   isOpen: boolean,
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  setIsOpen: Dispatch<SetStateAction<boolean>>,
+  userStats: UserStats,
+  setUserStats: Dispatch<SetStateAction<UserStats>>,
 }
 
-export default function UpdateStatusDialog({ isOpen, setIsOpen }: Props ) {
+export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUserStats }: Props ) {
   const [selectedTab, setSelectedTab] = useState({ workouts: false, stats: true })
-  // todo: this should come from db
-  const [userStats, setUserStats] = useState({
-    gender: { male: true, female: false }, bodyWeight: 200, age: 27 }
-  )
+  const [showAlert, setShowAlert] = useState(false)
   const session = useSession()
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
@@ -33,9 +33,9 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen }: Props ) {
 
   const saveChanges = async () => {
     try {
-      const email = get(session, 'data.user.email')
+      const userId = get(session, 'data.userData.id')
       const body = {
-        email,
+        userId,
         gender: userStats.gender.male ? 'male' : 'female',
         bodyWeight: userStats.bodyWeight,
         age: userStats.age
@@ -48,6 +48,8 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen }: Props ) {
         },
       })
       const data = await res.json()
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 5000)
       console.log(data)
     } catch (err) {
       console.log(err);
@@ -117,6 +119,12 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen }: Props ) {
                   onClick={saveChanges}
                 />
               </div>
+            </div>
+            <div className="grid grid-cols-3">
+              <p></p>
+              <p className="ml-10">
+                {showAlert && <Alert>Changes saved successfully</Alert>}
+              </p>
             </div>
           </Dialog.Description>
         </Dialog.Panel>

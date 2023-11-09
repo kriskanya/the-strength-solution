@@ -1,14 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { upsertProfile } from '@/app/api/profile/profile-helpers'
+import { NextApiRequest } from 'next'
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, gender, bodyWeight, age } = await req.json()
+    const { userId, gender, bodyWeight, age } = await req.json()
+
+    debugger
 
     // check incoming req.json() data for validity, prob use Joi()
 
     const upsertedProfile = await upsertProfile({
-      email, gender, bodyWeight, age
+      userId, gender, bodyWeight, age
     })
 
     return Response.json(upsertedProfile)
@@ -24,4 +27,3 @@ export async function POST(req: NextRequest) {
     )
   }
 }
-

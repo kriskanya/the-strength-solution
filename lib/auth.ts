@@ -82,14 +82,22 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    session: ({ session, token }) => {
+    session: async ({ session, token }) => {
       // console.log('Session Callback', { session, token })
+      const email = _.get(session, 'user.email')
+      let userData
+
+      if (_.isString(email) && email.length) {
+        userData = await prisma.user.findUnique({ where: { email } })
+      }
+
       return {
         ...session,
         user: {
           ...session.user,
           id: token.id
-        }
+        },
+        userData
       }
     },
     jwt: async ({ token, user , account }) => {
@@ -119,7 +127,7 @@ export const authOptions: NextAuthOptions = {
             }
           })
 
-          if (!_.isEmpty(account) && account?.provider) {
+          if (!_.isEmpty(account) && ['google', 'facebook'].includes(account?.provider)) {
             await prisma.user.update({
               where: { email: user.email },
               data: { [account.provider]: account as InputJsonValue }
@@ -128,7 +136,8 @@ export const authOptions: NextAuthOptions = {
         }
         return {
           ...token,
-          id: u.id
+          id: u.id,
+          anotherProp: 'hello'
         }
       }
 

@@ -19,7 +19,7 @@ export default function GenericInput({ field, value, onChange }: Props) {
         onChange={onChange}
       />
       {
-        field === 'weight'
+        field === 'bodyWeight'
           ? <span className="absolute left-40 top-9">lbs</span>
           : ''
       }
