@@ -11,10 +11,6 @@ export default function DashboardNav() {
 
   const { data: session } = useSession()
 
-  useEffect(() => {
-    console.log(session)
-  }, [session]);
-
   function openDialog() {
     setIsOpen(true)
   }

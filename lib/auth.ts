@@ -5,8 +5,9 @@ import { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
-import { User } from '@prisma/client'
+import { Prisma, User } from '@prisma/client'
 import _ from 'lodash'
+import InputJsonValue = Prisma.InputJsonValue
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
@@ -91,8 +92,9 @@ export const authOptions: NextAuthOptions = {
         }
       }
     },
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user , account }) => {
       // console.log('JWT Callback', { token, user })
+
       if (user) {
         const u = user as unknown as User
         const fullName = _.get(user, 'name', '')
@@ -116,12 +118,20 @@ export const authOptions: NextAuthOptions = {
               imageUrl
             }
           })
+
+          if (!_.isEmpty(account) && account?.provider) {
+            await prisma.user.update({
+              where: { email: user.email },
+              data: { [account.provider]: account as InputJsonValue }
+            })
+          }
         }
         return {
           ...token,
           id: u.id
         }
       }
+
       return token
     },
     async signIn({ account, profile }) {

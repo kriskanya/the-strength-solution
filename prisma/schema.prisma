@@ -22,6 +22,9 @@ model User {
   profile   Profile? @relation(fields: [profileId], references: [id]) // a User has-a Profile
   profileId Int?     @unique
 
+  google    Json?
+  facebook  Json?
+
   ExercisePerformed ExercisePerformed?
 
   createdAt DateTime @default(now())
