@@ -1,3 +1,5 @@
+import { Exercise } from '@prisma/client'
+
 export interface Description {
   [key: string]: { position: string, name: string, text: string }
 }

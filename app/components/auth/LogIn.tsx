@@ -1,6 +1,5 @@
 'use client'
 import { FormEvent, useState } from "react"
-import { useSession } from "next-auth/react";
 
 import OAuthButton from "@/app/ui/OAuthButton"
 import Divider from "@/app/ui/Divider"
@@ -8,13 +7,12 @@ import CustomInput from "@/app/ui/CustomInput"
 import CustomButton from "@/app/ui/CustomButton"
 import classes from './LogIn.module.css'
 import { Alert } from '@/app/ui/Alert'
-import { signIn } from 'next-auth/react'
-import { redirect, useRouter, useSearchParams } from 'next/navigation'
-import { get, isEmpty, isPlainObject } from 'lodash-es'
+import { signIn, useSession, getSession } from 'next-auth/react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { get } from 'lodash-es'
 
 export default function LogIn() {
   const router = useRouter()
-  const session = useSession()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
   const [email, setEmail] = useState('')
@@ -39,10 +37,13 @@ export default function LogIn() {
         callbackUrl
       })
 
+      const session = await getSession()
       const profileId = get(session, 'userData.profileId')
 
       if (!profileId) {
         router.push('about-you')
+      } else if (profileId) {
+        router.push('choose-workouts')
       } else if (!res?.error) {
         router.push(callbackUrl)
       } else {

@@ -6,8 +6,6 @@ export async function POST(req: NextRequest) {
   try {
     const { userId, gender, bodyWeight, age } = await req.json()
 
-    debugger
-
     // check incoming req.json() data for validity, prob use Joi()
 
     const upsertedProfile = await upsertProfile({

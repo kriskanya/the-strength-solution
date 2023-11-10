@@ -1,16 +1,16 @@
-'use client'
 import classes from './CustomCheckbox.module.css'
-import { useState } from 'react'
+import { ChangeEvent } from 'react'
 
 interface Props {
-  checked: boolean,
+  isChecked: boolean,
+  checkboxHandler: (evt: ChangeEvent<HTMLInputElement>) => void,
+  name: string,
   label: string,
   id: string,
   showRepsInput?: boolean
 }
 
-export default function CustomCheckbox({ checked, label, id, showRepsInput }: Props) {
-  const [isChecked, setIsChecked] = useState(checked);
+export default function CustomCheckbox({ isChecked, checkboxHandler, label, name, id, showRepsInput }: Props) {
 
   return (
     <div className={`${classes.checkboxWrapper} flex items-center justify-between h-16 w-80 px-3 border border-lighter-grey rounded bg-white`}>
@@ -18,8 +18,9 @@ export default function CustomCheckbox({ checked, label, id, showRepsInput }: Pr
         <input
           id={id}
           type="checkbox"
+          name={name}
           checked={isChecked}
-          onChange={() => setIsChecked((prev) => !prev)}
+          onChange={checkboxHandler}
           className={isChecked ? classes.checked : ""}
         />
         <span className="inter font-medium text-sm text-custom-black opacity-80">{label}</span>
