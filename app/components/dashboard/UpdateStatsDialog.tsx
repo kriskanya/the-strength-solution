@@ -1,14 +1,15 @@
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { cloneDeep, get } from 'lodash-es'
+import { cloneDeep, get, isArray } from 'lodash-es'
 import { Dialog } from '@headlessui/react'
 
 import { UpdateStatsTab } from '@/app/ui/UpdateStatsTab'
-import UpdateStatusSelectWorkout from '@/app/components/dashboard/UpdateStatsSelectWorkout'
 import CustomButton from '@/app/ui/CustomButton'
 import UpdateUserStats from '@/app/components/dashboard/UpdateUserStats'
-import { useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 import { UserStats } from '@/common/frontend-types'
 import { Alert } from '@/app/ui/Alert'
+import { ChosenExercise, FlattenedChosenExercise } from '@/common/shared-types'
+import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'
 
 interface Props {
   isOpen: boolean,
@@ -18,9 +19,9 @@ interface Props {
 }
 
 export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUserStats }: Props ) {
-  const [selectedTab, setSelectedTab] = useState({ workouts: false, stats: true })
+  const [selectedTab, setSelectedTab] = useState({ workouts: true, stats: false })
   const [showAlert, setShowAlert] = useState(false)
-  const session = useSession()
+  const [exercises, setExercises] = useState<FlattenedChosenExercise[]>()
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
@@ -31,28 +32,80 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
     }
   }
 
+  const fetchExercises = async () => {
+    try {
+      let data: any
+      const session = await getSession()
+      const profileId = get(session, 'userData.profileId')
+      const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
+      const exercises = await res.json()
+
+      if (exercises && (isArray(exercises) && exercises.length)) {
+        // flatten the returned inner-joined object, so that we can more easily handle the case where they haven't chosen their exercises yet
+        data = exercises.map((e: ChosenExercise) => {
+          return { ...e, ...e.exercise }
+        }) as FlattenedChosenExercise[]
+      }
+
+      if (data && (isArray(data) && data.length)) {
+        setExercises(data)
+      }
+    } catch (err) {
+      console.error('UpdateStatsDialog', err)
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      await fetchExercises()
+    })()
+  }, [])
+
+  const saveStats = async (userId: number) => {
+    const body = {
+      userId,
+      gender: userStats.gender.male ? 'male' : 'female',
+      bodyWeight: userStats.bodyWeight,
+      age: userStats.age
+    }
+    return fetch(`/api/profile`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+  }
+
+  const saveExercises = async (profileId: number) => {
+    const body = {
+      exercises,
+      profileId
+    }
+    return fetch(`/api/exercises/choose`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+  }
+
   const saveChanges = async () => {
     try {
-      const userId = get(session, 'data.userData.id')
-      const body = {
-        userId,
-        gender: userStats.gender.male ? 'male' : 'female',
-        bodyWeight: userStats.bodyWeight,
-        age: userStats.age
+      const session = await getSession()
+      const userId = get(session, 'userData.id')
+      const profileId = get(session, 'userData.profileId')
+
+      if (userId && profileId) {
+        await Promise.all([saveStats(userId), saveExercises(profileId)])
+        setShowAlert(true)
+        setTimeout(() => setShowAlert(false), 5000)
+      } else {
+        console.error(`UpdateStatsDialog: userId: ${ userId }, profileId: ${ profileId }`)
       }
-      const res = await fetch(`/api/profile`, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      const data = await res.json()
-      setShowAlert(true)
-      setTimeout(() => setShowAlert(false), 5000)
-      console.log(data)
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
@@ -98,7 +151,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
             <div>
               {
                 selectedTab.workouts
-                  ? <UpdateStatusSelectWorkout />
+                  ? <UpdateStatusSelectExercises exercises={exercises} setExercises={setExercises} />
                   : <UpdateUserStats userStats={userStats} onChangeStat={onChangeStat} />
               }
             </div>
@@ -120,9 +173,8 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
                 />
               </div>
             </div>
-            <div className="grid grid-cols-3">
-              <p></p>
-              <p className="ml-10">
+            <div className="mx-6 mt-10">
+              <p>
                 {showAlert && <Alert>Changes saved successfully</Alert>}
               </p>
             </div>

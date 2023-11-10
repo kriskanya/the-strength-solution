@@ -14,30 +14,34 @@ export default function ChooseExercises() {
   const [exercises, setExercises] = useState<FlattenedChosenExercise[]>()
 
   const fetchExercises = async () => {
-    let data: any
-    const session = await getSession()
-    const profileId = get(session, 'userData.profileId')
-    const promises = [
-      fetch(`/api/exercises/choose/profile/${ profileId }`),
-      fetch(`/api/exercises`)
-    ]
-    const apiCalls = await Promise.all(promises)
-    const chosenWorkoutsData = await apiCalls[0].json()
-    const exercisesData = await apiCalls[1].json()
+    try {
+      let data: any
+      const session = await getSession()
+      const profileId = get(session, 'userData.profileId')
+      const promises = [
+        fetch(`/api/exercises/choose/profile/${ profileId }`),
+        fetch(`/api/exercises`)
+      ]
+      const apiCalls = await Promise.all(promises)
+      const chosenWorkoutsData = await apiCalls[0].json()
+      const exercisesData = await apiCalls[1].json()
 
-    if (chosenWorkoutsData && (isArray(chosenWorkoutsData) && chosenWorkoutsData.length)) {
-      // flatten the returned inner-joined object, so that we can more easily handle the case where they haven't chosen their exercises yet
-      data = chosenWorkoutsData.map((e: ChosenExercise) => {
-        return { ...e, ...e.exercise }
-      }) as FlattenedChosenExercise[]
-    } else if (exercisesData && (isArray(exercisesData) && exercisesData.length)) {
-      data = exercisesData.map((e: Exercise) => {
-        return { ...e, ...{ active: true } }
-      }) as Exercise[]
-    }
+      if (chosenWorkoutsData && (isArray(chosenWorkoutsData) && chosenWorkoutsData.length)) {
+        // flatten the returned inner-joined object, so that we can more easily handle the case where they haven't chosen their exercises yet
+        data = chosenWorkoutsData.map((e: ChosenExercise) => {
+          return { ...e, ...e.exercise }
+        }) as FlattenedChosenExercise[]
+      } else if (exercisesData && (isArray(exercisesData) && exercisesData.length)) {
+        data = exercisesData.map((e: Exercise) => {
+          return { ...e, ...{ active: true } }
+        }) as Exercise[]
+      }
 
-    if (data && (isArray(data) && data.length)) {
-      setExercises(data)
+      if (data && (isArray(data) && data.length)) {
+        setExercises(data)
+      }
+    } catch (e) {
+      console.error('ChooseExercises', e)
     }
   }
 
@@ -106,7 +110,7 @@ export default function ChooseExercises() {
           </div>
           <div className="flex flex-wrap gap-5 mt-10">
             {
-              exercises && exercises.map(({displayName, exerciseName,  active}, i) => {
+              exercises && exercises.map(({ displayName, exerciseName,  active }, i) => {
                 return (
                   <CustomCheckbox
                     isChecked={active}
