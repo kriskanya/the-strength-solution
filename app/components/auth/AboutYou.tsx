@@ -9,20 +9,23 @@ import femaleAvatar from '../../images/female-avatar.svg'
 import blueBlur from '../../images/blue-blur-background-small.svg'
 import classes from './AboutYou.module.css'
 import { cloneDeep, get } from 'lodash-es'
-import { useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 import { Alert } from '@/app/ui/Alert'
 import { useRouter } from 'next/navigation'
+import { UserStats } from '@/common/frontend-types'
 
 export default function AboutYou() {
-  const { data: session } = useSession()
   const router = useRouter()
-  const [userStats, setUserStats] = useState({
-    gender: { male: true, female: false }, bodyWeight: 0, age: 0 }
+  const [userStats, setUserStats] = useState<UserStats>({
+    gender: { male: true, female: false }, bodyWeight: 150, age: 25 }
   )
   const [error, setError] = useState<string | null>(null)
 
   const fetchProfileInformation = async () => {
+    const session = await getSession()
     const profileId = get(session, 'userData.profileId')
+
+    if (!profileId) return
 
     try {
       const res = await fetch(`/api/profile/${profileId}`)
@@ -36,10 +39,10 @@ export default function AboutYou() {
   }
 
   useEffect(() => {
-    if (session?.user) {
-      fetchProfileInformation()
-    }
-  }, [session]);
+    (async () => {
+      await fetchProfileInformation()
+    })()
+  }, [])
 
   function onChangeStat(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target
@@ -65,6 +68,7 @@ export default function AboutYou() {
   const saveChanges = async (event: FormEvent) => {
     event.preventDefault()
     try {
+      const session = await getSession()
       const userId = get(session, 'userData.id')
       const body = {
         userId: userId,

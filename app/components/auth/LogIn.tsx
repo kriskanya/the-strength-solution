@@ -9,7 +9,7 @@ import classes from './LogIn.module.css'
 import { Alert } from '@/app/ui/Alert'
 import { signIn, useSession, getSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { get } from 'lodash-es'
+import { get, isArray } from 'lodash-es'
 
 export default function LogIn() {
   const router = useRouter()
@@ -43,7 +43,12 @@ export default function LogIn() {
       if (!profileId) {
         router.push('about-you')
       } else if (profileId) {
-        router.push('choose-workouts')
+        const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
+        const chosenExercises = await res.json()
+        const path = (isArray(chosenExercises) && chosenExercises?.length)
+          ? 'dashboard'
+          : 'choose-workouts'
+        router.push(path)
       } else if (!res?.error) {
         router.push(callbackUrl)
       } else {

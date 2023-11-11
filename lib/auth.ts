@@ -76,7 +76,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
-          name: `${ user.firstName } ${ user.lastName }`
+          name: (user.firstName && user.lastName) ? `${ user.firstName } ${ user.lastName }` : ''
         }
       }
     })

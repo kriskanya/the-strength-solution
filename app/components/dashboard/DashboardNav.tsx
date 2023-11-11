@@ -25,7 +25,7 @@ export default function DashboardNav() {
       setUserStats(stats)
       setIsOpen(true)
     } catch (err) {
-      console.log(err);
+      console.error('DashboardNav component', err)
     }
   }
 
@@ -44,7 +44,7 @@ export default function DashboardNav() {
         </div>
         <div className="flex ml-7">
           <p className="inter font-medium text-white opacity-60 my-auto">
-            { session?.user?.name }
+            { session?.user?.name || '' }
           </p>
           {
             session?.user?.image

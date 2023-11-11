@@ -1,12 +1,14 @@
 import { NextApiRequest } from 'next'
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
+import { validateIdParam } from '@/common/validation/constants/common_validation.constants'
 
-export async function GET(req: NextApiRequest, { params }: { params: { profileId: number } }) {
+export async function GET(req: NextApiRequest, { params }: { params: { id: number } }) {
   try {
-    const { profileId } = params
+    const { id } = params
+    const validatedParam = validateIdParam({ id })
     const exercisesOnProfiles = await prisma.exercisesOnProfiles.findMany({
-      where: { profileId },
+      where: { profileId: validatedParam.id },
       include: {
         exercise: true
       }

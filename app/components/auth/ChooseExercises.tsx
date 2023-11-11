@@ -32,6 +32,7 @@ export default function ChooseExercises() {
           return { ...e, ...e.exercise }
         }) as FlattenedChosenExercise[]
       } else if (exercisesData && (isArray(exercisesData) && exercisesData.length)) {
+        // set all new exercises choices to 'active' by default
         data = exercisesData.map((e: Exercise) => {
           return { ...e, ...{ active: true } }
         }) as Exercise[]

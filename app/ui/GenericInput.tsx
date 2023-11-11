@@ -2,8 +2,16 @@ import { capitalize } from 'lodash-es'
 
 interface Props {
   field: string,
-  value: string | number,
+  value: string | number | undefined,
   onChange: (event: any) => void
+}
+
+const maxLength = (field: string): number => {
+  return field === 'age'
+    ? 2
+    : field === 'bodyWeight'
+      ? 3
+      : 999
 }
 
 export default function GenericInput({ field, value, onChange }: Props) {
@@ -17,6 +25,7 @@ export default function GenericInput({ field, value, onChange }: Props) {
         id={field}
         value={value}
         onChange={onChange}
+        maxLength={maxLength(field)}
       />
       {
         field === 'bodyWeight'
