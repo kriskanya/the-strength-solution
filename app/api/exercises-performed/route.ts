@@ -4,15 +4,15 @@ import {
   createNewExercisesPerformed,
 } from '@/app/api/exercises-performed/exercises-performed-helpers'
 import { ExercisesPerformedPayload } from '@/app/api/exercises-performed/exercises-performed.constants'
-import { validateCreateParams, validatePayload } from '@/app/api/exercises-performed/exercises-performed.validation'
+import { validatePayload } from '@/app/api/exercises-performed/exercises-performed.validation'
+import { validateIdParam } from '@/common/validation/constants/common_validation.constants'
 
 export async function POST(req: NextRequest) {
   try {
     const { userId, payload }: { userId: number, payload: ExercisesPerformedPayload } = await req.json()
 
-    validatePayload(payload)
-
-    // validateCreateParams({ userId, payload })
+    validateIdParam({ id: userId })
+    const a = validatePayload(payload)
 
     return prisma.$transaction(async (tx) => {
       const user: any = await tx.user.findUnique({
