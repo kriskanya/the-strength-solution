@@ -22,6 +22,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
   const [selectedTab, setSelectedTab] = useState({ workouts: true, stats: false })
   const [showAlert, setShowAlert] = useState(false)
   const [exercises, setExercises] = useState<FlattenedChosenExercise[]>()
+  const [reps, setReps] = useState()
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
@@ -91,6 +92,22 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
     })
   }
 
+  const saveExercisesPerformed = async () => {
+    const session = await getSession()
+    const userId = get(session, 'userData.id')
+    const body = {
+      userId,
+      payload: reps
+    }
+    return fetch(`/api/exercises-performed`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+  }
+
   const saveChanges = async () => {
     try {
       const session = await getSession()
@@ -98,7 +115,8 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       const profileId = get(session, 'userData.profileId')
 
       if (userId && profileId) {
-        await Promise.all([saveStats(userId), saveExercises(profileId)])
+        // await Promise.all([saveStats(userId), saveExercises(profileId)])
+        await saveExercisesPerformed()
         setShowAlert(true)
         setTimeout(() => setShowAlert(false), 5000)
       } else {
@@ -152,7 +170,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
             <div>
               {
                 selectedTab.workouts
-                  ? <UpdateStatusSelectExercises exercises={exercises} setExercises={setExercises} />
+                  ? <UpdateStatusSelectExercises exercises={exercises} setExercises={setExercises} reps={reps} setReps={setReps} />
                   : <UpdateUserStats userStats={userStats} onChangeStat={onChangeStat} />
               }
             </div>

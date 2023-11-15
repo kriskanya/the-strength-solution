@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import CustomButton from '@/app/ui/CustomButton'
 import UpdateStatusDialog from '@/app/components/dashboard/UpdateStatsDialog'
-import { useSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import { get } from 'lodash-es'
 
 export default function DashboardNav() {
@@ -12,10 +12,10 @@ export default function DashboardNav() {
   const [userStats, setUserStats] = useState({
     gender: { male: true, female: false }, bodyWeight: 180, age: 27 }
   )
-
   const { data: session } = useSession()
 
   const openDialog = async () => {
+    const session = await getSession()
     const profileId = get(session, 'userData.profileId')
     try {
       const res = await fetch(`/api/profile/${profileId}`)

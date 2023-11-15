@@ -22,10 +22,10 @@ model User {
   profile   Profile? @relation(fields: [profileId], references: [id]) // a User has-a Profile
   profileId Int?     @unique
 
-  google    Json?
-  facebook  Json?
+  google   Json?
+  facebook Json?
 
-  ExercisePerformed ExercisePerformed?
+  ExercisePerformed ExercisePerformed[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -41,8 +41,8 @@ model Profile {
 
   ExercisesOnProfiles ExercisesOnProfiles[]
 
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // join table - user chooses which exercises he performs
@@ -52,10 +52,10 @@ model ExercisesOnProfiles {
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
   exerciseId Int // relation scalar field (used in the `@relation` attribute above)
 
-  active     Boolean // indicates whether or not the user selected this exercise as one he performs
+  active Boolean // indicates whether or not the user selected this exercise as one he performs
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@id([profileId, exerciseId])
 }
@@ -66,12 +66,13 @@ model Exercise {
   displayName  String
   description  String
 
-  standards Standard[] // an Exercise belongs-to-many Standards
+  standards    Standard[] // an Exercise belongs-to-many Standards
 
   ExercisesOnProfiles ExercisesOnProfiles[]
+  ExercisePerformed   ExercisePerformed[]
 
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
 }
 
 model Standard {
@@ -96,14 +97,16 @@ model Standard {
 model ExercisePerformed {
   id            Int       @id @default(autoincrement())
   reps          Int
-  standard      Standard? @relation(fields: [standardId], references: [id]) // an ExercisePerformed has-a a Standard
-  standardId    Int?      @unique
+  standard      Standard  @relation(fields: [standardId], references: [id]) // an ExercisePerformed has-a a Standard
+  standardId    Int
   user          User      @relation(fields: [userId], references: [id])
-  userId        Int       @unique
+  userId        Int
+  exercise      Exercise  @relation(fields: [exerciseId], references: [id])
+  exerciseId    Int
   datePerformed DateTime
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ENUMS

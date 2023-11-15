@@ -23,6 +23,8 @@ CREATE TABLE "User" (
     "fullName" TEXT,
     "imageUrl" TEXT,
     "profileId" INTEGER,
+    "google" JSONB,
+    "facebook" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -84,8 +86,9 @@ CREATE TABLE "Standard" (
 CREATE TABLE "ExercisePerformed" (
     "id" SERIAL NOT NULL,
     "reps" INTEGER NOT NULL,
-    "standardId" INTEGER,
+    "standardId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
+    "exerciseId" INTEGER NOT NULL,
     "datePerformed" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -98,12 +101,6 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_profileId_key" ON "User"("profileId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ExercisePerformed_standardId_key" ON "ExercisePerformed"("standardId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ExercisePerformed_userId_key" ON "ExercisePerformed"("userId");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -118,7 +115,10 @@ ALTER TABLE "ExercisesOnProfiles" ADD CONSTRAINT "ExercisesOnProfiles_exerciseId
 ALTER TABLE "Standard" ADD CONSTRAINT "Standard_exerciseId_fkey" FOREIGN KEY ("exerciseId") REFERENCES "Exercise"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ExercisePerformed" ADD CONSTRAINT "ExercisePerformed_standardId_fkey" FOREIGN KEY ("standardId") REFERENCES "Standard"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "ExercisePerformed" ADD CONSTRAINT "ExercisePerformed_standardId_fkey" FOREIGN KEY ("standardId") REFERENCES "Standard"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ExercisePerformed" ADD CONSTRAINT "ExercisePerformed_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ExercisePerformed" ADD CONSTRAINT "ExercisePerformed_exerciseId_fkey" FOREIGN KEY ("exerciseId") REFERENCES "Exercise"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

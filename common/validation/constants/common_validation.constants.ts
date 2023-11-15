@@ -1,5 +1,5 @@
 import { Schema, ValidationOptions } from 'joi'
-import { IIdParam, IProfileIdParam } from '@/common/validation/constants/app.constants'
+import { IIdParam } from '@/common/validation/constants/app.constants'
 import { Joi } from '@/common/validation/validation'
 
 export const ANY                     = Joi.any()

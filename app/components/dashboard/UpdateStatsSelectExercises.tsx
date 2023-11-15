@@ -1,14 +1,16 @@
 import CustomCheckbox from '@/app/ui/CustomCheckbox'
 import { FlattenedChosenExercise } from '@/common/shared-types'
 import { ChangeEvent } from 'react'
-import { cloneDeep, get } from 'lodash-es'
+import { cloneDeep, get, toInteger } from 'lodash-es'
 
 interface Props {
   exercises: FlattenedChosenExercise[] | undefined,
-  setExercises: (updatedExercises: FlattenedChosenExercise[]) => void
+  setExercises: (updatedExercises: FlattenedChosenExercise[]) => void,
+  reps: any,
+  setReps: any
 }
 
-export default function UpdateStatusSelectExercises({ exercises, setExercises }: Props) {
+export default function UpdateStatusSelectExercises({ exercises, setExercises, reps, setReps }: Props) {
   const checkboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
     let updatedExercises = cloneDeep(exercises)
     const checked = get(event, 'target.checked')
@@ -29,20 +31,39 @@ export default function UpdateStatusSelectExercises({ exercises, setExercises }:
     setExercises(updatedExercises)
   }
 
+  const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    let updatedReps = cloneDeep(reps)
+    const exerciseName = get(event, 'target.name')
+    const inputValue = get(event, 'target.value')
+    const exerciseId = get(event, `target.attributes['data-exercise_id'].value`)
+
+    if (!inputValue || !exerciseId) {
+      console.log(`Issue with saving reps in UpdateStatusSelectExercises: inputValue is ${inputValue} and exerciseId is ${exerciseId}`)
+      return
+    }
+
+    const current = { [exerciseName]: { reps: +inputValue, exerciseId: toInteger(exerciseId) } }
+    updatedReps = { ...updatedReps, ...current }
+
+    setReps(updatedReps)
+  }
+
   return (
-    <div className={``}>
+    <div>
       <div className={`h-4/6 mx-auto relative`}>
         <div className="flex justify-center flex-wrap gap-5 mt-10">
           {
-            exercises && exercises.map(({ displayName, exerciseName,  active }, i) => {
+            exercises && exercises.map(({ displayName, exerciseName,  active, id }) => {
               return (
                 <CustomCheckbox
                   isChecked={active}
+                  showRepsInput={true}
                   checkboxHandler={checkboxHandler}
+                  inputHandler={inputHandler}
                   label={displayName}
                   name={exerciseName}
-                  id={i+''}
-                  key={i}
+                  id={id+''}
+                  key={id}
                 />
               )
             })

@@ -72,6 +72,8 @@ export const EXERCISE_NAME: any = {
   'BACK EXTENSIONS': ExerciseName.BACK_EXTENSION
 }
 
+export type EXERCISE_ENUM_VALUE = 'PUSH_UP' | 'INVERTED_ROW' | 'DIP' | 'CHIN_UP' | 'PULL_UP' | 'GOBLET_SQUAT' | 'BACK_EXTENSION'
+
 export const EXERCISE_METADATA: any = {
   'PUSH-UP': { displayName: 'Push-Ups', description: '' },
   'INVERTED ROW': { displayName: 'Inverted Rows', description: '' },
