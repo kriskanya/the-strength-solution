@@ -4,4 +4,6 @@ export interface ChosenExercise extends ExercisesOnProfiles {
   exercise: Exercise
 }
 
-export interface FlattenedChosenExercise extends ExercisesOnProfiles, Exercise {}
+export interface FlattenedChosenExercise extends ExercisesOnProfiles, Exercise {
+  reps?: number
+}

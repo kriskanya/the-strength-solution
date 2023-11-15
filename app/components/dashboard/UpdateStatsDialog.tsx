@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { cloneDeep, get, isArray } from 'lodash-es'
 import { Dialog } from '@headlessui/react'
 
@@ -40,6 +40,8 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       const profileId = get(session, 'userData.profileId')
       const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
       const exercises = await res.json()
+
+      console.log('fetch exercises', exercises)
 
       if (exercises && (isArray(exercises) && exercises.length)) {
         // flatten the returned inner-joined object, so that we can more easily handle the case where they haven't chosen their exercises yet

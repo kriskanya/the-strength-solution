@@ -1,24 +1,16 @@
 import { NextApiRequest } from 'next'
-import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 import { validateIdParam } from '@/common/validation/constants/common_validation.constants'
+import { fetchUsersExercises } from '@/app/api/exercises/exercises-helpers'
 
 export async function GET(req: NextApiRequest, { params }: { params: { id: number } }) {
   try {
     const { id } = params
-    const validatedParam = validateIdParam({ id })
-    const exercisesOnProfiles = await prisma.exercisesOnProfiles.findMany({
-      where: { profileId: validatedParam.id },
-      include: {
-        exercise: true
-      }
-    })
+    validateIdParam({ id })
 
-    const sortedData = exercisesOnProfiles.sort((a: any, b: any) => {
-      return a.exercise.displayName.localeCompare(b.exercise.displayName);
-    })
+    const res = await fetchUsersExercises(+id)
 
-    return Response.json(sortedData)
+    return Response.json(res)
   } catch (err: any) {
     return new NextResponse(
       JSON.stringify({

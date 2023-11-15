@@ -6,7 +6,7 @@ import { ExercisesPerformedPayload } from '@/app/api/exercises-performed/exercis
 import Joi, { ValidationOptions } from 'joi'
 
 /**
- * Need to set presence to 'optional' here---the object CREATE_EXERCISE_PERFORMED_PAYLOAD
+ * Need to set 'presence' to 'optional' here---the object CREATE_EXERCISE_PERFORMED_PAYLOAD
  * must have at least one of those key-value pairs, but not all of them
  */
 const VALIDATION_OPTS:ValidationOptions = {

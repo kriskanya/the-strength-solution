@@ -6,13 +6,14 @@ import {
 import { ExercisesPerformedPayload } from '@/app/api/exercises-performed/exercises-performed.constants'
 import { validatePayload } from '@/app/api/exercises-performed/exercises-performed.validation'
 import { validateIdParam } from '@/common/validation/constants/common_validation.constants'
+import { NextApiRequest } from 'next'
 
 export async function POST(req: NextRequest) {
   try {
     const { userId, payload }: { userId: number, payload: ExercisesPerformedPayload } = await req.json()
 
     validateIdParam({ id: userId })
-    const a = validatePayload(payload)
+    validatePayload(payload)
 
     return prisma.$transaction(async (tx) => {
       const user: any = await tx.user.findUnique({

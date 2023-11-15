@@ -45,6 +45,8 @@ export default function UpdateStatusSelectExercises({ exercises, setExercises, r
     const current = { [exerciseName]: { reps: +inputValue, exerciseId: toInteger(exerciseId) } }
     updatedReps = { ...updatedReps, ...current }
 
+    console.log('updated reps', updatedReps)
+
     setReps(updatedReps)
   }
 
@@ -53,11 +55,12 @@ export default function UpdateStatusSelectExercises({ exercises, setExercises, r
       <div className={`h-4/6 mx-auto relative`}>
         <div className="flex justify-center flex-wrap gap-5 mt-10">
           {
-            exercises && exercises.map(({ displayName, exerciseName,  active, id }) => {
+            exercises && exercises.map(({ displayName, exerciseName,  active, id, reps }) => {
               return (
                 <CustomCheckbox
                   isChecked={active}
                   showRepsInput={true}
+                  reps={reps}
                   checkboxHandler={checkboxHandler}
                   inputHandler={inputHandler}
                   label={displayName}
