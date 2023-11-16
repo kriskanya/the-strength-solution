@@ -1,14 +1,14 @@
 import Image from 'next/image'
 
-import FemaleAvatarFront from '@/app/components/dashboard/FemaleAvatarFront'
+import FemaleAvatarFront from '@/app/components/dashboard/avatars/FemaleAvatarFront'
 import proficiencyLegend from '@/app/images/proficiency-legend.svg'
 import bgBlur from '@/app/images/blue-bg-blur-dashboard.svg'
 import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types'
-import FemaleAvatarRear from '@/app/components/dashboard/FemaleAvatarRear'
+import FemaleAvatarRear from '@/app/components/dashboard/avatars/FemaleAvatarRear'
 import DashboardSidePanel from '@/app/components/dashboard/DashboardSidePanel'
 import classes from './DashboardAvatarSection.module.css'
-import MaleAvatarFront from '@/app/components/dashboard/MaleAvatarFront'
-import MaleAvatarRear from '@/app/components/dashboard/MaleAvatarRear'
+import MaleAvatarFront from '@/app/components/dashboard/avatars/MaleAvatarFront'
+import MaleAvatarRear from '@/app/components/dashboard/avatars/MaleAvatarRear'
 
 export default function DashboardAvatarSection() {
   const grey = '#9396A3'

@@ -4,15 +4,15 @@ import { NextApiRequest } from 'next'
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId, gender, bodyWeight, age } = await req.json()
+    // const { userId, gender, bodyWeight, age } = await req.json()
 
     // check incoming req.json() data for validity, prob use Joi()
 
-    const upsertedProfile = await upsertProfile({
-      userId, gender, bodyWeight, age
-    })
+    // const upsertedProfile = await upsertProfile({
+    //   userId, gender, bodyWeight, age
+    // })
 
-    return Response.json(upsertedProfile)
+    // return Response.json(upsertedProfile)
 
   } catch (err: any) {
     return new NextResponse(

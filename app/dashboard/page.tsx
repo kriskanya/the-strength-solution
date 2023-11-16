@@ -1,18 +1,15 @@
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
+'use client'
 import DashboardNav from '@/app/components/dashboard/DashboardNav'
-import DashboardAvatarSection from '@/app/components/dashboard/DashboardAvatarSection'
-import DashboardGraphsSection from '@/app/components/dashboard/DashboardGraphsSection'
+import DashboardAvatarSection from '@/app/components/dashboard/avatars/DashboardAvatarSection'
+import DashboardGraphsSection from '@/app/components/dashboard/graphs/DashboardGraphsSection'
+import ActiveExerciseContextProvider from '@/app/store/exercises-context'
 
-export default async function DashboardPage() {
-  const session = await getServerSession(authOptions)
-  console.log('session info, dashboard', session)
-
+export default function DashboardPage() {
   return (
-    <>
+    <ActiveExerciseContextProvider>
       <DashboardNav />
       <DashboardAvatarSection />
       <DashboardGraphsSection />
-    </>
+    </ActiveExerciseContextProvider>
   )
 }

@@ -1,18 +1,16 @@
 'use client'
 
 import CustomDropdown from '@/app/ui/CustomDropdown'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { get, isEmpty, map } from 'lodash-es'
 import { ExercisesOnProfiles, Standard } from '@prisma/client'
 import { getSession } from 'next-auth/react'
 import { StandardsDropdownSelection } from '@/common/frontend-types'
+import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
-interface Props {
-  activeExercises: ExercisesOnProfiles[] | undefined
-}
-
-export default function StrengthStandardsTable({ activeExercises }: Props) {
-  const [standards, setStandards] = useState<{ [key:string]: Standard[] }>({})
+export default function StrengthStandardsTable() {
+  const { activeExercises } = useContext(ActiveExercisesContext)
+  const [standards, setStandards] = useState<{ [key:string]: (Standard & { active?: boolean })[] }>({})
   const [selectedValues, setSelectedValues] = useState<StandardsDropdownSelection>()
   const weight: { [key: string]: number[] } = {
     male: Array.from({length: 201}, (_, i) => i + 110),
@@ -27,21 +25,32 @@ export default function StrengthStandardsTable({ activeExercises }: Props) {
     setSelectedValues({...selectedValues, ...obj})
   }
 
+  const determineIfStandardsActive = (standards: { [key: string]: (Standard & { active?: boolean })[] }, activeExercises: ExercisesOnProfiles[]) => {
+    for (const [key, value] of Object.entries(standards)) {
+      const isActive = activeExercises.find(ex => ex.exerciseId === get(value, '[0].id'))?.active
+      standards[key] = standards[key].map(standard => {
+        standard.active = isActive
+        return standard
+      })
+    }
+  }
+
   const fetchStandards = async ({ gender, weight, age }: StandardsDropdownSelection) => {
     try {
       if (!gender || !weight || !age) return
 
-      let data
-      const exerciseNames = map(activeExercises, 'exercise.exerciseName').join(', ')
+      let standards
+      const exercises = map(activeExercises, 'exercise.exerciseName')
+      const exerciseNames = exercises.join(', ')
       const res = await fetch(
         `/api/standards?gender=${gender}&age=${age}&bodyWeight=${weight}&exerciseNames=${exerciseNames}`
       )
-      if (res) {
-        data = await res.json()
-      }
-      if (data) {
-        setStandards(data)
-      }
+
+      if (res) standards = await res.json()
+
+      if (standards) setStandards(standards)
+
+      if (activeExercises) determineIfStandardsActive(standards, activeExercises)
     } catch (err) {
       console.log(err);
     }
@@ -56,7 +65,7 @@ export default function StrengthStandardsTable({ activeExercises }: Props) {
       setSelectedValues({ gender, weight, age })
       fetchStandards({ gender, weight, age })
     })()
-  }, [])
+  }, [activeExercises])
 
   return (
     <div className="bg-light-grey">
@@ -118,19 +127,22 @@ export default function StrengthStandardsTable({ activeExercises }: Props) {
               {(() => {
                 const arr = []
                 for (const [exerciseName, standardsRecords] of Object.entries(standards)) {
-                  const el = (
-                    <tr className="h-12 border-b border-lighter-grey" key={exerciseName}>
-                      <td className="inter font-medium text-sm">{get(standardsRecords, '[0].displayName')}</td>
-                      {
-                        standardsRecords.map((record, i) => {
-                          return (
-                            <td key={i}>{record.startRepRange} { record.startRepRange === 1 ? 'rep' : 'reps' }</td>
-                          )
-                        })
-                      }
-                    </tr>
-                  )
-                  arr.push(el)
+                  const isActive = get(standardsRecords, '[0].active')
+                  if (isActive) {
+                    const el = (
+                      <tr className="h-12 border-b border-lighter-grey" key={exerciseName}>
+                        <td className="inter font-medium text-sm">{get(standardsRecords, '[0].displayName')}</td>
+                        {
+                          standardsRecords.map((record, i) => {
+                            return (
+                              <td key={i}>{record.startRepRange} { record.startRepRange === 1 ? 'rep' : 'reps' }</td>
+                            )
+                          })
+                        }
+                      </tr>
+                    )
+                    arr.push(el)
+                  }
                 }
                 return arr
               })()}

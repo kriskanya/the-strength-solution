@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
 import { cloneDeep, get, isArray } from 'lodash-es'
 import { Dialog } from '@headlessui/react'
 
@@ -10,6 +10,7 @@ import { UserStats } from '@/common/frontend-types'
 import { Alert } from '@/app/ui/Alert'
 import { ChosenExercise, FlattenedChosenExercise } from '@/common/shared-types'
 import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'
+import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
 interface Props {
   isOpen: boolean,
@@ -22,6 +23,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
   const [selectedTab, setSelectedTab] = useState({ workouts: true, stats: false })
   const [showAlert, setShowAlert] = useState(false)
   const [exercises, setExercises] = useState<FlattenedChosenExercise[]>()
+  const { activeExercises, setActiveExercises } = useContext(ActiveExercisesContext)
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
@@ -92,6 +94,8 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       if (userId && profileId) {
         const save = await saveAll(userId, profileId)
         const res = await save.json()
+        setActiveExercises(res.chosenExercises)
+        // need to set chosen exercises here
 
         setShowAlert(true)
         setTimeout(() => setShowAlert(false), 5000)

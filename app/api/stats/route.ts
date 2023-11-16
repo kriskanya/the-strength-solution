@@ -23,8 +23,14 @@ export async function POST(req: NextRequest) {
       })
       const chosenExercises = await saveChosenExercises({tx, exercises, profileId: user.profileId})
       const exercisesPerformed = await createNewExercisesPerformed({tx, exercises, user})
+      const exercisesOnProfiles = await prisma.exercisesOnProfiles.findMany({
+        where: { profileId: user.profileId, active: true },
+        include: {
+          exercise: true
+        }
+      })
 
-      return Response.json({ profile: upsertedProfile, exercises: chosenExercises, exercisesPerformed })
+      return Response.json({ profile: upsertedProfile, chosenExercises, exercisesPerformed })
     })
   } catch (err: any) {
     return new NextResponse(
