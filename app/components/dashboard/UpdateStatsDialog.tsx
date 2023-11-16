@@ -8,7 +8,7 @@ import UpdateUserStats from '@/app/components/dashboard/UpdateUserStats'
 import { getSession } from 'next-auth/react'
 import { UserStats } from '@/common/frontend-types'
 import { Alert } from '@/app/ui/Alert'
-import { ChosenExercise, ExercisesPerformedPayload, FlattenedChosenExercise } from '@/common/shared-types'
+import { ChosenExercise, FlattenedChosenExercise } from '@/common/shared-types'
 import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'
 
 interface Props {
@@ -22,7 +22,6 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
   const [selectedTab, setSelectedTab] = useState({ workouts: true, stats: false })
   const [showAlert, setShowAlert] = useState(false)
   const [exercises, setExercises] = useState<FlattenedChosenExercise[]>()
-  const [reps, setReps] = useState<ExercisesPerformedPayload>()
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target

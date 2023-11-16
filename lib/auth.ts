@@ -88,7 +88,12 @@ export const authOptions: NextAuthOptions = {
       let userData
 
       if (_.isString(email) && email.length) {
-        userData = await prisma.user.findUnique({ where: { email } })
+        userData = await prisma.user.findUnique({
+          where: { email },
+          include: {
+            profile: true
+          }
+        })
       }
 
       return {

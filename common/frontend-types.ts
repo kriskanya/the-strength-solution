@@ -50,3 +50,9 @@ export interface UserStats {
   bodyWeight: number,
   age: number
 }
+
+export interface StandardsDropdownSelection {
+  gender: 'MALE' | 'FEMALE',
+  weight: number,
+  age: number
+}
