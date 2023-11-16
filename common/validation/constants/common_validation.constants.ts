@@ -24,6 +24,8 @@ export const EMAIL_MULTI_TRIM        = EMAIL_MULTI.trim().options({ convert:true
 export const POSITIVE_NONZERO_INT    = Joi.number().min(1).integer().positive()
 export const UI_DB_ID                = POSITIVE_NONZERO_INT.options({ convert:true })
 export const ID_PARAM     = Joi.object({ id:UI_DB_ID }).label('id')
+export const JSON_OBJECT             = Joi.object()
+export const JSON_ARRAY              = Joi.array()
 
 export function validateIdParam(param:IIdParam):IIdParam {
   return validate(param, ID_PARAM)

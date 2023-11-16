@@ -1,4 +1,5 @@
 import { Exercise } from '@prisma/client'
+import { EXERCISE_ENUM_VALUE } from './shared-types'
 
 export interface Description {
   [key: string]: { position: string, name: string, text: string }

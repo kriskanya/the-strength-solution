@@ -1,7 +1,9 @@
 import { prisma } from '@/lib/prisma'
 import _ from 'lodash'
 import { UserSavedExercise } from '@/common/backend-types'
-import { ExercisePerformed } from '@prisma/client'
+import { ExercisePerformed, Prisma } from '@prisma/client'
+import { FlattenedChosenExercise } from '@/common/shared-types'
+import TransactionClient = Prisma.TransactionClient
 
 /**
  * Fetches a user's saved exercises, including the associated Exercise record
@@ -22,12 +24,10 @@ export const fetchUsersExercises = async (profileId: number): Promise<UserSavedE
   const sql = `
       SELECT DISTINCT ON ("ExercisePerformed"."exerciseId") *
       FROM "ExercisePerformed"
-      INNER JOIN "Exercise"
-      ON "ExercisePerformed"."exerciseId" = "Exercise".id
+      INNER JOIN "Exercise" ON "ExercisePerformed"."exerciseId" = "Exercise".id
       WHERE "ExercisePerformed"."userId" = ${user?.id}
       ORDER BY "ExercisePerformed"."exerciseId", "ExercisePerformed"."datePerformed" DESC;
     `
-
   const exercisesPerformed = await prisma.$queryRawUnsafe(sql)
 
   let sortedData = exercisesOnProfiles
@@ -43,4 +43,36 @@ export const fetchUsersExercises = async (profileId: number): Promise<UserSavedE
   }
 
   return sortedData
+}
+
+export const saveChosenExercises = async ({tx, exercises, profileId}: { tx: TransactionClient, exercises: FlattenedChosenExercise[], profileId: number }) => {
+  if (!profileId) {
+    console.log('No profileId provided for saveChosenExercises')
+    return
+  }
+
+  const promises = exercises.map((exercise: FlattenedChosenExercise) => {
+    const active = exercise.active
+
+    return tx.exercisesOnProfiles.upsert({
+      where: { profileId_exerciseId: { profileId, exerciseId: exercise.id } },
+      update: {
+        active
+      },
+      create: ({
+        profileId,
+        exerciseId: exercise.id,
+        active
+      })
+    })
+  })
+
+  await Promise.all(promises)
+
+  return await tx.exercisesOnProfiles.findMany({
+    where: { profileId },
+    include: {
+      exercise: true
+    }
+  })
 }

@@ -1,16 +1,16 @@
 import CustomCheckbox from '@/app/ui/CustomCheckbox'
-import { FlattenedChosenExercise } from '@/common/shared-types'
+import { ExercisesPerformedPayload, FlattenedChosenExercise } from '@/common/shared-types'
 import { ChangeEvent } from 'react'
-import { cloneDeep, get, toInteger } from 'lodash-es'
+import { cloneDeep, get, isArray, toInteger } from 'lodash-es'
 
 interface Props {
   exercises: FlattenedChosenExercise[] | undefined,
   setExercises: (updatedExercises: FlattenedChosenExercise[]) => void,
-  reps: any,
-  setReps: any
+  // reps: ExercisesPerformedPayload | undefined,
+  // setReps: (reps: ExercisesPerformedPayload) => void
 }
 
-export default function UpdateStatusSelectExercises({ exercises, setExercises, reps, setReps }: Props) {
+export default function UpdateStatusSelectExercises({ exercises, setExercises }: Props) {
   const checkboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
     let updatedExercises = cloneDeep(exercises)
     const checked = get(event, 'target.checked')
@@ -32,22 +32,21 @@ export default function UpdateStatusSelectExercises({ exercises, setExercises, r
   }
 
   const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    let updatedReps = cloneDeep(reps)
+    let updatedExercises = cloneDeep(exercises)
     const exerciseName = get(event, 'target.name')
     const inputValue = get(event, 'target.value')
-    const exerciseId = get(event, `target.attributes['data-exercise_id'].value`)
 
-    if (!inputValue || !exerciseId) {
-      console.log(`Issue with saving reps in UpdateStatusSelectExercises: inputValue is ${inputValue} and exerciseId is ${exerciseId}`)
+    if (!updatedExercises || (isArray(updatedExercises) && updatedExercises.length === 0) || !inputValue) {
+      console.log(`Issue with saving reps in UpdateStatusSelectExercises; inputValue: ${inputValue}, updatedExercises: ${JSON.stringify(updatedExercises)}`)
       return
     }
 
-    const current = { [exerciseName]: { reps: +inputValue, exerciseId: toInteger(exerciseId) } }
-    updatedReps = { ...updatedReps, ...current }
+    const currentExercise = updatedExercises.find(e => e.exerciseName === exerciseName)
 
-    console.log('updated reps', updatedReps)
-
-    setReps(updatedReps)
+    if (currentExercise) {
+      currentExercise.reps = +inputValue
+      setExercises(updatedExercises)
+    }
   }
 
   return (

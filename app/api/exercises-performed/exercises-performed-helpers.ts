@@ -1,7 +1,7 @@
 import { AGE_RANGES, BODYWEIGHT_RANGES, GENDER } from '@/common/backend-types'
 import { Prisma, Profile, User } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
-import { ExercisesPerformedPayload } from '@/app/api/exercises-performed/exercises-performed.constants'
+import { ExercisesPerformedPayload, FlattenedChosenExercise } from '@/common/shared-types'
 
 export const findEnum = (enums: string[], reps: number) => {
   let i = 0
@@ -16,9 +16,10 @@ export const findEnum = (enums: string[], reps: number) => {
   }
 }
 
-export const createNewExercisesPerformed = async ({tx, payload, user}: { tx: TransactionClient, payload: ExercisesPerformedPayload, user: User & { profile: Profile } }) => {
+export const createNewExercisesPerformed = async ({tx, exercises, user}: { tx: TransactionClient, exercises: FlattenedChosenExercise[], user: User & { profile: Profile } }) => {
   let promises = []
-  for (const [key, value] of Object.entries(payload)) {
+  const exercisesWithReps = exercises.filter(ex => ex.reps)
+  for (const [key, value] of Object.entries(exercisesWithReps)) {
     const bodyWeightRange = findEnum(Object.keys(BODYWEIGHT_RANGES), (user?.profile as Profile).bodyWeight)
     const ageRange = findEnum(Object.keys(AGE_RANGES), (user?.profile as Profile).age)
 
@@ -49,16 +50,18 @@ export const createNewExercisesPerformed = async ({tx, payload, user}: { tx: Tra
       return
     }
 
-    const promise = tx.exercisePerformed.create({
-      data: {
-        reps: value.reps,
-        standardId: standard.id,
-        userId: user.id,
-        exerciseId: value.exerciseId,
-        datePerformed: new Date()
-      }
-    })
-    promises.push(promise)
+    if (value?.reps) {
+      const promise = tx.exercisePerformed.create({
+        data: {
+          reps: value.reps,
+          standardId: standard.id,
+          userId: user.id,
+          exerciseId: value.exerciseId,
+          datePerformed: new Date()
+        }
+      })
+      promises.push(promise)
+    }
   }
-  return await Promise.all(promises)
+  return Promise.all(promises)
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { FlattenedChosenExercise } from '@/common/shared-types'
 import { prisma } from '@/lib/prisma'
+import { saveChosenExercises } from '@/app/api/exercises/exercises-helpers'
 
 export async function POST(req: NextRequest) {
   // check incoming req.json() data for validity, prob use Joi()
@@ -8,23 +9,7 @@ export async function POST(req: NextRequest) {
     const { profileId, exercises } = await req.json()
 
     return prisma.$transaction(async (tx) => {
-      const promises = exercises.map((exercise: FlattenedChosenExercise) => {
-        const active = exercise.active
-
-        return prisma.exercisesOnProfiles.upsert({
-          where: { profileId_exerciseId: { profileId, exerciseId: exercise.id } },
-          update: {
-            active
-          },
-          create: ({
-            profileId,
-            exerciseId: exercise.id,
-            active
-          })
-        })
-      })
-
-      await Promise.all(promises)
+      await saveChosenExercises({tx, exercises, profileId})
 
       const exercisesOnProfiles = await prisma.exercisesOnProfiles.findMany({
         where: { profileId },

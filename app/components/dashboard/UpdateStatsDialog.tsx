@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { cloneDeep, get, isArray } from 'lodash-es'
 import { Dialog } from '@headlessui/react'
 
@@ -8,7 +8,7 @@ import UpdateUserStats from '@/app/components/dashboard/UpdateUserStats'
 import { getSession } from 'next-auth/react'
 import { UserStats } from '@/common/frontend-types'
 import { Alert } from '@/app/ui/Alert'
-import { ChosenExercise, FlattenedChosenExercise } from '@/common/shared-types'
+import { ChosenExercise, ExercisesPerformedPayload, FlattenedChosenExercise } from '@/common/shared-types'
 import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'
 
 interface Props {
@@ -22,7 +22,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
   const [selectedTab, setSelectedTab] = useState({ workouts: true, stats: false })
   const [showAlert, setShowAlert] = useState(false)
   const [exercises, setExercises] = useState<FlattenedChosenExercise[]>()
-  const [reps, setReps] = useState()
+  const [reps, setReps] = useState<ExercisesPerformedPayload>()
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
@@ -40,8 +40,6 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       const profileId = get(session, 'userData.profileId')
       const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
       const exercises = await res.json()
-
-      console.log('fetch exercises', exercises)
 
       if (exercises && (isArray(exercises) && exercises.length)) {
         // flatten the returned inner-joined object, so that we can more easily handle the case where they haven't chosen their exercises yet
@@ -64,44 +62,20 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
     })()
   }, [])
 
-  const saveStats = async (userId: number) => {
-    const body = {
+  const constructBody = (userId: number, profileId: number) => {
+    return {
       userId,
-      gender: userStats.gender.male ? 'male' : 'female',
+      exercises,
+      profileId,
+      gender: userStats.gender.male ? 'MALE' : 'FEMALE',
       bodyWeight: userStats.bodyWeight,
       age: userStats.age
     }
-    return fetch(`/api/profile`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
   }
 
-  const saveExercises = async (profileId: number) => {
-    const body = {
-      exercises,
-      profileId
-    }
-    return fetch(`/api/exercises/choose`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-  }
-
-  const saveExercisesPerformed = async () => {
-    const session = await getSession()
-    const userId = get(session, 'userData.id')
-    const body = {
-      userId,
-      payload: reps
-    }
-    return fetch(`/api/exercises-performed`, {
+  const saveAll = (userId: number, profileId: number) => {
+    const body = constructBody(userId, profileId)
+    return fetch(`/api/stats`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -117,8 +91,9 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       const profileId = get(session, 'userData.profileId')
 
       if (userId && profileId) {
-        // await Promise.all([saveStats(userId), saveExercises(profileId)])
-        await saveExercisesPerformed()
+        const save = await saveAll(userId, profileId)
+        const res = await save.json()
+
         setShowAlert(true)
         setTimeout(() => setShowAlert(false), 5000)
       } else {
@@ -172,7 +147,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
             <div>
               {
                 selectedTab.workouts
-                  ? <UpdateStatusSelectExercises exercises={exercises} setExercises={setExercises} reps={reps} setReps={setReps} />
+                  ? <UpdateStatusSelectExercises exercises={exercises} setExercises={setExercises} />
                   : <UpdateUserStats userStats={userStats} onChangeStat={onChangeStat} />
               }
             </div>
@@ -196,7 +171,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
             </div>
             <div className="mx-6 mt-10">
               <p>
-                {showAlert && <Alert>Changes saved successfully</Alert>}
+                {showAlert && <Alert customClasses="bg-green-200 text-sm">Changes saved successfully</Alert>}
               </p>
             </div>
           </Dialog.Description>

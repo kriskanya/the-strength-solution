@@ -2,8 +2,8 @@ import {
   POSITIVE_NONZERO_INT,
   validate
 } from '@/common/validation/constants/common_validation.constants'
-import { ExercisesPerformedPayload } from '@/app/api/exercises-performed/exercises-performed.constants'
 import Joi, { ValidationOptions } from 'joi'
+import { ExercisesPerformedPayload } from '@/common/shared-types'
 
 /**
  * Need to set 'presence' to 'optional' here---the object CREATE_EXERCISE_PERFORMED_PAYLOAD

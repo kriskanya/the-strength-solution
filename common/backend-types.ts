@@ -72,7 +72,6 @@ export const EXERCISE_NAME: any = {
   'BACK EXTENSIONS': ExerciseName.BACK_EXTENSION
 }
 
-export type EXERCISE_ENUM_VALUE = 'PUSH_UP' | 'INVERTED_ROW' | 'DIP' | 'CHIN_UP' | 'PULL_UP' | 'GOBLET_SQUAT' | 'BACK_EXTENSION'
 
 export const EXERCISE_METADATA: any = {
   'PUSH-UP': { displayName: 'Push-Ups', description: '' },
@@ -98,7 +97,8 @@ export interface ExerciseRecordPayload {
 }
 
 /**
- * Combines a few models to return a user's saved exercises, including the
+ * Combines the ExercisesOnProfiles and Exercise models plus 'reps' from
+ * ExercisePerformed to return a user's saved exercises, including the
  * associated Exercise record and the number of reps
  */
 export interface UserSavedExercise extends ExercisesOnProfiles {
