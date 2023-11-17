@@ -1,11 +1,15 @@
-import { Exercise, ExercisesOnProfiles } from '@prisma/client'
+import { Exercise, ExercisePerformed, ExercisesOnProfiles } from '@prisma/client'
 
 export interface ChosenExercise extends ExercisesOnProfiles {
   exercise: Exercise
 }
 
-export interface FlattenedChosenExercise extends ExercisesOnProfiles, Exercise {
-  reps?: number
+/**
+ * ExercisesOnProfiles record joined with exercise and loggedExercise
+ */
+export interface UserSavedExercise extends ExercisesOnProfiles {
+  exercise: Exercise,
+  loggedExercise?: ExercisePerformed
 }
 
 export type EXERCISE_ENUM_VALUE = 'PUSH_UP' | 'INVERTED_ROW' | 'DIP' | 'CHIN_UP' | 'PULL_UP' | 'GOBLET_SQUAT' | 'BACK_EXTENSION'

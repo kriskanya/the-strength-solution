@@ -1,7 +1,8 @@
 import { AGE_RANGES, BODYWEIGHT_RANGES, GENDER } from '@/common/backend-types'
 import { Prisma, Profile, User } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
-import { ExercisesPerformedPayload, FlattenedChosenExercise } from '@/common/shared-types'
+import { UserSavedExercise } from '@/common/shared-types'
+import { prisma } from '@/lib/prisma'
 
 export const findEnum = (enums: string[], reps: number) => {
   let i = 0
@@ -16,9 +17,9 @@ export const findEnum = (enums: string[], reps: number) => {
   }
 }
 
-export const createNewExercisesPerformed = async ({tx, exercises, user}: { tx: TransactionClient, exercises: FlattenedChosenExercise[], user: User & { profile: Profile } }) => {
+export const createNewExercisesPerformed = async ({tx, exercises, user}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile } }) => {
   let promises = []
-  const exercisesWithReps = exercises.filter(ex => ex.reps)
+  const exercisesWithReps = exercises.filter(item => item?.loggedExercise?.reps)
   for (const [key, value] of Object.entries(exercisesWithReps)) {
     const bodyWeightRange = findEnum(Object.keys(BODYWEIGHT_RANGES), (user?.profile as Profile).bodyWeight)
     const ageRange = findEnum(Object.keys(AGE_RANGES), (user?.profile as Profile).age)
@@ -34,10 +35,10 @@ export const createNewExercisesPerformed = async ({tx, exercises, user}: { tx: T
       bodyWeight: BODYWEIGHT_RANGES[bodyWeightRange],
       ageRange: AGE_RANGES[ageRange],
       startRepRange: {
-        lte: value.reps
+        lte: value?.loggedExercise?.reps
       },
       endRepRange: {
-        gte: value.reps
+        gte: value?.loggedExercise?.reps
       }
     }
 
@@ -50,10 +51,10 @@ export const createNewExercisesPerformed = async ({tx, exercises, user}: { tx: T
       return
     }
 
-    if (value?.reps) {
+    if (value?.loggedExercise?.reps) {
       const promise = tx.exercisePerformed.create({
         data: {
-          reps: value.reps,
+          reps: value.loggedExercise.reps,
           standardId: standard.id,
           userId: user.id,
           exerciseId: value.exerciseId,
@@ -64,4 +65,10 @@ export const createNewExercisesPerformed = async ({tx, exercises, user}: { tx: T
     }
   }
   return Promise.all(promises)
+}
+
+const getDashboardData = () => {
+  const exercisesPerformed = prisma.exercisePerformed.findMany({
+    where: {  }
+  })
 }

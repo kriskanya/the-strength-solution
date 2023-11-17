@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { ExercisesOnProfiles } from '@prisma/client'
 import { getSession } from 'next-auth/react'
-import { get } from 'lodash-es'
+import { get, isArray } from 'lodash-es'
+import { ChosenExercise, UserSavedExercise } from '@/common/shared-types'
 
 interface Props {
   children?: ReactNode
@@ -14,18 +14,27 @@ interface Props {
  * chooses in UpdateStatsDialog (the ExercisesOnProfiles table)
  */
 export const ActiveExercisesContext = createContext({
-  activeExercises: [] as ExercisesOnProfiles[] | undefined,
-  setActiveExercises: (input: ExercisesOnProfiles[]) => {}
+  activeExercises    : [] as ChosenExercise[] | undefined,
+  setActiveExercises : (input: ChosenExercise[]) => {},
+  exerciseStats      : [] as UserSavedExercise[] | undefined,
+  setExerciseStats   : (input: UserSavedExercise[]) => {}
 })
 
 export default function ActiveExerciseContextProvider({ children }: Props) {
-  const [activeExercises, setActiveExercises] = useState<ExercisesOnProfiles[]>()
+  const [activeExercises, setActiveExercises] = useState<ChosenExercise[]>()
+  const [exerciseStats, setExerciseStats] = useState<UserSavedExercise[]>()
   const ctxProvider = {
     activeExercises,
-    setActiveExercises
+    setActiveExercises,
+    exerciseStats,
+    setExerciseStats
   }
 
-  const fetchExercisesOnProfiles = async () => {
+  /**
+   * This data is used to determine what exercises to show in Strength Standards
+   * table
+   */
+  const fetchActiveExercises = async () => {
     const session = await getSession()
     const profileId = get(session, 'userData.profileId')
     const res = await fetch(`/api/exercises-on-profiles/${profileId}`, {
@@ -33,15 +42,46 @@ export default function ActiveExerciseContextProvider({ children }: Props) {
         'Content-Type': 'application/json'
       },
     })
-    const data = await res.json()
+    const data: ChosenExercise[] | undefined = await res.json()
     if (data) {
+      console.log('active exercises', data)
       setActiveExercises(data)
+    }
+  }
+
+  /**
+   * This data is used to show how many reps a user has logged for
+   * a particular exercise
+   */
+  const fetchMostRecentLoggedExercises = async () => {
+    try {
+      let data: any
+      const session = await getSession()
+      const profileId = get(session, 'userData.profileId')
+      const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
+      const exercises = await res.json()
+
+      data = exercises
+
+      // if (exercises && (isArray(exercises) && exercises.length)) {
+      //   // flatten the returned inner-joined object, so that we can more easily handle the case where they haven't chosen their exercises yet
+      //   data = exercises.map((e: ChosenExercise) => {
+      //     return { ...e, ...e.exercise }
+      //   }) as FlattenedChosenExercise[]
+      // }
+
+      if (data && (isArray(data) && data.length)) {
+        console.log('logged exercises', data)
+        setExerciseStats(data)
+      }
+    } catch (err) {
+      console.error('UpdateStatsDialog', err)
     }
   }
 
   useEffect(() => {
     (async () => {
-      await fetchExercisesOnProfiles()
+      await Promise.all([fetchActiveExercises(), fetchMostRecentLoggedExercises()])
     })()
   }, [])
 

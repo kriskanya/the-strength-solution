@@ -1,18 +1,13 @@
 import CustomCheckbox from '@/app/ui/CustomCheckbox'
-import { ExercisesPerformedPayload, FlattenedChosenExercise } from '@/common/shared-types'
-import { ChangeEvent } from 'react'
-import { cloneDeep, get, isArray, toInteger } from 'lodash-es'
+import { UserSavedExercise } from '@/common/shared-types'
+import { ChangeEvent, useContext } from 'react'
+import { cloneDeep, get, isArray, isUndefined } from 'lodash-es'
+import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
-interface Props {
-  exercises: FlattenedChosenExercise[] | undefined,
-  setExercises: (updatedExercises: FlattenedChosenExercise[]) => void,
-  // reps: ExercisesPerformedPayload | undefined,
-  // setReps: (reps: ExercisesPerformedPayload) => void
-}
-
-export default function UpdateStatusSelectExercises({ exercises, setExercises }: Props) {
+export default function UpdateStatusSelectExercises() {
+  const { exerciseStats,  setExerciseStats} = useContext(ActiveExercisesContext)
   const checkboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    let updatedExercises = cloneDeep(exercises)
+    let updatedExercises = cloneDeep(exerciseStats)
     const checked = get(event, 'target.checked')
     const exerciseName = get(event, 'target.name')
 
@@ -21,18 +16,18 @@ export default function UpdateStatusSelectExercises({ exercises, setExercises }:
       return
     }
 
-    updatedExercises = updatedExercises.map((e: FlattenedChosenExercise) => {
-      if (e.exerciseName === exerciseName) {
+    updatedExercises = updatedExercises.map((e: UserSavedExercise) => {
+      if (e.exercise.exerciseName === exerciseName) {
         e.active = checked
       }
       return e
     })
 
-    setExercises(updatedExercises)
+    setExerciseStats(updatedExercises)
   }
 
   const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    let updatedExercises = cloneDeep(exercises)
+    let updatedExercises = cloneDeep(exerciseStats)
     const exerciseName = get(event, 'target.name')
     const inputValue = get(event, 'target.value')
 
@@ -41,11 +36,11 @@ export default function UpdateStatusSelectExercises({ exercises, setExercises }:
       return
     }
 
-    const currentExercise = updatedExercises.find(e => e.exerciseName === exerciseName)
+    const currentExercise = updatedExercises.find(e => e.exercise.exerciseName === exerciseName)
 
-    if (currentExercise) {
-      currentExercise.reps = +inputValue
-      setExercises(updatedExercises)
+    if (!isUndefined(currentExercise) && !isUndefined(currentExercise.loggedExercise)) {
+      currentExercise.loggedExercise.reps = +inputValue
+      setExerciseStats(updatedExercises)
     }
   }
 
@@ -54,18 +49,18 @@ export default function UpdateStatusSelectExercises({ exercises, setExercises }:
       <div className={`h-4/6 mx-auto relative`}>
         <div className="flex justify-center flex-wrap gap-5 mt-10">
           {
-            exercises && exercises.map(({ displayName, exerciseName,  active, id, reps }) => {
+            exerciseStats && exerciseStats.map(({ exercise, loggedExercise, active }) => {
               return (
                 <CustomCheckbox
                   isChecked={active}
                   showRepsInput={true}
-                  reps={reps}
+                  reps={loggedExercise?.reps}
                   checkboxHandler={checkboxHandler}
                   inputHandler={inputHandler}
-                  label={displayName}
-                  name={exerciseName}
-                  id={id+''}
-                  key={id}
+                  label={exercise.displayName}
+                  name={exercise.exerciseName}
+                  id={exercise.id+''}
+                  key={exercise.id}
                 />
               )
             })

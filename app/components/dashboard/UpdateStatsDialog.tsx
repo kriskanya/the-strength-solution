@@ -8,7 +8,7 @@ import UpdateUserStats from '@/app/components/dashboard/UpdateUserStats'
 import { getSession } from 'next-auth/react'
 import { UserStats } from '@/common/frontend-types'
 import { Alert } from '@/app/ui/Alert'
-import { ChosenExercise, FlattenedChosenExercise } from '@/common/shared-types'
+import { ChosenExercise } from '@/common/shared-types'
 import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
@@ -22,8 +22,7 @@ interface Props {
 export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUserStats }: Props ) {
   const [selectedTab, setSelectedTab] = useState({ workouts: true, stats: false })
   const [showAlert, setShowAlert] = useState(false)
-  const [exercises, setExercises] = useState<FlattenedChosenExercise[]>()
-  const { activeExercises, setActiveExercises } = useContext(ActiveExercisesContext)
+  const { exerciseStats, setExerciseStats } = useContext(ActiveExercisesContext)
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
@@ -34,44 +33,45 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
     }
   }
 
-  const fetchExercises = async () => {
-    try {
-      let data: any
-      const session = await getSession()
-      const profileId = get(session, 'userData.profileId')
-      const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
-      const exercises = await res.json()
+  // const fetchExercises = async () => {
+  //   try {
+  //     let data: any
+  //     const session = await getSession()
+  //     const profileId = get(session, 'userData.profileId')
+  //     const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
+  //     const exercises = await res.json()
+  //
+  //     if (exercises && (isArray(exercises) && exercises.length)) {
+  //       // flatten the returned inner-joined object, so that we can more easily handle the case where they haven't chosen their exercises yet
+  //       data = exercises.map((e: ChosenExercise) => {
+  //         return { ...e, ...e.exercise }
+  //       }) as FlattenedChosenExercise[]
+  //     }
+  //
+  //     if (data && (isArray(data) && data.length)) {
+  //       setExercises(data)
+  //     }
+  //   } catch (err) {
+  //     console.error('UpdateStatsDialog', err)
+  //   }
+  // }
 
-      if (exercises && (isArray(exercises) && exercises.length)) {
-        // flatten the returned inner-joined object, so that we can more easily handle the case where they haven't chosen their exercises yet
-        data = exercises.map((e: ChosenExercise) => {
-          return { ...e, ...e.exercise }
-        }) as FlattenedChosenExercise[]
-      }
-
-      if (data && (isArray(data) && data.length)) {
-        setExercises(data)
-      }
-    } catch (err) {
-      console.error('UpdateStatsDialog', err)
-    }
-  }
-
-  useEffect(() => {
-    (async () => {
-      await fetchExercises()
-    })()
-  }, [])
+  // useEffect(() => {
+  //   (async () => {
+  //     await fetchExercises()
+  //   })()
+  // }, [])
 
   const constructBody = (userId: number, profileId: number) => {
-    return {
+    const a = {
       userId,
-      exercises,
+      exercises: exerciseStats,
       profileId,
       gender: userStats.gender.male ? 'MALE' : 'FEMALE',
       bodyWeight: userStats.bodyWeight,
       age: userStats.age
     }
+    return a
   }
 
   const saveAll = (userId: number, profileId: number) => {
@@ -94,7 +94,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       if (userId && profileId) {
         const save = await saveAll(userId, profileId)
         const res = await save.json()
-        setActiveExercises(res.chosenExercises)
+        setExerciseStats(res.chosenExercises)
         // need to set chosen exercises here
 
         setShowAlert(true)
@@ -150,7 +150,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
             <div>
               {
                 selectedTab.workouts
-                  ? <UpdateStatusSelectExercises exercises={exercises} setExercises={setExercises} />
+                  ? <UpdateStatusSelectExercises />
                   : <UpdateUserStats userStats={userStats} onChangeStat={onChangeStat} />
               }
             </div>

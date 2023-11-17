@@ -5,6 +5,7 @@ import { createNewExercisesPerformed } from '@/app/api/exercises-performed/exerc
 import { upsertProfile } from '@/app/api/profile/profile-helpers'
 import { validateStatsPayload } from '@/app/api/stats/stats.validation'
 import { SaveStats } from '@/app/api/stats/stats-helpers'
+import { Exercise } from '@prisma/client'
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,12 +24,6 @@ export async function POST(req: NextRequest) {
       })
       const chosenExercises = await saveChosenExercises({tx, exercises, profileId: user.profileId})
       const exercisesPerformed = await createNewExercisesPerformed({tx, exercises, user})
-      const exercisesOnProfiles = await prisma.exercisesOnProfiles.findMany({
-        where: { profileId: user.profileId, active: true },
-        include: {
-          exercise: true
-        }
-      })
 
       return Response.json({ profile: upsertedProfile, chosenExercises, exercisesPerformed })
     })

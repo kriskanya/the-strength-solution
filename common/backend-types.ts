@@ -1,4 +1,13 @@
-import { AgeRange, ExerciseName, Gender, Level, BodyWeightRange, ExercisesOnProfiles, Exercise } from '@prisma/client'
+import {
+  AgeRange,
+  ExerciseName,
+  Gender,
+  Level,
+  BodyWeightRange,
+  ExercisesOnProfiles,
+  Exercise,
+  ExercisePerformed
+} from '@prisma/client'
 
 export interface StrengthStandardRecord {
   bodyWeight: BodyWeightRange,
@@ -96,12 +105,6 @@ export interface ExerciseRecordPayload {
   description: string
 }
 
-/**
- * Combines the ExercisesOnProfiles and Exercise models plus 'reps' from
- * ExercisePerformed to return a user's saved exercises, including the
- * associated Exercise record and the number of reps
- */
-export interface UserSavedExercise extends ExercisesOnProfiles {
-  exercise: Exercise,
-  reps?: number
+export interface ActiveExercise extends ExercisesOnProfiles {
+  exercise?: Exercise
 }

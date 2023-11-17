@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { FlattenedChosenExercise } from '@/common/shared-types'
 import { prisma } from '@/lib/prisma'
 import { saveChosenExercises } from '@/app/api/exercises/exercises-helpers'
 
