@@ -1,18 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { upsertProfile } from '@/app/api/profile/profile-helpers'
-import { NextApiRequest } from 'next'
+import { prisma } from '@/lib/prisma'
+import { validateCreateProfilePayload } from '@/app/api/profile/profile.validation'
 
 export async function POST(req: NextRequest) {
   try {
-    // const { userId, gender, bodyWeight, age } = await req.json()
+    const { userId, gender, bodyWeight, age } = await req.json()
+    validateCreateProfilePayload({ userId, gender, bodyWeight, age })
 
-    // check incoming req.json() data for validity, prob use Joi()
+    return prisma.$transaction(async (tx) => {
+      const upsertedProfile = await upsertProfile(tx, {
+        userId, gender, bodyWeight, age
+      })
 
-    // const upsertedProfile = await upsertProfile({
-    //   userId, gender, bodyWeight, age
-    // })
-
-    // return Response.json(upsertedProfile)
+      return Response.json(upsertedProfile)
+    })
 
   } catch (err: any) {
     return new NextResponse(

@@ -4,7 +4,7 @@ import { ChangeEvent } from 'react'
 interface Props {
   isChecked: boolean,
   checkboxHandler: (evt: ChangeEvent<HTMLInputElement>) => void,
-  inputHandler: (evt: ChangeEvent<HTMLInputElement>) => void,
+  inputHandler?: (evt: ChangeEvent<HTMLInputElement>) => void,
   name: string,
   label: string,
   id: string,

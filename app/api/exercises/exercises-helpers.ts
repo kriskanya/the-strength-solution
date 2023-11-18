@@ -14,7 +14,7 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
     where: { profileId }
   })
   const exercisesOnProfiles = await prisma.exercisesOnProfiles.findMany({
-    where: { profileId },
+    where: { profileId, active: true },
     include: {
       exercise: true
     }
@@ -24,6 +24,7 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
       SELECT DISTINCT ON ("ExercisePerformed"."exerciseId") *
       FROM "ExercisePerformed"
       INNER JOIN "Exercise" ON "ExercisePerformed"."exerciseId" = "Exercise".id
+      INNER JOIN "Standard" ON "ExercisePerformed"."standardId" = "Standard".id
       WHERE "ExercisePerformed"."userId" = ${user?.id}
       ORDER BY "ExercisePerformed"."exerciseId", "ExercisePerformed"."datePerformed" DESC;
     `
@@ -36,7 +37,7 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
     sortedData = sortedData
       .map((record: UserSavedExercise) => {
         const exercisePerformed = exercisesPerformed.find((e: ExercisePerformed) => e.exerciseId === record.exerciseId)
-        record.loggedExercise = exercisePerformed
+        record.loggedExercise = exercisePerformed || { reps: null }
         return record
       })
   }
@@ -67,11 +68,9 @@ export const saveChosenExercises = async ({tx, exercises, profileId}: { tx: Tran
   })
 
   await Promise.all(promises)
+}
 
-  return await tx.exercisesOnProfiles.findMany({
-    where: { profileId },
-    include: {
-      exercise: true
-    }
-  })
+export interface InitialChooseExercises {
+  profileId: number,
+  exercises: UserSavedExercise[]
 }

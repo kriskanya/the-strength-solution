@@ -43,3 +43,10 @@ export async function upsertProfile(tx: TransactionClient, { userId, gender, bod
     data: payload
   })
 }
+
+export interface CreateProfilePayload {
+  gender: 'MALE' | 'FEMALE',
+  bodyWeight: number,
+  age: number,
+  userId: number,
+}

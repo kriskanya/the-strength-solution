@@ -3,6 +3,7 @@ import { Prisma, Profile, User } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
 import { UserSavedExercise } from '@/common/shared-types'
 import { prisma } from '@/lib/prisma'
+import _ from 'lodash'
 
 export const findEnum = (enums: string[], reps: number) => {
   let i = 0
@@ -19,7 +20,7 @@ export const findEnum = (enums: string[], reps: number) => {
 
 export const createNewExercisesPerformed = async ({tx, exercises, user}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile } }) => {
   let promises = []
-  const exercisesWithReps = exercises.filter(item => item?.loggedExercise?.reps)
+  const exercisesWithReps = exercises.filter(item => _.isNumber(item?.loggedExercise?.reps))
   for (const [key, value] of Object.entries(exercisesWithReps)) {
     const bodyWeightRange = findEnum(Object.keys(BODYWEIGHT_RANGES), (user?.profile as Profile).bodyWeight)
     const ageRange = findEnum(Object.keys(AGE_RANGES), (user?.profile as Profile).age)
@@ -51,24 +52,27 @@ export const createNewExercisesPerformed = async ({tx, exercises, user}: { tx: T
       return
     }
 
-    if (value?.loggedExercise?.reps) {
-      const promise = tx.exercisePerformed.create({
-        data: {
-          reps: value.loggedExercise.reps,
-          standardId: standard.id,
-          userId: user.id,
-          exerciseId: value.exerciseId,
-          datePerformed: new Date()
-        }
-      })
-      promises.push(promise)
+    const data = {
+      // @ts-ignore
+      reps: value.loggedExercise.reps,
+        standardId: standard.id,
+        userId: user.id,
+        exerciseId: value.exerciseId,
+        datePerformed: new Date()
     }
+    debugger
+
+    const promise = tx.exercisePerformed.create({
+      data: {
+        // @ts-ignore
+        reps: value.loggedExercise.reps,
+        standardId: standard.id,
+        userId: user.id,
+        exerciseId: value.exerciseId,
+        datePerformed: new Date()
+      }
+    })
+    promises.push(promise)
   }
   return Promise.all(promises)
-}
-
-const getDashboardData = () => {
-  const exercisesPerformed = prisma.exercisePerformed.findMany({
-    where: {  }
-  })
 }

@@ -45,7 +45,7 @@ export default function AboutYou() {
   }, [])
 
   function onChangeStat(event: ChangeEvent<HTMLInputElement>) {
-    const { value } = event.target
+    let { value } = event.target
     const fieldName = get(event, 'target.name')
     const stats = cloneDeep(userStats)
 
@@ -59,6 +59,7 @@ export default function AboutYou() {
         break
       case 'bodyWeight':
       case 'age':
+        value = value.replace(/\D/g,'')
         stats[fieldName] = +value
         break
     }
@@ -72,7 +73,7 @@ export default function AboutYou() {
       const userId = get(session, 'userData.id')
       const body = {
         userId: userId,
-        gender: userStats.gender.male ? 'male' : 'female',
+        gender: userStats.gender.male ? 'MALE' : 'FEMALE',
         bodyWeight: userStats.bodyWeight,
         age: userStats.age
       }

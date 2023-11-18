@@ -5,9 +5,9 @@ import { cloneDeep, get, isArray, isUndefined } from 'lodash-es'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
 export default function UpdateStatusSelectExercises() {
-  const { exerciseStats,  setExerciseStats} = useContext(ActiveExercisesContext)
+  const { activeExercises,  setActiveExercises} = useContext(ActiveExercisesContext)
   const checkboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    let updatedExercises = cloneDeep(exerciseStats)
+    let updatedExercises = cloneDeep(activeExercises)
     const checked = get(event, 'target.checked')
     const exerciseName = get(event, 'target.name')
 
@@ -23,15 +23,15 @@ export default function UpdateStatusSelectExercises() {
       return e
     })
 
-    setExerciseStats(updatedExercises)
+    setActiveExercises(updatedExercises)
   }
 
   const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    let updatedExercises = cloneDeep(exerciseStats)
+    let updatedExercises = cloneDeep(activeExercises)
     const exerciseName = get(event, 'target.name')
-    const inputValue = get(event, 'target.value')
+    let inputValue = get(event, 'target.value')
 
-    if (!updatedExercises || (isArray(updatedExercises) && updatedExercises.length === 0) || !inputValue) {
+    if (!updatedExercises || (isArray(updatedExercises) && updatedExercises.length === 0)) {
       console.log(`Issue with saving reps in UpdateStatusSelectExercises; inputValue: ${inputValue}, updatedExercises: ${JSON.stringify(updatedExercises)}`)
       return
     }
@@ -40,7 +40,7 @@ export default function UpdateStatusSelectExercises() {
 
     if (!isUndefined(currentExercise) && !isUndefined(currentExercise.loggedExercise)) {
       currentExercise.loggedExercise.reps = +inputValue
-      setExerciseStats(updatedExercises)
+      setActiveExercises(updatedExercises)
     }
   }
 
@@ -49,7 +49,7 @@ export default function UpdateStatusSelectExercises() {
       <div className={`h-4/6 mx-auto relative`}>
         <div className="flex justify-center flex-wrap gap-5 mt-10">
           {
-            exerciseStats && exerciseStats.map(({ exercise, loggedExercise, active }) => {
+            activeExercises && activeExercises.map(({ exercise, loggedExercise, active }) => {
               return (
                 <CustomCheckbox
                   isChecked={active}

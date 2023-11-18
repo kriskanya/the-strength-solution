@@ -1,10 +1,9 @@
 import Joi, { ValidationOptions } from 'joi'
 import {
-  JSON_ARRAY,
   POSITIVE_NONZERO_INT, UI_DB_ID,
   validate
 } from '@/common/validation/constants/common_validation.constants'
-import { SaveStats } from '@/app/api/stats/stats-helpers'
+import { CreateProfilePayload } from '@/app/api/profile/profile-helpers'
 
 const VALIDATION_OPTS:ValidationOptions = {
   abortEarly    : true,
@@ -16,14 +15,13 @@ const VALIDATION_OPTS:ValidationOptions = {
   convert       : false
 }
 
-export const SAVE_STATS_PAYLOAD = Joi.object().keys({
+export const CREATE_PROFILE_PAYLOAD = Joi.object().keys({
   gender     : Joi.string().valid('MALE', 'FEMALE'),
   bodyWeight : POSITIVE_NONZERO_INT,
   age        : POSITIVE_NONZERO_INT,
-  exercises  : JSON_ARRAY,
   userId     : UI_DB_ID
-}).label('saveStatsPayload')
+}).label('createProfilePayload')
 
-export function validateStatsPayload(params: SaveStats) {
-  return validate(params, SAVE_STATS_PAYLOAD, VALIDATION_OPTS)
+export function validateCreateProfilePayload(params: CreateProfilePayload) {
+  return validate(params, CREATE_PROFILE_PAYLOAD, VALIDATION_OPTS)
 }

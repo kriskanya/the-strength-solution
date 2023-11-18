@@ -33,6 +33,12 @@ function determineRepRange(start: string, end?: string): { startRepRange: number
   if (start.includes('<')) {
     startIncludesOperator = true
     start = stripOperator(start)
+
+    // @ts-ignore
+    // if the value from the csv is '< 1', then make the lower rep range value 0
+    if (start == 1) {
+      start = '0'
+    }
   }
   if (end?.includes('<')) {
     endIncludesOperator = true

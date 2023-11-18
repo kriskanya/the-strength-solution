@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import questionMark from '@/app/icons/question-mark.svg'
 import { CustomChip } from '@/app/ui/CustomChip'
@@ -6,18 +7,16 @@ import { useContext, useEffect } from 'react'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
 export default function DashboardSidePanel() {
+  const { activeExercises, setActiveExercises } = useContext(ActiveExercisesContext)
   const proficiencyLevels: { [key: string]: string } = {
-    novice: 'bg-[#F25B28] w-[69px]',
-    intermediate: 'bg-[#F4B43B] w-[107px]',
-    advanced: 'bg-[#4CD964] w-[90px]'
+    NOVICE: 'bg-[#F25B28] w-[69px]',
+    INTERMEDIATE: 'bg-[#F4B43B] w-[107px]',
+    PROFICIENT: 'bg-[#FCFF4B] w-[98px]',
+    ADVANCED: 'bg-[#4CD964] w-[90px]',
+    ELITE: 'bg-[#2E8EEC] w-[69px]'
   }
-  const exerciseProficiency = [
-    { name: 'Push-Ups', reps: 1, level: 'advanced' },
-    { name: 'Goblet Squat', reps: 2, level: 'intermediate' },
-    { name: 'Dips', reps: 4, level: 'intermediate' },
-    { name: 'Chin-ups', reps: 4, level: 'advanced' },
-    { name: 'Bench Press', reps: 2, level: 'novice' }
-  ]
+
+  // useEffect(() => {}, [activeExercises]);
 
   return (
     <div className="flex items-center">
@@ -52,14 +51,14 @@ export default function DashboardSidePanel() {
               <th align="right" className="inter font-normal text-white text-xs opacity-50 capitalize">Strength Level</th>
             </tr>
             {
-              exerciseProficiency.map((exercise, i) => {
+              activeExercises && activeExercises.map((exercise, i) => {
                 return (
                   <tr className="leading-6 h-12" key={i}>
-                    <td className="inter font-normal text-base text-white">{exercise.name}</td>
-                    <td align="center" className="inter font-normal text-base text-white">{exercise.reps}</td>
+                    <td className="inter font-normal text-base text-white">{exercise?.exercise?.exerciseName}</td>
+                    <td align="center" className="inter font-normal text-base text-white">{exercise?.loggedExercise?.reps}</td>
                     <td align="right" className="inter font-normal text-base text-white">
-                      <CustomChip classes={`uppercase text-black ${ proficiencyLevels[exercise.level as keyof { [key: string]: string }] }`}>
-                        { capitalize(exercise.level) }
+                      <CustomChip classes={`uppercase text-black ${ proficiencyLevels[exercise?.loggedExercise?.level as keyof { [key: string]: string }] }`}>
+                        { capitalize(exercise?.loggedExercise?.level) }
                       </CustomChip>
                     </td>
                   </tr>

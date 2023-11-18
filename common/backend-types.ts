@@ -6,7 +6,6 @@ import {
   BodyWeightRange,
   ExercisesOnProfiles,
   Exercise,
-  ExercisePerformed
 } from '@prisma/client'
 
 export interface StrengthStandardRecord {
