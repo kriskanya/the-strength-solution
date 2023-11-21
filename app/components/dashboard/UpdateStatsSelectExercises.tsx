@@ -1,7 +1,7 @@
 import CustomCheckbox from '@/app/ui/CustomCheckbox'
 import { UserSavedExercise } from '@/common/shared-types'
 import { ChangeEvent, useContext } from 'react'
-import { cloneDeep, get, isArray, isUndefined } from 'lodash-es'
+import { cloneDeep, get, isArray, isEmpty, isUndefined, set } from 'lodash-es'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
 export default function UpdateStatusSelectExercises() {
@@ -38,8 +38,8 @@ export default function UpdateStatusSelectExercises() {
 
     const currentExercise = updatedExercises.find(e => e.exercise.exerciseName === exerciseName)
 
-    if (!isUndefined(currentExercise) && !isUndefined(currentExercise.loggedExercise)) {
-      currentExercise.loggedExercise.reps = +inputValue
+    if (!isUndefined(currentExercise) && !isEmpty(currentExercise)) {
+      set(currentExercise, 'loggedExercise.reps', +inputValue)
       setActiveExercises(updatedExercises)
     }
   }

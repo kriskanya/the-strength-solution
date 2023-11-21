@@ -1,5 +1,4 @@
 'use client'
-
 import CustomDropdown from '@/app/ui/CustomDropdown'
 import { useContext, useEffect, useState } from 'react'
 import { get, isEmpty, map } from 'lodash-es'
@@ -58,14 +57,21 @@ export default function StrengthStandardsTable() {
 
   useEffect(() => {
     (async () => {
+      if (selectedValues && !isEmpty(selectedValues)) {
+        fetchStandards(selectedValues)
+      }
+    })()
+  }, [selectedValues])
+
+  useEffect(() => {
+    (async () => {
       const session = await getSession()
       const gender = get(session, 'userData.profile.gender', 'MALE')
       const weight    = get(session, 'userData.profile.bodyWeight', 160)
       const age        = get(session, 'userData.profile.age', 30)
-      setSelectedValues({ gender, weight, age })
-      fetchStandards({ gender, weight, age })
+      setSelectedValues({gender, weight, age})
     })()
-  }, [activeExercises])
+  }, [])
 
   return (
     <div className="bg-light-grey">

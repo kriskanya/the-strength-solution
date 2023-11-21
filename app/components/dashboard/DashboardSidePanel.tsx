@@ -16,8 +16,6 @@ export default function DashboardSidePanel() {
     ELITE: 'bg-[#2E8EEC] w-[69px]'
   }
 
-  // useEffect(() => {}, [activeExercises]);
-
   return (
     <div className="flex items-center">
       <div>
@@ -53,15 +51,19 @@ export default function DashboardSidePanel() {
             {
               activeExercises && activeExercises.map((exercise, i) => {
                 return (
-                  <tr className="leading-6 h-12" key={i}>
-                    <td className="inter font-normal text-base text-white">{exercise?.exercise?.exerciseName}</td>
-                    <td align="center" className="inter font-normal text-base text-white">{exercise?.loggedExercise?.reps}</td>
-                    <td align="right" className="inter font-normal text-base text-white">
-                      <CustomChip classes={`uppercase text-black ${ proficiencyLevels[exercise?.loggedExercise?.level as keyof { [key: string]: string }] }`}>
-                        { capitalize(exercise?.loggedExercise?.level) }
-                      </CustomChip>
-                    </td>
-                  </tr>
+                  exercise.active
+                    ? (
+                      <tr className="leading-6 h-12" key={i}>
+                        <td className="inter font-normal text-base text-white">{exercise?.exercise?.displayName}</td>
+                        <td align="center" className="inter font-normal text-base text-white">{exercise?.loggedExercise?.reps}</td>
+                        <td align="right" className="inter font-normal text-base text-white">
+                          <CustomChip classes={`uppercase text-black ${ proficiencyLevels[exercise?.loggedExercise?.level as keyof { [key: string]: string }] }`}>
+                            { capitalize(exercise?.loggedExercise?.level) }
+                          </CustomChip>
+                        </td>
+                      </tr>
+                    )
+                    : ''
                 )
               })
             }

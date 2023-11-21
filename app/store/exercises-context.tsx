@@ -37,7 +37,7 @@ export default function ActiveExerciseContextProvider({ children }: Props) {
       const data = await res.json()
 
       if (data && (isArray(data) && data.length)) {
-        console.log('logged exercises', data)
+        console.log('active exercises', data)
         setActiveExercises(data)
       }
     } catch (err) {
