@@ -12,7 +12,7 @@ export interface UserSavedExercise extends ExercisesOnProfiles {
   loggedExercise?: ExercisePerformed & Standard
 }
 
-export type EXERCISE_ENUM_VALUE = 'PUSH_UP' | 'INVERTED_ROW' | 'DIP' | 'CHIN_UP' | 'PULL_UP' | 'GOBLET_SQUAT' | 'BACK_EXTENSION'
+export type EXERCISE_ENUM_VALUE = 'PUSH_UP' | 'INVERTED_ROW' | 'DIP' | 'CHIN_UP' | 'PULL_UP' | 'GOBLET_SQUAT' | 'BACK_EXTENSION' | 'DEAD_HANG' | 'BROAD_JUMP' | 'FARMER_CARRY'
 
 /**
  * e.g.,

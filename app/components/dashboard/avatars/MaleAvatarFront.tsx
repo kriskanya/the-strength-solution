@@ -1,7 +1,4 @@
-'use client'
-
-import Image from 'next/image'
-import { AvatarColorsFront } from '@/common/frontend-types'
+import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types'
 import AbsMale from '@/app/images/male-avatar/front/abs'
 import BicepsMale from '@/app/images/male-avatar/front/biceps'
 import CalvesMale from '@/app/images/male-avatar/front/calves'
@@ -18,16 +15,23 @@ import TrapsMale from '@/app/images/male-avatar/front/traps'
 import { useEffect, useState } from 'react'
 import ExerciseDescription from '@/app/ui/ExerciseDescription'
 import { get } from 'lodash-es'
-import { maleAvatarFrontPositions } from '@/app/components/dashboard/dashboard-helpers'
+import { maleAvatarPositions } from '@/app/components/dashboard/dashboard-helpers'
 import classes from './MaleAvatarFront.module.css'
+import { EXERCISE_ENUM_VALUE } from '@/common/shared-types'
 
-export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
-  const [fillColors, setFillColors] = useState(colors)
+interface Props {
+  fillColors: AvatarColorsFront['colors'] & AvatarColorsRear['colors']
+  originalFillColors: AvatarColorsFront['colors'] & AvatarColorsRear['colors']
+  setFillColors: (input: AvatarColorsFront['colors'] & AvatarColorsRear['colors']) => void
+}
+
+export default function MaleAvatarFront({ fillColors, setFillColors, originalFillColors }: Props) {
   const [description, setDescription] = useState({
     bodyPart: '',
     text: '',
     position: '',
-    name: ''
+    name: '',
+    exerciseName: '' as EXERCISE_ENUM_VALUE
   })
   const [showDescription, setShowDescription] = useState(false)
   const DARK_GREY = '#444751'
@@ -40,16 +44,17 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
 
     const obj = {
       bodyPart,
-      text: maleAvatarFrontPositions[bodyPart]?.text,
-      position: maleAvatarFrontPositions[bodyPart]?.position,
-      name: maleAvatarFrontPositions[bodyPart]?.name
+      text: maleAvatarPositions[bodyPart]?.text,
+      position: maleAvatarPositions[bodyPart]?.position,
+      name: maleAvatarPositions[bodyPart]?.name,
+      exerciseName: maleAvatarPositions[bodyPart]?.exercise
     }
     setDescription(obj)
     for (const key in fillColors) {
       newFillColors[key] = DARK_GREY
     }
     setShowDescription(true)
-    newFillColors[bodyPart] = colors[bodyPart as keyof AvatarColorsFront['colors']]
+    newFillColors[bodyPart] = originalFillColors[bodyPart as keyof AvatarColorsFront['colors']]
     setShowDescription(true)
     setFillColors(newFillColors)
   }
@@ -60,16 +65,15 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
 
   function resetAvatar() {
     const newFillColors: any = {}
-    for (const key in colors) {
-      newFillColors[key] = colors[key as keyof AvatarColorsFront['colors']]
+    for (const key in originalFillColors) {
+      newFillColors[key] = originalFillColors[key as keyof AvatarColorsFront['colors']]
     }
     setFillColors(newFillColors)
   }
 
   // listener for resetting the avatar if user's mouse leaves the area
   useEffect(() => {
-    // only add the event listener when the description is shown
-    if (showDescription) return;
+    if (showDescription) return
     resetAvatar()
   }, [showDescription]);
 
@@ -77,40 +81,40 @@ export default function MaleAvatarFront({ colors } : AvatarColorsFront) {
     <div className="relative" onMouseLeave={handleLeave}>
       <HipAbductorsMale className="absolute top-[12.5em] left-[.30em]" fill={fillColors.quads} />
       <QuadsMale className="absolute top-[12.7em] -left-[1.4em]" fill={fillColors.quads} />
-      <CalvesMale className="absolute top-[20.75em] -left-[1.9em]" fill={fillColors.calves} />
-      <ObliquesMale className="absolute top-[7.2em] -left-[.9em]" fill={fillColors.obliques} />
-      <TrapsMale className="absolute top-[3.3em] -left-[.6em]" fill={fillColors.traps} />
-      <ForearmsMale className="absolute top-[9.4em] -left-[4.7em]" fill={fillColors.forearms} />
+      <CalvesMale className="absolute top-[20.75em] -left-[1.9em]" fill={fillColors.calvesFront} />
+      <ObliquesMale className="absolute top-[7.2em] -left-[.9em]" fill={fillColors.obliquesFront} />
+      <TrapsMale className="absolute top-[3.3em] -left-[.6em]" fill={fillColors.trapsFront} />
+      <ForearmsMale className="absolute top-[9.4em] -left-[4.7em]" fill={fillColors.forearmsFront} />
       <BicepsMale className="absolute top-[7em] -left-[3em]" fill={fillColors.biceps} />
-      <AbsMale className="absolute top-[6.6em] left-[.1em]" fill={fillColors.abs} />
+      <AbsMale className="absolute top-[6.6em] left-[.1em]" fill={fillColors.absFront} />
       <NeckSternumMale className="absolute top-[2.9em] -left-[.35em]" fill={fillColors.neck} />
       <PecsMale className="absolute top-[5.4em] -left-[1.4em]" fill={fillColors.pecs} />
       <HeadMale className="absolute -top-[.3em] left-2" fill={fillColors.head} />
-      <DeltsMale className="absolute top-[5em] -left-[2.6em]" fill={fillColors.delts} />
+      <DeltsMale className="absolute top-[5em] -left-[2.6em]" fill={fillColors.deltsFront} />
       <HandsMale className="absolute top-[14em] -left-[4.2em]" fill={fillColors.hands} />
 
       {/*hover-over areas*/}
-      <div className="w-[3em] h-[1.5em] absolute top-[4em] -left-[.6em]" data-name="traps" onMouseEnter={hoverOverDescription}></div>
-      <div className={`${classes.shoulderLeft} w-[4.8em] h-[2.7em] absolute top-[5.2em] -left-[4.4em]`} data-name="delts" onMouseEnter={hoverOverDescription}></div>
-      <div className={`${classes.shoulderRight} w-[4.8em] h-[2.7em] absolute top-[5.2em] left-[4em]`} data-name="delts" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[3em] h-[1.5em] absolute top-[4em] -left-[.6em]" data-name="trapsFront" onMouseEnter={hoverOverDescription}></div>
+      <div className={`${classes.shoulderLeft} w-[4.8em] h-[2.7em] absolute top-[5.2em] -left-[4.4em]`} data-name="deltsFront" onMouseEnter={hoverOverDescription}></div>
+      <div className={`${classes.shoulderRight} w-[4.8em] h-[2.7em] absolute top-[5.2em] left-[4em]`} data-name="deltsFront" onMouseEnter={hoverOverDescription}></div>
       <div className="w-[5.2em] h-[2.3em] absolute top-[5.8em] -left-[.6em]" data-name="pecs" onMouseEnter={hoverOverDescription}></div>
       <div className="w-[2em] h-[3.2em] absolute top-[7.5em] -left-[3em]" data-name="biceps" onMouseEnter={hoverOverDescription}></div>
       <div className="w-[2em] h-[3.2em] absolute top-[7.5em] left-[5.4em]" data-name="biceps" onMouseEnter={hoverOverDescription}></div>
-      <div className="w-[2em] h-[3.8em] absolute top-[10.5em] -left-[3.3em]" data-name="forearms" onMouseEnter={hoverOverDescription}></div>
-      <div className="w-[2em] h-[4.1em] absolute top-[10.5em] left-[6.1em]" data-name="forearms" onMouseEnter={hoverOverDescription}></div>
-      <div className="w-[3.3em] h-[6.5em] absolute top-[8.2em] left-[.5em]" data-name="abs" onMouseEnter={hoverOverDescription}></div>
-      <div className="w-[1.5em] h-[5em] absolute top-[8.2em] -left-[1em]" data-name="obliques" onMouseEnter={hoverOverDescription}></div>
-      <div className="w-[1.5em] h-[5em] absolute top-[8.2em] left-[3.7em]" data-name="obliques" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2em] h-[3.8em] absolute top-[10.5em] -left-[3.3em]" data-name="forearmsFront" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2em] h-[4.1em] absolute top-[10.5em] left-[6.1em]" data-name="forearmsFront" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[3.3em] h-[6.5em] absolute top-[8.2em] left-[.5em]" data-name="absFront" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[1.5em] h-[5em] absolute top-[8.2em] -left-[1em]" data-name="obliquesFront" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[1.5em] h-[5em] absolute top-[8.2em] left-[3.7em]" data-name="obliquesFront" onMouseEnter={hoverOverDescription}></div>
       <div className="w-[2em] h-[8em] absolute top-[14em] -left-[1.5em]" data-name="quads" onMouseEnter={hoverOverDescription}></div>
       <div className="w-[1.5em] h-[6.3em] absolute top-[15.7em] left-[.5em]" data-name="quads" onMouseEnter={hoverOverDescription}></div>
       <div className="w-[2em] h-[8em] absolute top-[14em] left-[3.8em]" data-name="quads" onMouseEnter={hoverOverDescription}></div>
-      <div className="w-[2.5em] h-[6.3em] absolute top-[22em] -left-[1.2em]" data-name="calves" onMouseEnter={hoverOverDescription}></div>
-      <div className="w-[2.5em] h-[6.3em] absolute top-[22em] left-[3.5em]" data-name="calves" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2.5em] h-[6.3em] absolute top-[22em] -left-[1.2em]" data-name="calvesFront" onMouseEnter={hoverOverDescription}></div>
+      <div className="w-[2.5em] h-[6.3em] absolute top-[22em] left-[3.5em]" data-name="calvesFront" onMouseEnter={hoverOverDescription}></div>
       {
         showDescription
           ? (
             <div className={`absolute ${ description?.position } z-10`}>
-              <ExerciseDescription description={description?.text} bodyPart={description?.bodyPart} name={description?.name} />
+              <ExerciseDescription description={description?.text} bodyPart={description?.bodyPart} name={description?.name} exerciseName={description?.exerciseName} />
             </div>
           )
           : ''

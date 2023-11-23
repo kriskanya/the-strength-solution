@@ -1,6 +1,6 @@
 const _ = require('lodash')
 
-import { Exercise, ExerciseName, Standard } from '@prisma/client'
+import { Standard } from '@prisma/client'
 
 /**
  * Determine which range the input value is in
