@@ -8,7 +8,7 @@ import ObliquesFemale from '@/app/images/female-avatar/front/obliques'
 import PecsFemale from '@/app/images/female-avatar/front/pecs'
 import QuadsFemale from '@/app/images/female-avatar/front/quads'
 import TrapsFemale from '@/app/images/female-avatar/front/traps'
-import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types'
+import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types-and-constants'
 import { useContext, useEffect, useState } from 'react'
 import { get } from 'lodash-es'
 import classes from '@/app/components/dashboard/avatars/FemaleAvatarFront.module.css'
@@ -100,7 +100,7 @@ export default function FemaleAvatarFront({ fillColors, setFillColors, originalF
         showDescription
           ? (
             <div className={`absolute ${ description?.position } z-10`}>
-              <ExerciseDescription hoveredExercise={activeExercise} bodyPartDisplayName={description?.name} />
+              <ExerciseDescription hoveredExercise={activeExercise} bodyPart={description?.bodyPart} bodyPartDisplayName={description?.name} />
             </div>
           )
           : ''

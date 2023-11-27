@@ -1,4 +1,4 @@
-import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types'
+import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types-and-constants'
 import CalvesMaleRear from '@/app/images/male-avatar/rear/calves'
 import DeltsMaleRear from '@/app/images/male-avatar/rear/delts'
 import ForearmsMaleRear from '@/app/images/male-avatar/rear/forearms'
@@ -76,7 +76,7 @@ export default function MaleAvatarRear({ fillColors, setFillColors, originalFill
       <HandsMaleRear alt="" className="absolute top-[16.1em] -left-[.8em]" fill={fillColors.hands} />
       <ForearmsMaleRear className="absolute top-[11.2em] -left-[1em]" fill={fillColors.forearmsRear}  />
       <TricepsMale className="absolute top-[8.8em] -left-[.8em]" fill={fillColors.triceps} />
-      <LatsMaleRear className="absolute top-[9.2em] left-[1em]" fill={fillColors.lats} />
+      <LatsMaleRear className="absolute top-[9.2em] left-[1.05em]" fill={fillColors.lats} />
       <RotatorCuffMaleRear className="absolute top-[7.7em] left-[.9em]" fill={fillColors.lats}  />
       <SpinalErectorsMale className="absolute top-[11.4em] left-[2.4em]" fill={fillColors.erectors}  />
       <RhomboidsMale className="absolute top-[5.0em] left-[1.1em]" fill={fillColors.rhomboids}  />
@@ -86,7 +86,7 @@ export default function MaleAvatarRear({ fillColors, setFillColors, originalFill
 
       {/*hover-over areas*/}
       <div className="w-[4.3em] h-[1.5em] absolute top-[5.5em] left-[2.0em]" data-name="trapsRear" onMouseEnter={hoverOverDescription}></div>
-      <div className={`${classes.rhomboids} w-[5.4em] h-[7em] absolute top-[4.9em] left-[1.6em]`} data-name="rhomboids" onMouseEnter={hoverOverDescription}></div>
+      <div className={`${classes.rhomboids} w-[5.4em] h-[7em] absolute top-[4.9em] left-[1.5em]`} data-name="rhomboids" onMouseEnter={hoverOverDescription}></div>
       <div className={`${classes.erectorsBottom} w-[5.8em] h-[7em] absolute top-[11.1em] left-[1.5em]`} data-name="erectors" onMouseEnter={hoverOverDescription}></div>
       <div className={`${classes.shoulderLeft} w-[6.2em] h-[4.3em] absolute top-[5.5em] -left-[1.3em]`} data-name="deltsRear" onMouseEnter={hoverOverDescription}></div>
       <div className={`${classes.shoulderRight} w-[6.5em] h-[4.5em] absolute top-[5.3em] left-[6em]`} data-name="deltsRear" onMouseEnter={hoverOverDescription}></div>
@@ -113,7 +113,7 @@ export default function MaleAvatarRear({ fillColors, setFillColors, originalFill
         showDescription
           ? (
             <div className={`absolute ${ description?.position } z-10`}>
-              <ExerciseDescription hoveredExercise={activeExercise} bodyPartDisplayName={description?.name} />
+              <ExerciseDescription hoveredExercise={activeExercise} bodyPart={description?.bodyPart} bodyPartDisplayName={description?.name} />
             </div>
           )
           : ''

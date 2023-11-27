@@ -1,4 +1,4 @@
-import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types'
+import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types-and-constants'
 import AbsMale from '@/app/images/male-avatar/front/abs'
 import BicepsMale from '@/app/images/male-avatar/front/biceps'
 import CalvesMale from '@/app/images/male-avatar/front/calves'
@@ -99,7 +99,7 @@ export default function MaleAvatarFront({ fillColors, setFillColors, originalFil
         showDescription
           ? (
             <div className={`absolute ${ description?.position } z-10`}>
-              <ExerciseDescription hoveredExercise={activeExercise} bodyPartDisplayName={description?.name} />
+              <ExerciseDescription hoveredExercise={activeExercise} bodyPart={description?.bodyPart} bodyPartDisplayName={description?.name} />
             </div>
           )
           : ''

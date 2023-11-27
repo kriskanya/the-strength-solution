@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import { get, isEmpty, map } from 'lodash-es'
 import { ExercisesOnProfiles, Standard } from '@prisma/client'
 import { getSession } from 'next-auth/react'
-import { StandardsDropdownSelection } from '@/common/frontend-types'
+import { StandardsDropdownSelection } from '@/common/frontend-types-and-constants'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
 export default function StrengthStandardsTable() {

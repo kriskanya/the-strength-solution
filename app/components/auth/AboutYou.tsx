@@ -12,7 +12,7 @@ import { cloneDeep, get } from 'lodash-es'
 import { getSession } from 'next-auth/react'
 import { Alert } from '@/app/ui/Alert'
 import { useRouter } from 'next/navigation'
-import { UserStats } from '@/common/frontend-types'
+import { UserStats } from '@/common/frontend-types-and-constants'
 
 export default function AboutYou() {
   const router = useRouter()

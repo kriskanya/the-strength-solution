@@ -1,6 +1,6 @@
 // todo: grab this from the db
 // need to figure out how these are calculated for the first graph
-import { AvatarColorsFront, AvatarColorsRear, AvatarDescription, Description } from '@/common/frontend-types'
+import { AvatarColorsFront, AvatarColorsRear, AvatarDescription, Description } from '@/common/frontend-types-and-constants'
 import { Dispatch, SetStateAction } from 'react'
 import { UserSavedExercise } from '@/common/shared-types'
 

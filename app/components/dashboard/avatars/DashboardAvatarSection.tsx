@@ -54,29 +54,29 @@ export default function DashboardAvatarSection() {
         <div className={`hidden h-[522px] xl:grid ${classes.container}`}>
           <Image src={bgBlur} alt="legend" className="absolute left-0 top-8" />
           <div className="w-220px relative ml-28 mt-6">
-            {
-              get(session, 'data.userData.profile.gender') === 'MALE'
-                ? <MaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
-                : get(session, 'data.userData.profile.gender') === 'FEMALE'
-                  ? <FemaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
-                  : ''
-            }
+            {/*{*/}
+            {/*  get(session, 'data.userData.profile.gender') === 'MALE'*/}
+            {/*    ? <MaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
+            {/*    : get(session, 'data.userData.profile.gender') === 'FEMALE'*/}
+            {/*      ? <FemaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
+            {/*      : ''*/}
+            {/*}*/}
             {/*<FemaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
-            {/*<MaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
+            <MaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
             <div className="absolute bottom-6 right-20 z-0">
               <Image src={proficiencyLegend} alt="legend"/>
             </div>
           </div>
           <div className="">
-            {
-              get(session, 'data.userData.profile.gender') === 'MALE'
-                ? <MaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
-                : get(session, 'data.userData.profile.gender') === 'FEMALE'
-                  ? <FemaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
-                  : ''
-            }
+            {/*{*/}
+            {/*  get(session, 'data.userData.profile.gender') === 'MALE'*/}
+            {/*    ? <MaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
+            {/*    : get(session, 'data.userData.profile.gender') === 'FEMALE'*/}
+            {/*      ? <FemaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
+            {/*      : ''*/}
+            {/*}*/}
             {/*<FemaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
-            {/*<MaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
+            <MaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
           </div>
           <DashboardSidePanel />
         </div>

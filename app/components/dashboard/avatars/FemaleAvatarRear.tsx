@@ -1,5 +1,5 @@
 'use client'
-import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types'
+import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types-and-constants'
 import TrapsFemaleRear from '@/app/images/female-avatar/rear/traps'
 import DeltsFemaleRear from '@/app/images/female-avatar/rear/delts'
 import RhomboidsFemale from '@/app/images/female-avatar/rear/rhomboids'
@@ -115,7 +115,7 @@ export default function FemaleAvatarRear({ fillColors, setFillColors, originalFi
         showDescription
           ? (
             <div className={`absolute ${ description?.position } z-10`}>
-              <ExerciseDescription hoveredExercise={activeExercise} bodyPartDisplayName={description?.name} />
+              <ExerciseDescription hoveredExercise={activeExercise} bodyPart={description?.bodyPart} bodyPartDisplayName={description?.name} />
             </div>
           )
           : ''
