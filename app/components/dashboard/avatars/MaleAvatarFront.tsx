@@ -12,12 +12,18 @@ import ObliquesMale from '@/app/images/male-avatar/front/obliques'
 import PecsMale from '@/app/images/male-avatar/front/pecs'
 import QuadsMale from '@/app/images/male-avatar/front/quads'
 import TrapsMale from '@/app/images/male-avatar/front/traps'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import ExerciseDescription from '@/app/ui/ExerciseDescription'
 import { get } from 'lodash-es'
-import { maleAvatarPositions } from '@/app/components/dashboard/dashboard-helpers'
+import {
+  getActiveExercise,
+  getMuscleGroupInfo,
+  maleAvatarPositions,
+  resetAvatar
+} from '@/app/components/dashboard/dashboard-helpers'
 import classes from './MaleAvatarFront.module.css'
-import { EXERCISE_ENUM_VALUE } from '@/common/shared-types'
+import { EXERCISE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types'
+import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
 interface Props {
   fillColors: AvatarColorsFront['colors'] & AvatarColorsRear['colors']
@@ -34,47 +40,26 @@ export default function MaleAvatarFront({ fillColors, setFillColors, originalFil
     exerciseName: '' as EXERCISE_ENUM_VALUE
   })
   const [showDescription, setShowDescription] = useState(false)
-  const DARK_GREY = '#444751'
+  const { activeExercises} = useContext(ActiveExercisesContext)
+  const [activeExercise, setActiveExercise] = useState<UserSavedExercise>()
 
   function hoverOverDescription(event: any) {
-    const newFillColors: any = {}
     const bodyPart = get(event, 'target.dataset.name')
 
     if (!bodyPart) return
 
-    const obj = {
-      bodyPart,
-      text: maleAvatarPositions[bodyPart]?.text,
-      position: maleAvatarPositions[bodyPart]?.position,
-      name: maleAvatarPositions[bodyPart]?.name,
-      exerciseName: maleAvatarPositions[bodyPart]?.exercise
-    }
-    setDescription(obj)
-    for (const key in fillColors) {
-      newFillColors[key] = DARK_GREY
-    }
-    setShowDescription(true)
-    newFillColors[bodyPart] = originalFillColors[bodyPart as keyof AvatarColorsFront['colors']]
-    setShowDescription(true)
-    setFillColors(newFillColors)
+    getActiveExercise(bodyPart, setActiveExercise, activeExercises, maleAvatarPositions)
+    getMuscleGroupInfo(bodyPart, setDescription, fillColors, originalFillColors, setShowDescription, setFillColors, maleAvatarPositions)
   }
 
   function handleLeave() {
     setShowDescription(false)
   }
 
-  function resetAvatar() {
-    const newFillColors: any = {}
-    for (const key in originalFillColors) {
-      newFillColors[key] = originalFillColors[key as keyof AvatarColorsFront['colors']]
-    }
-    setFillColors(newFillColors)
-  }
-
   // listener for resetting the avatar if user's mouse leaves the area
   useEffect(() => {
     if (showDescription) return
-    resetAvatar()
+    resetAvatar(originalFillColors, setFillColors)
   }, [showDescription]);
 
   return (
@@ -114,7 +99,7 @@ export default function MaleAvatarFront({ fillColors, setFillColors, originalFil
         showDescription
           ? (
             <div className={`absolute ${ description?.position } z-10`}>
-              <ExerciseDescription description={description?.text} bodyPart={description?.bodyPart} name={description?.name} exerciseName={description?.exerciseName} />
+              <ExerciseDescription hoveredExercise={activeExercise} bodyPartDisplayName={description?.name} />
             </div>
           )
           : ''

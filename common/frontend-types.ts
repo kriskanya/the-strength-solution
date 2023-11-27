@@ -6,42 +6,50 @@ export interface Description {
 
 export interface AvatarColorsFront {
   colors: {
-    trapsFront: string,
-    deltsFront: string,
-    pecs: string,
-    biceps: string,
-    forearmsFront: string,
     absFront: string,
-    obliquesFront: string,
-    quads: string,
+    biceps: string,
     calvesFront: string,
-    neck: string,
+    deltsFront: string,
+    forearmsFront: string,
+    hair?: string
     hands: string,
     head: string,
-    hair?: string
+    neck: string,
+    obliquesFront: string,
+    pecs: string,
+    quads: string,
+    trapsFront: string,
   }
 }
 
 export interface AvatarColorsRear {
   colors: {
-    calvesRear: string,
     adductors: string,
-    quads: string,
-    hamstrings: string,
-    glutes: string,
-    obliquesRear: string,
-    trapsRear: string,
-    lats: string,
-    rotatorCuff: string,
-    forearmsRear: string,
-    triceps: string,
+    calvesRear: string,
     deltsRear: string,
     erectors: string,
-    lowerTraps: string
-    rhomboids: string,
+    forearmsRear: string,
+    glutes: string,
+    hamstrings: string,
     hands: string,
     head: string
+    lowerTraps: string
+    lats: string,
+    obliquesRear: string,
+    quads: string,
+    rhomboids: string,
+    rotatorCuff: string,
+    trapsRear: string,
+    triceps: string,
   }
+}
+
+export interface AvatarDescription {
+  bodyPart: string,
+  text: string,
+  position: string,
+  name: string,
+  exerciseName: EXERCISE_ENUM_VALUE
 }
 
 export interface UserStats {

@@ -1,14 +1,7 @@
 import { capitalize } from 'lodash-es'
+import { STRENGTH_CLASSIFICATIONS } from '@/app/components/dashboard/dashboard-helpers'
 
 export default function StrengthClassifications() {
-  const classifications = [
-    { level: 'novice', color: 'red', description: 'The lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-    { level: 'intermediate', color: 'orange', description: 'The lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-    { level: 'proficient', color: 'yellow', description: 'The lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-    { level: 'advanced', color: 'green', description: 'The lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-    { level: 'elite', color: 'blue', description: 'The lifter is weaker than the average untrained individual of the same sex and weight. Strength score <30' },
-  ]
-
   function setMargin(elementIndex: number) {
     if (elementIndex === 0 || elementIndex === 3) {
       return 'mr-2 mb-4'
@@ -24,7 +17,7 @@ export default function StrengthClassifications() {
       <h3 className="uppercase">Strength Classifications</h3>
       <div className="grid grid-cols-3 auto-cols-max mt-10">
         {
-          classifications.map(({ level, color, description}, i) => {
+          STRENGTH_CLASSIFICATIONS.map(({ level, color, description}, i) => {
             return (
               <div key={i} className={`bg-white rounded px-4 py-5 ${ setMargin(i) }`}>
                 <div className="flex items-center">

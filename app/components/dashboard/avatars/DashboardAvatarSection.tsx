@@ -1,9 +1,7 @@
 import Image from 'next/image'
-
 import FemaleAvatarFront from '@/app/components/dashboard/avatars/FemaleAvatarFront'
 import proficiencyLegend from '@/app/images/proficiency-legend.svg'
 import bgBlur from '@/app/images/blue-bg-blur-dashboard.svg'
-import { AvatarColorsFront, AvatarColorsRear } from '@/common/frontend-types'
 import FemaleAvatarRear from '@/app/components/dashboard/avatars/FemaleAvatarRear'
 import DashboardSidePanel from '@/app/components/dashboard/DashboardSidePanel'
 import classes from './DashboardAvatarSection.module.css'
@@ -18,12 +16,14 @@ import {
   LEGEND,
   maleAvatarPositions
 } from '@/app/components/dashboard/dashboard-helpers'
-import { cloneDeep, isEmpty } from 'lodash-es'
+import { cloneDeep, get, isEmpty } from 'lodash-es'
+import { useSession } from 'next-auth/react'
 
 export default function DashboardAvatarSection() {
   const { activeExercises} = useContext(ActiveExercisesContext)
   const [fillColors, setFillColors] = useState<AvatarColors>({...colorsFront, ...colorsRear})
   const [originalFillColors, setOriginalFillColors] = useState<AvatarColors>({...colorsFront, ...colorsRear})
+  const session = useSession()
 
   const setAvatarColors = () => {
     const avatarColors = cloneDeep(fillColors)
@@ -54,15 +54,29 @@ export default function DashboardAvatarSection() {
         <div className={`hidden h-[522px] xl:grid ${classes.container}`}>
           <Image src={bgBlur} alt="legend" className="absolute left-0 top-8" />
           <div className="w-220px relative ml-28 mt-6">
-            {/*<FemaleAvatarFront colors={colorsFront} />*/}
-            <MaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
+            {
+              get(session, 'data.userData.profile.gender') === 'MALE'
+                ? <MaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
+                : get(session, 'data.userData.profile.gender') === 'FEMALE'
+                  ? <FemaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
+                  : ''
+            }
+            {/*<FemaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
+            {/*<MaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
             <div className="absolute bottom-6 right-20 z-0">
               <Image src={proficiencyLegend} alt="legend"/>
             </div>
           </div>
           <div className="">
-            {/*<FemaleAvatarRear colors={colorsRear} />*/}
-            <MaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
+            {
+              get(session, 'data.userData.profile.gender') === 'MALE'
+                ? <MaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
+                : get(session, 'data.userData.profile.gender') === 'FEMALE'
+                  ? <FemaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
+                  : ''
+            }
+            {/*<FemaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
+            {/*<MaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
           </div>
           <DashboardSidePanel />
         </div>
