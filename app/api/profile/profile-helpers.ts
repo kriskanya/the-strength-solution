@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import _ from 'lodash'
-import { ProfilePayload } from '@/common/backend-types'
+import { ProfilePayload } from '@/common/backend-types-and-constants'
 import { Gender, Prisma } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
 

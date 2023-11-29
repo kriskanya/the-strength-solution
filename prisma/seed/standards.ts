@@ -12,7 +12,7 @@ import {
   StrengthStandardRecord,
   EXERCISE_METADATA,
   ExerciseRecordPayload
-} from '../../common/backend-types'
+} from '../../common/backend-types-and-constants'
 import { determineRange } from '../../common/standards-helpers'
 const fileName = `${__dirname}/exercise_standards.csv`
 
@@ -62,7 +62,8 @@ export function createExerciseSeedValues() {
     const record = {
       exerciseName : value,
       displayName : EXERCISE_METADATA[key]?.displayName,
-      description : EXERCISE_METADATA[key]?.description
+      description : EXERCISE_METADATA[key]?.description,
+      unitOfMeasurement: EXERCISE_METADATA[key]?.unitOfMeasurement
     } as ExerciseRecordPayload
     records = [...records, record]
   }

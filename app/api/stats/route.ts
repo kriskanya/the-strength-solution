@@ -8,9 +8,9 @@ import { SaveStats } from '@/app/api/stats/stats-helpers'
 
 export async function POST(req: NextRequest) {
   try {
-    const { gender, bodyWeight, age, exercises, userId }: SaveStats = await req.json()
-    validateStatsPayload({ gender, bodyWeight, age, exercises, userId })
-    let upsertedProfile, exercisesPerformed
+    const { gender, bodyWeight, age, exercises, userId, source }: SaveStats = await req.json()
+    validateStatsPayload({ gender, bodyWeight, age, exercises, userId, source })
+    let upsertedProfile, exercisesPerformed, nonStandardExercisesPerformed
 
     const user: any = await prisma.user.findUnique({
       where: { id: userId },
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         userId, gender, bodyWeight, age
       })
       await saveChosenExercises({tx, exercises, profileId: user.profileId})
-      exercisesPerformed = await createNewExercisesPerformed({tx, exercises, user})
+      exercisesPerformed = await createNewExercisesPerformed({tx, exercises, user, source})
     })
 
     const mostRecentLoggedExercises = await fetchMostRecentLoggedExercises(user?.profileId)

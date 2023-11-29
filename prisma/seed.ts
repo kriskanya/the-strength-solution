@@ -6,7 +6,7 @@
 const _ = require('lodash')
 import { hash } from 'bcrypt'
 import { createExerciseSeedValues, createStandardSeedValues } from './seed/standards'
-import { ExerciseRecordPayload, StrengthStandardRecord } from '@/common/backend-types'
+import { ExerciseRecordPayload, StrengthStandardRecord } from '@/common/backend-types-and-constants'
 
 import { prisma } from '../lib/prisma'
 

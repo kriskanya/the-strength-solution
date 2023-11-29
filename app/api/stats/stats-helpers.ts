@@ -1,4 +1,4 @@
-import { UserSavedExercise } from '@/common/shared-types'
+import { SAVED_EXERCISE_SOURCE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types'
 
 export interface SaveStats {
   gender: 'MALE' | 'FEMALE',
@@ -6,4 +6,5 @@ export interface SaveStats {
   age: number,
   exercises: UserSavedExercise[],
   userId: number,
+  source: SAVED_EXERCISE_SOURCE_ENUM_VALUE
 }

@@ -25,7 +25,8 @@ model User {
   google   Json?
   facebook Json?
 
-  ExercisePerformed ExercisePerformed[]
+  ExercisePerformed            ExercisePerformed[]
+  NonStandardExercisePerformed NonStandardExercisePerformed[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -65,11 +66,13 @@ model Exercise {
   exerciseName ExerciseName
   displayName  String
   description  String
+  unitOfMeasurement UnitOfMeasurementForExercise
 
   standards    Standard[] // an Exercise belongs-to-many Standards
 
-  ExercisesOnProfiles ExercisesOnProfiles[]
-  ExercisePerformed   ExercisePerformed[]
+  ExercisesOnProfiles          ExercisesOnProfiles[]
+  ExercisePerformed            ExercisePerformed[]
+  NonStandardExercisePerformed NonStandardExercisePerformed[]
 
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
@@ -96,14 +99,32 @@ model Standard {
 
 model ExercisePerformed {
   id            Int       @id @default(autoincrement())
-  reps          Int
-  standard      Standard  @relation(fields: [standardId], references: [id]) // an ExercisePerformed has-a a Standard
-  standardId    Int
+  quantity      Int
+  standard      Standard? @relation(fields: [standardId], references: [id]) // an ExercisePerformed has-a Standard
+  standardId    Int?
   user          User      @relation(fields: [userId], references: [id])
   userId        Int
   exercise      Exercise  @relation(fields: [exerciseId], references: [id])
   exerciseId    Int
   datePerformed DateTime
+  source        ExercisePerformedSource
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// for exercises where proficiency isn't measured in terms of reps; i.e., dead hang, broad jump, farmer's carry
+// the `standard` column has been omitted; proficiency is calculated on the front-end
+model NonStandardExercisePerformed {
+  id            Int       @id @default(autoincrement())
+  quantity      Int
+  user          User      @relation(fields: [userId], references: [id])
+  userId        Int
+  exercise      Exercise  @relation(fields: [exerciseId], references: [id])
+  exerciseId    Int
+  datePerformed DateTime
+
+  source        ExercisePerformedSource
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -133,7 +154,8 @@ enum ExerciseName {
   PULL_UP
   PUSH_UP
   BROAD_JUMP
-  HANG
+  DEAD_HANG
+  FARMER_CARRY
 }
 
 enum AgeRange {
@@ -171,4 +193,16 @@ enum BodyWeightRange {
   TWO_HUNDRED_NINETY  @map(name: "290-299")
   THREE_HUNDRED       @map(name: "300-309")
   THREE_HUNDRED_TEN   @map(name: "310-319")
+}
+
+enum UnitOfMeasurementForExercise {
+  REPS
+  SECONDS
+  INCHES
+  POUNDS_PER_HAND
+}
+
+enum ExercisePerformedSource {
+  UPDATE_STATS
+  LOG_EXERCISE
 }

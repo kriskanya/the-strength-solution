@@ -39,7 +39,7 @@ export default function UpdateStatusSelectExercises() {
     const currentExercise = updatedExercises.find(e => e.exercise.exerciseName === exerciseName)
 
     if (!isUndefined(currentExercise) && !isEmpty(currentExercise)) {
-      set(currentExercise, 'loggedExercise.reps', +inputValue)
+      set(currentExercise, 'loggedExercise.quantity', +inputValue)
       setActiveExercises(updatedExercises)
     }
   }
@@ -53,8 +53,9 @@ export default function UpdateStatusSelectExercises() {
               return (
                 <CustomCheckbox
                   isChecked={active}
-                  showRepsInput={true}
-                  reps={loggedExercise?.reps}
+                  showInputBox={true}
+                  inputBoxLabel={exercise.unitOfMeasurement}
+                  quantity={loggedExercise?.quantity}
                   checkboxHandler={checkboxHandler}
                   inputHandler={inputHandler}
                   label={exercise.displayName}

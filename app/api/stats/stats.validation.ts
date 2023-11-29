@@ -21,7 +21,8 @@ export const SAVE_STATS_PAYLOAD = Joi.object().keys({
   bodyWeight : POSITIVE_NONZERO_INT,
   age        : POSITIVE_NONZERO_INT,
   exercises  : JSON_ARRAY,
-  userId     : UI_DB_ID
+  userId     : UI_DB_ID,
+  source     : Joi.string().valid('UPDATE_STATS', 'LOG_EXERCISE'),
 }).label('saveStatsPayload')
 
 export function validateStatsPayload(params: SaveStats) {

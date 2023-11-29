@@ -20,12 +20,12 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
     }
   })
 
-  const sql = `SELECT DISTINCT ON ("ExercisePerformed"."exerciseId") *
-      FROM "ExercisePerformed"
+  const sql = `SELECT *, "ExercisePerformed".id, "ExercisePerformed"."exerciseId" FROM "ExercisePerformed"
       INNER JOIN "Exercise" ON "ExercisePerformed"."exerciseId" = "Exercise".id
-      INNER JOIN "Standard" ON "ExercisePerformed"."standardId" = "Standard".id
-      WHERE "ExercisePerformed"."userId" = ${user?.id}
-      ORDER BY "ExercisePerformed"."exerciseId", "ExercisePerformed"."datePerformed" DESC;`
+      LEFT OUTER JOIN "Standard" ON "ExercisePerformed"."standardId" = "Standard".id
+      WHERE "ExercisePerformed"."userId" = 2 AND "ExercisePerformed"."source" = 'UPDATE_STATS'
+      ORDER BY "ExercisePerformed"."exerciseId", "ExercisePerformed"."datePerformed" DESC;
+  `
   const exercisesPerformed = await prisma.$queryRawUnsafe(sql)
 
   let sortedData = exercisesOnProfiles
@@ -34,11 +34,11 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
   sortedData = sortedData
     .map((record: UserSavedExercise) => {
       if (_.isArray(exercisesPerformed) && exercisesPerformed.length) {
-        const exercisePerformed = exercisesPerformed.find((e: ExercisePerformed) => e.exerciseId === record.exerciseId)
-        record.loggedExercise = exercisePerformed
+        const res = exercisesPerformed.find((e: ExercisePerformed) => e.exerciseId === record.exerciseId)
+        record.loggedExercise = res
       } else {
         // @ts-ignore
-        record.loggedExercise = { reps: null }
+        record.loggedExercise = { quantity: null }
       }
       return record
     })

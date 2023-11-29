@@ -5,8 +5,9 @@ import {
   Level,
   BodyWeightRange,
   ExercisesOnProfiles,
-  Exercise,
+  Exercise, $Enums
 } from '@prisma/client'
+import UnitOfMeasurement = $Enums.UnitOfMeasurementForExercise
 
 export interface StrengthStandardRecord {
   bodyWeight: BodyWeightRange,
@@ -77,18 +78,30 @@ export const EXERCISE_NAME: any = {
   'CHIN-UP': ExerciseName.CHIN_UP,
   'PULL-UP': ExerciseName.PULL_UP,
   'GOBLET SQUAT': ExerciseName.GOBLET_SQUAT,
-  'BACK EXTENSIONS': ExerciseName.BACK_EXTENSION
+  'BACK EXTENSIONS': ExerciseName.BACK_EXTENSION,
+  'DEAD_HANG' : ExerciseName.DEAD_HANG,
+  'BROAD_JUMP': ExerciseName.BROAD_JUMP,
+  'FARMER_CARRY': ExerciseName.FARMER_CARRY
 }
 
+export const UNIT_OF_MEASUREMENT: any = {
+  'REPS'             : UnitOfMeasurement.REPS,
+  'SECONDS'          : UnitOfMeasurement.SECONDS,
+  'INCHES'           : UnitOfMeasurement.INCHES,
+  'POUNDS_PER_HAND'  : UnitOfMeasurement.POUNDS_PER_HAND
+}
 
 export const EXERCISE_METADATA: any = {
-  'PUSH-UP': { displayName: 'Push-Ups', description: '' },
-  'INVERTED ROW': { displayName: 'Inverted Rows', description: '' },
-  'DIP': { displayName: 'Dips', description: '' },
-  'CHIN-UP': { displayName: 'Chin-Ups', description: '' },
-  'PULL-UP': { displayName: 'Pull-Ups', description: '' },
-  'GOBLET SQUAT': { displayName: 'Goblet Squats', description: '' },
-  'BACK EXTENSIONS': { displayName: 'Back Extensions', description: '' }
+  'PUSH-UP'        : { displayName: 'Push-Ups'       , description: '', unitOfMeasurement: 'REPS' },
+  'INVERTED ROW'   : { displayName: 'Inverted Rows'  , description: '', unitOfMeasurement: 'REPS' },
+  'DIP'            : { displayName: 'Dips'           , description: '', unitOfMeasurement: 'REPS' },
+  'CHIN-UP'        : { displayName: 'Chin-Ups'       , description: '', unitOfMeasurement: 'REPS' },
+  'PULL-UP'        : { displayName: 'Pull-Ups'       , description: '', unitOfMeasurement: 'REPS' },
+  'GOBLET SQUAT'   : { displayName: 'Goblet Squats'  , description: '', unitOfMeasurement: 'REPS' },
+  'BACK EXTENSIONS': { displayName: 'Back Extensions', description: '', unitOfMeasurement: 'REPS' },
+  'DEAD_HANG'      : { displayName: 'Dead Hang'      , description: '', unitOfMeasurement: 'SECONDS' },
+  'BROAD_JUMP'     : { displayName: 'Broad Jump'     , description: '', unitOfMeasurement: 'INCHES' },
+  'FARMER_CARRY'   : { displayName: 'Farmer\'s Carry', description: '', unitOfMeasurement: 'POUNDS_PER_HAND' }
 }
 
 export interface ProfilePayload {
@@ -101,9 +114,18 @@ export interface ProfilePayload {
 export interface ExerciseRecordPayload {
   exerciseName: ExerciseName,
   displayName: string,
-  description: string
+  description: string,
+  unitOfMeasurement: UnitOfMeasurement
 }
 
 export interface ActiveExercise extends ExercisesOnProfiles {
   exercise?: Exercise
 }
+
+export const EXERCISES_PERFORMED: ExerciseName[] = [
+  'PUSH_UP', 'INVERTED_ROW', 'DIP', 'CHIN_UP', 'PULL_UP', 'GOBLET_SQUAT', 'BACK_EXTENSION'
+]
+
+export const NON_STANDARD_EXERCISES_PERFORMED: ExerciseName[] = [
+  'DEAD_HANG', 'BROAD_JUMP', 'FARMER_CARRY'
+]

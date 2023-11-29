@@ -2,7 +2,7 @@ const _ = require('lodash')
 import { type NextRequest, NextResponse } from 'next/server'
 
 import { prisma } from '@/lib/prisma'
-import { AGE_RANGES, BODYWEIGHT_RANGES, StrengthStandardRecord } from '@/common/backend-types'
+import { AGE_RANGES, BODYWEIGHT_RANGES, StrengthStandardRecord } from '@/common/backend-types-and-constants'
 import { determineRange, formatStringsForQuery, groupDataByExercise } from '@/common/standards-helpers'
 import { Standard } from '@prisma/client'
 

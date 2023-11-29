@@ -39,7 +39,8 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       profileId,
       gender: userStats.gender.male ? 'MALE' : 'FEMALE',
       bodyWeight: userStats.bodyWeight,
-      age: userStats.age
+      age: userStats.age,
+      source: 'UPDATE_STATS'
     }
   }
 
