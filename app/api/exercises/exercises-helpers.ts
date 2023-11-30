@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import _ from 'lodash'
 import { ExercisePerformed, Prisma } from '@prisma/client'
-import { UserSavedExercise } from '@/common/shared-types'
+import { UserSavedExercise } from '@/common/shared-types-and-constants'
 import TransactionClient = Prisma.TransactionClient
 
 /**

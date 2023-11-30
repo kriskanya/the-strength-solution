@@ -5,7 +5,7 @@ import {
 } from '@/app/api/exercises-performed/exercises-performed-helpers'
 import { validatePayload } from '@/app/api/exercises-performed/exercises-performed.validation'
 import { validateIdParam } from '@/common/validation/constants/common_validation.constants'
-import { ExercisesPerformedPayload } from '@/common/shared-types'
+import { ExercisesPerformedPayload } from '@/common/shared-types-and-constants'
 
 export async function POST(req: NextRequest) {
   try {

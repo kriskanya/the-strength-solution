@@ -1,5 +1,5 @@
 import { capitalize } from 'lodash-es'
-import { STRENGTH_CLASSIFICATIONS } from '@/app/components/dashboard/dashboard-helpers'
+import { STRENGTH_CLASSIFICATIONS } from '@/app/components/dashboard/dashboard-helpers-and-constants'
 
 export default function StrengthClassifications() {
   function setMargin(elementIndex: number) {

@@ -22,8 +22,8 @@ import {
   getActiveExercise,
   getMuscleGroupInfo,
   resetAvatar
-} from '@/app/components/dashboard/dashboard-helpers'
-import { EXERCISE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types'
+} from '@/app/components/dashboard/dashboard-helpers-and-constants'
+import { EXERCISE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types-and-constants'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
 interface Props {

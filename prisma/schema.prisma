@@ -37,6 +37,7 @@ model Profile {
   gender     Gender
   bodyWeight Int
   age        Int
+  height     Int // in inches
 
   user User? // a Profile belongs-to a User
 

@@ -1,4 +1,4 @@
-import { EXERCISE_ENUM_VALUE } from '@/common/shared-types'
+import { EXERCISE_ENUM_VALUE } from '@/common/shared-types-and-constants'
 
 export interface Description {
   [key: string]: { position: string, exercise: EXERCISE_ENUM_VALUE, name: string, text: string }

@@ -3,17 +3,11 @@ import {
   BODYWEIGHT_RANGES,
   EXERCISES_PERFORMED,
   GENDER,
-  NON_STANDARD_EXERCISES_PERFORMED, UNIT_OF_MEASUREMENT
+  NON_STANDARD_EXERCISES_PERFORMED
 } from '@/common/backend-types-and-constants'
 import { Prisma, Profile, User } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
-import {
-  EXERCISE_ENUM_VALUE,
-  SAVED_EXERCISE_SOURCE_ENUM_VALUE,
-  UNIT_OF_MEASUREMENT_ENUM_VALUE,
-  UserSavedExercise
-} from '@/common/shared-types'
-import { prisma } from '@/lib/prisma'
+import { SAVED_EXERCISE_SOURCE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types-and-constants'
 import _ from 'lodash'
 
 export const findEnum = (enums: string[], reps: number) => {
@@ -29,7 +23,7 @@ export const findEnum = (enums: string[], reps: number) => {
   }
 }
 
-export const createNewExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile }, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
+export const upsertNewExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile }, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
   const exercisesWithQuantityEntered = exercises.filter(item => _.isNumber(item?.loggedExercise?.quantity))
   const standardExercises = exercisesWithQuantityEntered.filter(item => {
     return EXERCISES_PERFORMED.includes(item?.exercise?.exerciseName)
@@ -39,15 +33,22 @@ export const createNewExercisesPerformed = async ({tx, exercises, user, source}:
   })
 
   if (_.isArray(standardExercises) && standardExercises.length > 0) {
-    await createNewStandardExercisesPerformed({tx, exercises: standardExercises, user, source})
+    await upsertNewStandardExercisesPerformed({tx, exercises: standardExercises, user, source})
   }
 
   if (_.isArray(nonStandardExercises) && nonStandardExercises.length > 0) {
-    await createNewNonStandardExercisesPerformed({tx, exercises: nonStandardExercises, user, source})
+    await upsertNewNonStandardExercisesPerformed({tx, exercises: nonStandardExercises, user, source})
   }
 }
 
-export const createNewStandardExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile }, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
+/**
+ * Upserts records for exercises with standards which are measured in REPS
+ * @param tx
+ * @param exercises
+ * @param user
+ * @param source
+ */
+export const upsertNewStandardExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile }, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
   let promises = []
   for (const [key, value] of Object.entries(exercises)) {
     const bodyWeightRange = findEnum(Object.keys(BODYWEIGHT_RANGES), (user?.profile as Profile).bodyWeight)
@@ -101,7 +102,14 @@ export const createNewStandardExercisesPerformed = async ({tx, exercises, user, 
   return Promise.all(promises)
 }
 
-export const createNewNonStandardExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile }, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
+/**
+ * Upserts records for exercises without standards which are measured in SECONDS, INCHES, or POUNDS_PER_HAND
+ * @param tx
+ * @param exercises
+ * @param user
+ * @param source
+ */
+export const upsertNewNonStandardExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile }, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
   let promises = []
   const exercisesWithReps = exercises.filter(item => {
     return _.isNumber(item?.loggedExercise?.quantity) && NON_STANDARD_EXERCISES_PERFORMED.includes(item?.exercise?.exerciseName)

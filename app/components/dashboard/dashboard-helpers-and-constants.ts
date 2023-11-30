@@ -2,7 +2,7 @@
 // need to figure out how these are calculated for the first graph
 import { AvatarColorsFront, AvatarColorsRear, AvatarDescription, Description } from '@/common/frontend-types-and-constants'
 import { Dispatch, SetStateAction } from 'react'
-import { UserSavedExercise } from '@/common/shared-types'
+import { UserSavedExercise } from '@/common/shared-types-and-constants'
 
 export const exercises = [
   { name: 'Push-Ups', proficiency: 15 },
@@ -215,3 +215,12 @@ export const STRENGTH_CLASSIFICATIONS = [
   { level: 'advanced', color: 'green', description: 'Individual has demonstrated greater than average muscular endurance in these particular muscle groups.' },
   { level: 'elite', color: 'blue', description: 'Individual has demonstrated ideal muscular endurance in these particular muscle groups.' },
 ]
+
+export const MEASUREMENT_DISPLAY_VALUES = {
+  REPS: 'REPS',
+  POUNDS_PER_HAND: 'LBS. EA.',
+  SECONDS: 'SEC.',
+  INCHES: 'IN.'
+}
+
+export type MEASUREMENT_DISPLAY_VALUE = 'REPS' | 'LBS. EA.' | 'SEC.' | 'IN.'

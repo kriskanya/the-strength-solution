@@ -5,7 +5,7 @@ import CustomButton from '@/app/ui/CustomButton'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { cloneDeep, get, isArray, toInteger } from 'lodash-es'
 import { getSession } from 'next-auth/react'
-import { UserSavedExercise } from '@/common/shared-types'
+import { UserSavedExercise } from '@/common/shared-types-and-constants'
 import { Exercise } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 

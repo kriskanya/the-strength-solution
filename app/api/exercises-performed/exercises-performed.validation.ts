@@ -3,7 +3,7 @@ import {
   validate
 } from '@/common/validation/constants/common_validation.constants'
 import Joi, { ValidationOptions } from 'joi'
-import { ExercisesPerformedPayload } from '@/common/shared-types'
+import { ExercisesPerformedPayload } from '@/common/shared-types-and-constants'
 
 /**
  * Need to set 'presence' to 'optional' here---the object CREATE_EXERCISE_PERFORMED_PAYLOAD

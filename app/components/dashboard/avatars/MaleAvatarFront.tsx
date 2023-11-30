@@ -20,9 +20,9 @@ import {
   getMuscleGroupInfo,
   maleAvatarPositions,
   resetAvatar
-} from '@/app/components/dashboard/dashboard-helpers'
+} from '@/app/components/dashboard/dashboard-helpers-and-constants'
 import classes from './MaleAvatarFront.module.css'
-import { EXERCISE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types'
+import { EXERCISE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types-and-constants'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
 interface Props {

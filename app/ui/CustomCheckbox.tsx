@@ -1,7 +1,6 @@
 import classes from './CustomCheckbox.module.css'
 import { ChangeEvent } from 'react'
-import { UNIT_OF_MEASUREMENT_ENUM_VALUE } from '@/common/shared-types'
-import { startCase } from 'lodash-es'
+import { MEASUREMENT_DISPLAY_VALUE } from '@/app/components/dashboard/dashboard-helpers-and-constants'
 
 interface Props {
   isChecked: boolean,
@@ -11,7 +10,7 @@ interface Props {
   label: string,
   id: string,
   showInputBox?: boolean,
-  inputBoxLabel?: UNIT_OF_MEASUREMENT_ENUM_VALUE,
+  inputBoxLabel?: MEASUREMENT_DISPLAY_VALUE,
   quantity?: number
 }
 
@@ -42,7 +41,10 @@ export default function CustomCheckbox({ isChecked, checkboxHandler, inputHandle
                 value={quantity}
                 onChange={inputHandler}
               />
-              <span className="absolute top-2.5 left-3 inter font-medium text-sm text-custom-black opacity-80">{startCase(inputBoxLabel)}</span>
+              <span className="absolute top-2.5 left-3 inter font-medium text-sm text-custom-black opacity-80">
+                {inputBoxLabel}
+                {/*{startCase(inputBoxLabel)}*/}
+              </span>
             </label>
           )
           : ''

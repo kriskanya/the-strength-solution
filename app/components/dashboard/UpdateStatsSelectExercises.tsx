@@ -1,11 +1,13 @@
 import CustomCheckbox from '@/app/ui/CustomCheckbox'
-import { UserSavedExercise } from '@/common/shared-types'
+import { UserSavedExercise } from '@/common/shared-types-and-constants'
 import { ChangeEvent, useContext } from 'react'
 import { cloneDeep, get, isArray, isEmpty, isUndefined, set } from 'lodash-es'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
+import { MEASUREMENT_DISPLAY_VALUE, MEASUREMENT_DISPLAY_VALUES } from '@/app/components/dashboard/dashboard-helpers-and-constants'
 
 export default function UpdateStatusSelectExercises() {
   const { activeExercises,  setActiveExercises} = useContext(ActiveExercisesContext)
+
   const checkboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
     let updatedExercises = cloneDeep(activeExercises)
     const checked = get(event, 'target.checked')
@@ -54,7 +56,7 @@ export default function UpdateStatusSelectExercises() {
                 <CustomCheckbox
                   isChecked={active}
                   showInputBox={true}
-                  inputBoxLabel={exercise.unitOfMeasurement}
+                  inputBoxLabel={MEASUREMENT_DISPLAY_VALUES[exercise.unitOfMeasurement] as MEASUREMENT_DISPLAY_VALUE}
                   quantity={loggedExercise?.quantity}
                   checkboxHandler={checkboxHandler}
                   inputHandler={inputHandler}

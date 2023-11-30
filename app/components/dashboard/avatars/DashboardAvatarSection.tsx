@@ -15,7 +15,7 @@ import {
   colorsRear,
   LEGEND,
   maleAvatarPositions
-} from '@/app/components/dashboard/dashboard-helpers'
+} from '@/app/components/dashboard/dashboard-helpers-and-constants'
 import { cloneDeep, get, isEmpty } from 'lodash-es'
 import { useSession } from 'next-auth/react'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { calculateWidth, exercises, getAverage } from '@/app/components/dashboard/dashboard-helpers'
+import { calculateWidth, exercises, getAverage } from '@/app/components/dashboard/dashboard-helpers-and-constants'
 
 export default function YouVsAverageBarGraph() {
   const MAX_BAR_WIDTH = window.innerWidth / 3

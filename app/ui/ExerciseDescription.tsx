@@ -1,5 +1,5 @@
 import classes from './ExerciseDescription.module.css'
-import { UserSavedExercise } from '@/common/shared-types'
+import { UserSavedExercise } from '@/common/shared-types-and-constants'
 import { MUSCLE_PROFICIENCIES } from '@/common/frontend-types-and-constants'
 import { get } from 'lodash-es'
 

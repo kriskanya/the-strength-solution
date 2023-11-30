@@ -24,9 +24,9 @@ import {
   getMuscleGroupInfo,
   maleAvatarPositions,
   resetAvatar
-} from '@/app/components/dashboard/dashboard-helpers'
+} from '@/app/components/dashboard/dashboard-helpers-and-constants'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
-import { EXERCISE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types'
+import { EXERCISE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types-and-constants'
 
 interface Props {
   fillColors: AvatarColorsFront['colors'] & AvatarColorsRear['colors'],

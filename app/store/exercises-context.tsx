@@ -1,7 +1,9 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { getSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import { get, isArray } from 'lodash-es'
-import { UserSavedExercise } from '@/common/shared-types'
+import { UserSavedExercise } from '@/common/shared-types-and-constants'
+import { setProficienciesForNonStandardExercises } from '@/common/standards-helpers'
+import { Profile } from '@prisma/client'
 
 interface Props {
   children?: ReactNode
@@ -24,17 +26,21 @@ export default function ActiveExerciseContextProvider({ children }: Props) {
     activeExercises,
     setActiveExercises
   }
+  const { data:session } = useSession()
 
   /**
    * This data is used to show how many reps a user has logged for
-   * a particular exercise
+   * a particular exercise in the Update Stats dialog
    */
-  const fetchMostRecentLoggedExercises = async () => {
+  const fetchLoggedExercisesForUpdateStats = async () => {
     try {
-      const session = await getSession()
+      if (!session) return
+
       const profileId = get(session, 'userData.profileId')
       const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
       const data = await res.json()
+
+      console.log('session', session)
 
       if (data && (isArray(data) && data.length)) {
         console.log('active exercises', data)
@@ -45,11 +51,19 @@ export default function ActiveExerciseContextProvider({ children }: Props) {
     }
   }
 
+  const setProficienciesDynamically = () => {
+    if (!session || !activeExercises) return
+
+    const userProfile = get(session, 'userData.profile') as unknown as Profile
+    setProficienciesForNonStandardExercises(activeExercises, userProfile)
+  }
+
   useEffect(() => {
     (async () => {
-      await fetchMostRecentLoggedExercises()
+      await fetchLoggedExercisesForUpdateStats()
+      setProficienciesDynamically()
     })()
-  }, [])
+  }, [session])
 
   return (
     <ActiveExercisesContext.Provider value={ctxProvider}>

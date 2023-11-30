@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { fetchMostRecentLoggedExercises, saveChosenExercises } from '@/app/api/exercises/exercises-helpers'
-import { createNewExercisesPerformed } from '@/app/api/exercises-performed/exercises-performed-helpers'
+import { upsertNewExercisesPerformed } from '@/app/api/exercises-performed/exercises-performed-helpers'
 import { upsertProfile } from '@/app/api/profile/profile-helpers'
 import { validateStatsPayload } from '@/app/api/stats/stats.validation'
 import { SaveStats } from '@/app/api/stats/stats-helpers'
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         userId, gender, bodyWeight, age
       })
       await saveChosenExercises({tx, exercises, profileId: user.profileId})
-      exercisesPerformed = await createNewExercisesPerformed({tx, exercises, user, source})
+      exercisesPerformed = await upsertNewExercisesPerformed({tx, exercises, user, source})
     })
 
     const mostRecentLoggedExercises = await fetchMostRecentLoggedExercises(user?.profileId)

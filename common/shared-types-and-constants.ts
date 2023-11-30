@@ -32,3 +32,7 @@ export type ExercisesPerformedPayload = {
     exerciseId: number
   }
 }
+
+export const NON_STANDARD_EXERCISES = [
+  'BROAD_JUMP', 'DEAD_HANG', 'FARMER_CARRY'
+]

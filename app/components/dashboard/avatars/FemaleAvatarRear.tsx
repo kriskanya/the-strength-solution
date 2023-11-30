@@ -20,13 +20,13 @@ import ExerciseDescription from '@/app/ui/ExerciseDescription'
 import HeadFemaleRear from '@/app/images/female-avatar/rear/head'
 import HandsFemaleRear from '@/app/images/female-avatar/rear/hands'
 import SpinalErectorsFemale from '@/app/images/female-avatar/rear/spinal-erectors'
-import { EXERCISE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types'
+import { EXERCISE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types-and-constants'
 import {
   femaleAvatarPositions,
   getActiveExercise,
   getMuscleGroupInfo,
   resetAvatar
-} from '@/app/components/dashboard/dashboard-helpers'
+} from '@/app/components/dashboard/dashboard-helpers-and-constants'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 
 interface Props {
