@@ -215,6 +215,8 @@ export interface UserStats {
   gender: { male: boolean, female: boolean },
   bodyWeight: number,
   age: number
+  heightFeet: number,
+  heightInches: number
 }
 
 export const MUSCLE_GROUPINGS = {

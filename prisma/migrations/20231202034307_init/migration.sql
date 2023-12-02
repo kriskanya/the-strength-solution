@@ -43,6 +43,7 @@ CREATE TABLE "Profile" (
     "gender" "Gender" NOT NULL,
     "bodyWeight" INTEGER NOT NULL,
     "age" INTEGER NOT NULL,
+    "height" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -104,20 +105,6 @@ CREATE TABLE "ExercisePerformed" (
     CONSTRAINT "ExercisePerformed_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "NonStandardExercisePerformed" (
-    "id" SERIAL NOT NULL,
-    "quantity" INTEGER NOT NULL,
-    "userId" INTEGER NOT NULL,
-    "exerciseId" INTEGER NOT NULL,
-    "datePerformed" TIMESTAMP(3) NOT NULL,
-    "source" "ExercisePerformedSource" NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "NonStandardExercisePerformed_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -144,9 +131,3 @@ ALTER TABLE "ExercisePerformed" ADD CONSTRAINT "ExercisePerformed_userId_fkey" F
 
 -- AddForeignKey
 ALTER TABLE "ExercisePerformed" ADD CONSTRAINT "ExercisePerformed_exerciseId_fkey" FOREIGN KEY ("exerciseId") REFERENCES "Exercise"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "NonStandardExercisePerformed" ADD CONSTRAINT "NonStandardExercisePerformed_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "NonStandardExercisePerformed" ADD CONSTRAINT "NonStandardExercisePerformed_exerciseId_fkey" FOREIGN KEY ("exerciseId") REFERENCES "Exercise"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

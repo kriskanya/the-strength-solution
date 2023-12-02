@@ -1,9 +1,8 @@
-import { capitalize } from 'lodash-es'
-
 interface Props {
   field: string,
+  displayName: string,
   value: string | number | undefined,
-  onChange: (event: any) => void
+  onChange: (event: any) => void,
 }
 
 const maxLength = (field: string): number => {
@@ -14,12 +13,27 @@ const maxLength = (field: string): number => {
       : 999
 }
 
-export default function GenericInput({ field, value, onChange }: Props) {
+const determineUnitOfMeasurement = (field: string) => {
+  switch (field) {
+    case 'bodyWeight':
+      return 'lbs.'
+    case 'heightFeet':
+      return 'ft.'
+    case 'heightInches':
+      return 'in.'
+    default:
+      return ''
+  }
+}
+
+export default function GenericInput({ field, displayName, value, onChange }: Props) {
+  const unitOfMeasurement = determineUnitOfMeasurement(field)
+
   return (
     <div className="flex flex-col relative">
-      <label className="inter font-medium text-sm mb-1" htmlFor="weight">{capitalize(field)}</label>
+      <label className="inter font-medium text-sm mb-1" htmlFor={field}>{displayName}</label>
       <input
-        className="px-3 border border-lighter-grey w-[201px] h-[48px] rounded"
+        className={`px-3 border border-lighter-grey w-[201px] h-[48px] rounded`}
         type="text"
         name={field}
         id={field}
@@ -28,8 +42,8 @@ export default function GenericInput({ field, value, onChange }: Props) {
         maxLength={maxLength(field)}
       />
       {
-        field === 'bodyWeight'
-          ? <span className="absolute left-40 top-9">lbs</span>
+        unitOfMeasurement
+          ? <span className="absolute left-40 top-9">{unitOfMeasurement}</span>
           : ''
       }
     </div>

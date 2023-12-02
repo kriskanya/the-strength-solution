@@ -1,4 +1,4 @@
-import { NON_STANDARD_EXERCISES, UserSavedExercise } from '@/common/shared-types-and-constants'
+import { NON_STANDARD_EXERCISES, UserSavedExercise } from '../common/shared-types-and-constants'
 
 const _ = require('lodash')
 

@@ -4,7 +4,7 @@ import { ProfilePayload } from '@/common/backend-types-and-constants'
 import { Gender, Prisma } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
 
-export async function upsertProfile(tx: TransactionClient, { userId, gender, bodyWeight, age }: ProfilePayload) {
+export async function upsertProfile(tx: TransactionClient, { userId, gender, bodyWeight, age, height }: ProfilePayload) {
   const user = await prisma.user.findFirst({
     where: { id: userId }
   })
@@ -13,7 +13,8 @@ export async function upsertProfile(tx: TransactionClient, { userId, gender, bod
   const payload = {
     gender: _.upperCase(gender) as Gender,
     bodyWeight,
-    age
+    age,
+    height
   }
 
   // if a user profile does not exist, create one
@@ -49,4 +50,5 @@ export interface CreateProfilePayload {
   bodyWeight: number,
   age: number,
   userId: number,
+  height: number
 }

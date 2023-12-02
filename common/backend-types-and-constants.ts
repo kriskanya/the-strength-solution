@@ -108,7 +108,8 @@ export interface ProfilePayload {
   userId: number
   gender: Gender,
   bodyWeight: number,
-  age: number
+  age: number,
+  height: number
 }
 
 export interface ExerciseRecordPayload {

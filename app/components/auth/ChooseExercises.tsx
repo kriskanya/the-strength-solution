@@ -4,7 +4,7 @@ import CustomCheckbox from '@/app/ui/CustomCheckbox'
 import CustomButton from '@/app/ui/CustomButton'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { cloneDeep, get, isArray, toInteger } from 'lodash-es'
-import { getSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import { UserSavedExercise } from '@/common/shared-types-and-constants'
 import { Exercise } from '@prisma/client'
 import { useRouter } from 'next/navigation'
@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 export default function ChooseExercises() {
   const router = useRouter()
   const [selectedExercises, setSelectedExercises] = useState<UserSavedExercise[]>()
+  const { update } = useSession()
 
   const fetchExercises = async () => {
     try {
@@ -71,7 +72,8 @@ export default function ChooseExercises() {
       })
       const data = await res.json()
 
-      if (data && (isArray(data) && data.length)) {
+      if (res?.status === 200 && data && (isArray(data) && data.length)) {
+        await update() // refresh the session so profile info is available for the dashboard
         router.push('/dashboard')
       } else {
         console.error('error saving data in choose exercises component', data)

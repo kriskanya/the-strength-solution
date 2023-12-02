@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { getSession, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { get, isArray } from 'lodash-es'
 import { UserSavedExercise } from '@/common/shared-types-and-constants'
 import { setProficienciesForNonStandardExercises } from '@/common/standards-helpers'

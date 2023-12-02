@@ -23,8 +23,8 @@ export default function ExerciseDescription({ hoveredExercise, bodyPart, bodyPar
         </p>
         <hr className="mb-1 mt-3" />
         <p>
-          <span className="inter font-normal text-xs uppercase text-white opacity-30">Reps:</span>
-          <span className="inter font-normal text-xs text-white ml-[1.1em]">{hoveredExercise?.loggedExercise?.reps}</span>
+          <span className="inter font-normal text-xs uppercase text-white opacity-30">Quantity:</span>
+          <span className="inter font-normal text-xs text-white ml-[1.1em]">{hoveredExercise?.loggedExercise?.quantity}</span>
         </p>
         <p className="-mt-1">
           <span className="inter font-normal text-xs uppercase text-white opacity-30">Level:</span>

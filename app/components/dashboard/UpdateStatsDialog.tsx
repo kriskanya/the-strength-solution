@@ -10,6 +10,7 @@ import { UserStats } from '@/common/frontend-types-and-constants'
 import { Alert } from '@/app/ui/Alert'
 import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
+import { convertHeightToInches } from '@/app/components/auth/auth-helpers'
 
 interface Props {
   isOpen: boolean,
@@ -33,6 +34,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
   }
 
   const constructBody = (userId: number, profileId: number) => {
+    const height = convertHeightToInches(userStats.heightFeet, userStats.heightInches)
     return {
       userId,
       exercises: activeExercises,
@@ -40,6 +42,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       gender: userStats.gender.male ? 'MALE' : 'FEMALE',
       bodyWeight: userStats.bodyWeight,
       age: userStats.age,
+      height,
       source: 'UPDATE_STATS'
     }
   }
@@ -88,6 +91,8 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
           stats.gender = { male: false, female: true }
         }
         break
+      case 'heightFeet':
+      case 'heightInches':
       case 'bodyWeight':
       case 'age':
         value = value.replace(/\D/g,'')

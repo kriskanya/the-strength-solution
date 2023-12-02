@@ -53,10 +53,6 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
         if (options.indexOf(newSelection) === -1) return
         setSelectedOption(newSelection)
         setItemHovered(newSelection)
-
-        // const el = document.querySelectorAll(`.option`)
-        // console.log('el', el)
-
         break
       }
       case 'down': {
@@ -139,10 +135,12 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
       <div className="w-[131px] h-[40px] border border-lighter-grey rounded flex justify-between bg-white select-none"
            onClick={() => setShowDropdown(!showDropdown)}
       >
-        <span className="mt-2 ml-2">{
-          isString(selectedOption)
-            ? `${ capitalize(selectedOption) } ${ units || '' }`
-            : `${ selectedOption } ${ units || '' }` }
+        <span className="mt-2 ml-2">
+          {
+            isString(selectedOption)
+              ? `${ capitalize(selectedOption) } ${ units || '' }`
+              : `${ selectedOption } ${ units || '' }`
+          }
         </span>
         {
           showDropdown

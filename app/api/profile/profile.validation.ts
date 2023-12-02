@@ -19,6 +19,7 @@ export const CREATE_PROFILE_PAYLOAD = Joi.object().keys({
   gender     : Joi.string().valid('MALE', 'FEMALE'),
   bodyWeight : POSITIVE_NONZERO_INT,
   age        : POSITIVE_NONZERO_INT,
+  height     : POSITIVE_NONZERO_INT,
   userId     : UI_DB_ID
 }).label('createProfilePayload')
 

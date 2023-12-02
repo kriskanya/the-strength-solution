@@ -5,12 +5,12 @@ import { validateCreateProfilePayload } from '@/app/api/profile/profile.validati
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId, gender, bodyWeight, age } = await req.json()
-    validateCreateProfilePayload({ userId, gender, bodyWeight, age })
+    const { userId, gender, bodyWeight, age, height } = await req.json()
+    validateCreateProfilePayload({ userId, gender, bodyWeight, age, height })
 
     return prisma.$transaction(async (tx) => {
       const upsertedProfile = await upsertProfile(tx, {
-        userId, gender, bodyWeight, age
+        userId, gender, bodyWeight, age, height
       })
 
       return Response.json(upsertedProfile)

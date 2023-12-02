@@ -26,7 +26,6 @@ model User {
   facebook Json?
 
   ExercisePerformed            ExercisePerformed[]
-  NonStandardExercisePerformed NonStandardExercisePerformed[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -73,7 +72,6 @@ model Exercise {
 
   ExercisesOnProfiles          ExercisesOnProfiles[]
   ExercisePerformed            ExercisePerformed[]
-  NonStandardExercisePerformed NonStandardExercisePerformed[]
 
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
@@ -101,30 +99,13 @@ model Standard {
 model ExercisePerformed {
   id            Int       @id @default(autoincrement())
   quantity      Int
-  standard      Standard? @relation(fields: [standardId], references: [id]) // an ExercisePerformed has-a Standard
+  standard      Standard? @relation(fields: [standardId], references: [id]) // an ExercisePerformed has-a Standard, unless it's a non-standard exercise (i.e., DEAD_HANG, BROAD_JUMP, FARMER_CARRY)
   standardId    Int?
   user          User      @relation(fields: [userId], references: [id])
   userId        Int
   exercise      Exercise  @relation(fields: [exerciseId], references: [id])
   exerciseId    Int
   datePerformed DateTime
-  source        ExercisePerformedSource
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// for exercises where proficiency isn't measured in terms of reps; i.e., dead hang, broad jump, farmer's carry
-// the `standard` column has been omitted; proficiency is calculated on the front-end
-model NonStandardExercisePerformed {
-  id            Int       @id @default(autoincrement())
-  quantity      Int
-  user          User      @relation(fields: [userId], references: [id])
-  userId        Int
-  exercise      Exercise  @relation(fields: [exerciseId], references: [id])
-  exerciseId    Int
-  datePerformed DateTime
-
   source        ExercisePerformedSource
 
   createdAt DateTime @default(now())

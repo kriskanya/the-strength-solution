@@ -20,8 +20,12 @@ export default function UpdateUserStats({ userStats, onChangeStat }: Props) {
           <GenderRadioButton gender="female" checked={userStats.gender.female} onChange={onChangeStat} />
         </div>
         <div className="mt-5 md:flex md:gap-6">
-          <GenericInput field="bodyWeight" value={userStats.bodyWeight} onChange={onChangeStat} />
-          <GenericInput field="age" value={userStats.age} onChange={onChangeStat} />
+          <GenericInput field="bodyWeight" displayName="Body Weight" value={userStats.bodyWeight} onChange={onChangeStat} />
+          <GenericInput field="age" displayName="Age" value={userStats.age} onChange={onChangeStat} />
+        </div>
+        <div className="mt-5 md:flex md:gap-6">
+          <GenericInput field="heightFeet" displayName="Feet" value={userStats.heightFeet} onChange={onChangeStat} />
+          <GenericInput field="heightInches" displayName="Inches" value={userStats.heightInches} onChange={onChangeStat} />
         </div>
       </div>
     </div>
