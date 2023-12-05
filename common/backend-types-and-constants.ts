@@ -5,7 +5,7 @@ import {
   Level,
   BodyWeightRange,
   ExercisesOnProfiles,
-  Exercise, $Enums
+  Exercise, $Enums, User, Profile
 } from '@prisma/client'
 import UnitOfMeasurement = $Enums.UnitOfMeasurementForExercise
 
@@ -121,6 +121,10 @@ export interface ExerciseRecordPayload {
 
 export interface ActiveExercise extends ExercisesOnProfiles {
   exercise?: Exercise
+}
+
+export interface UserWithProfile extends User {
+  profile: Profile
 }
 
 export const EXERCISES_PERFORMED: ExerciseName[] = [

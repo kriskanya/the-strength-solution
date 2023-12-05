@@ -3,7 +3,7 @@ import {
   BODYWEIGHT_RANGES,
   EXERCISES_PERFORMED,
   GENDER,
-  NON_STANDARD_EXERCISES_PERFORMED
+  NON_STANDARD_EXERCISES_PERFORMED, UserWithProfile
 } from '@/common/backend-types-and-constants'
 import { Prisma, Profile, User } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
@@ -23,7 +23,7 @@ export const findEnum = (enums: string[], reps: number) => {
   }
 }
 
-export const upsertNewExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile }, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
+export const upsertNewExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: UserWithProfile, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
   const exercisesWithQuantityEntered = exercises.filter(item => _.isNumber(item?.loggedExercise?.quantity))
   const standardExercises = exercisesWithQuantityEntered.filter(item => {
     return EXERCISES_PERFORMED.includes(item?.exercise?.exerciseName)
@@ -86,7 +86,7 @@ export const upsertNewStandardExercisesPerformed = async ({tx, exercises, user, 
       update: {
         // @ts-ignore
         quantity: value.loggedExercise.quantity,
-        standardId: standard.id
+        standardId: standard.id,
       },
       create: {
         // @ts-ignore

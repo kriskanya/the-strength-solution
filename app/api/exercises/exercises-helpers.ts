@@ -9,7 +9,9 @@ import TransactionClient = Prisma.TransactionClient
  * and the number of reps
  * @param profileId
  */
-export const fetchMostRecentLoggedExercises = async (profileId: number): Promise<UserSavedExercise[]> => {
+export const fetchMostRecentLoggedExercises = async (profileId: number): Promise<UserSavedExercise[] | undefined> => {
+  if (!profileId) return
+
   const user = await prisma.user.findFirst({
     where: { profileId }
   })

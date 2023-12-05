@@ -8,7 +8,6 @@ import {
   PROFICIENCY_LEVELS_DESC,
   UserSavedExercise
 } from '@/common/shared-types-and-constants'
-import { isEmpty } from 'lodash-es'
 import _ from 'lodash'
 
 export const exercises = [

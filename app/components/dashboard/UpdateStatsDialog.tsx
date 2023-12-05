@@ -25,7 +25,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
   const [selectedTab, setSelectedTab] = useState({ workouts: true, stats: false })
   const [showAlert, setShowAlert] = useState(false)
   const { activeExercises, setActiveExercises } = useContext(ActiveExercisesContext)
-  const { data:session } = useSession()
+  const { data:session, update } = useSession()
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
@@ -73,6 +73,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       if (userId && profileId) {
         const saveRes = await saveAll(userId, profileId)
         const res = await saveRes.json()
+        await update() // refresh the session so profile metadata is available for the dashboard
         let activeExercises = get(res, 'activeExercises')
 
         if (!activeExercises || isEmpty(activeExercises)) {
