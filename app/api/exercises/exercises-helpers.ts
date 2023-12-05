@@ -23,7 +23,7 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
   const sql = `SELECT *, "ExercisePerformed".id, "ExercisePerformed"."exerciseId" FROM "ExercisePerformed"
       INNER JOIN "Exercise" ON "ExercisePerformed"."exerciseId" = "Exercise".id
       LEFT OUTER JOIN "Standard" ON "ExercisePerformed"."standardId" = "Standard".id
-      WHERE "ExercisePerformed"."userId" = 2 AND "ExercisePerformed"."source" = 'UPDATE_STATS'
+      WHERE "ExercisePerformed"."userId" = ${user?.id} AND "ExercisePerformed"."source" = 'UPDATE_STATS'
       ORDER BY "ExercisePerformed"."exerciseId", "ExercisePerformed"."datePerformed" DESC;
   `
   const exercisesPerformed = await prisma.$queryRawUnsafe(sql)

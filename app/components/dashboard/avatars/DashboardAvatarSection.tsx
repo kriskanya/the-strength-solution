@@ -51,7 +51,7 @@ export default function DashboardAvatarSection() {
   return (
     <>
       <section className="bg-black-russian h-100 pb-10">
-        <div className={`hidden h-[522px] xl:grid ${classes.container}`}>
+        <div className={`hidden h-[38em] xl:grid ${classes.container}`}>
           <Image src={bgBlur} alt="legend" className="absolute left-0 top-8" />
           <div className="w-220px relative ml-28 mt-6">
             {/*{*/}

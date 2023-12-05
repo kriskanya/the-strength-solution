@@ -5,7 +5,9 @@ interface Props {
   userStats: {
     gender: { male: boolean, female: boolean },
     bodyWeight: number,
-    age: number
+    age: number,
+    heightFeet: number,
+    heightInches: number
   },
   onChangeStat: (event: any) => void
 }

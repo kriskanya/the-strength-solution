@@ -86,6 +86,7 @@ export const upsertNewStandardExercisesPerformed = async ({tx, exercises, user, 
       update: {
         // @ts-ignore
         quantity: value.loggedExercise.quantity,
+        standardId: standard.id
       },
       create: {
         // @ts-ignore

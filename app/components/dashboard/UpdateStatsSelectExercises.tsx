@@ -41,6 +41,7 @@ export default function UpdateStatusSelectExercises() {
     const currentExercise = updatedExercises.find(e => e.exercise.exerciseName === exerciseName)
 
     if (!isUndefined(currentExercise) && !isEmpty(currentExercise)) {
+      inputValue = inputValue.replace(/\D/g,'')
       set(currentExercise, 'loggedExercise.quantity', +inputValue)
       setActiveExercises(updatedExercises)
     }

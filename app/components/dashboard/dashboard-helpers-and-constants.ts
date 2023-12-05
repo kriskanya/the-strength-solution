@@ -2,7 +2,14 @@
 // need to figure out how these are calculated for the first graph
 import { AvatarColorsFront, AvatarColorsRear, AvatarDescription, Description } from '@/common/frontend-types-and-constants'
 import { Dispatch, SetStateAction } from 'react'
-import { UserSavedExercise } from '@/common/shared-types-and-constants'
+import {
+  PROFICIENCY_LEVELS,
+  PROFICIENCY_LEVELS_ASC,
+  PROFICIENCY_LEVELS_DESC,
+  UserSavedExercise
+} from '@/common/shared-types-and-constants'
+import { isEmpty } from 'lodash-es'
+import _ from 'lodash'
 
 export const exercises = [
   { name: 'Push-Ups', proficiency: 15 },
@@ -206,6 +213,35 @@ export const resetAvatar = (originalFillColors: AvatarColorsFront['colors'] & Av
     newFillColors[key] = originalFillColors[key as keyof AvatarColorsRear['colors']]
   }
   setFillColors(newFillColors)
+}
+
+/**
+ * Determine the strongest or weakest exercise, based on the order of the provided proficiencyLevels
+ * @param activeExercises
+ * @param proficiencyLevels
+ */
+const filterActiveExercisesForLevel = (activeExercises: UserSavedExercise[], proficiencyLevels: PROFICIENCY_LEVELS[]) => {
+  let i = 0
+  let arr: UserSavedExercise[] = []
+  while (_.isEmpty(arr) && i < proficiencyLevels.length) {
+    arr = activeExercises.filter(activeExercise => {
+      const level = _.get(activeExercise, 'loggedExercise.level')
+      return level === proficiencyLevels[i]
+    })
+    i++
+  }
+  return arr
+}
+
+/**
+ * Determine strongest and weakest exercise for display on the dashboard
+ * @param activeExercises
+ */
+export const determineStrongestAndWeakestExercises = (activeExercises: UserSavedExercise[]) => {
+  const strongestExercises = filterActiveExercisesForLevel(activeExercises, PROFICIENCY_LEVELS_DESC as PROFICIENCY_LEVELS[])
+  const weakestExercises = filterActiveExercisesForLevel(activeExercises, PROFICIENCY_LEVELS_ASC as PROFICIENCY_LEVELS[])
+
+  return { strongestExercises, weakestExercises }
 }
 
 export const STRENGTH_CLASSIFICATIONS = [

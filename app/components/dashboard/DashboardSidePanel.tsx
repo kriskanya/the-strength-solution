@@ -2,12 +2,16 @@
 import Image from 'next/image'
 import questionMark from '@/app/icons/question-mark.svg'
 import { CustomChip } from '@/app/ui/CustomChip'
-import { capitalize } from 'lodash-es'
-import { useContext, useEffect } from 'react'
+import { capitalize, isEmpty, map } from 'lodash-es'
+import { useContext, useEffect, useState } from 'react'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
+import { determineStrongestAndWeakestExercises } from '@/app/components/dashboard/dashboard-helpers-and-constants'
+import { UserSavedExercise } from '@/common/shared-types-and-constants'
 
 export default function DashboardSidePanel() {
   const { activeExercises, setActiveExercises } = useContext(ActiveExercisesContext)
+  const [strongestExercises, setStrongestExercises] = useState<UserSavedExercise[]>()
+  const [weakestExercises, setWeakestExercises] = useState<UserSavedExercise[]>()
   const proficiencyLevels: { [key: string]: string } = {
     NOVICE: 'bg-[#F25B28] w-[69px]',
     INTERMEDIATE: 'bg-[#F4B43B] w-[107px]',
@@ -16,26 +20,42 @@ export default function DashboardSidePanel() {
     ELITE: 'bg-[#2E8EEC] w-[69px]'
   }
 
+  useEffect(() => {
+    if (!isEmpty(activeExercises)) {
+      const { strongestExercises, weakestExercises } = determineStrongestAndWeakestExercises(activeExercises as UserSavedExercise[])
+      setStrongestExercises(strongestExercises)
+      setWeakestExercises(weakestExercises)
+    }
+  }, [activeExercises]);
+
   return (
     <div className="flex items-center">
       <div>
         <div className="flex justify-between w-[35.1em]">
-          {/*strongest lift*/}
+          {/*strongest exercises*/}
           <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
-            <p className="inter font-normal text-white text-xs opacity-50 capitalize inline-block">
-              Strongest Lift
+            <p className="inter font-normal text-white text-xs opacity-50 inline-block">
+              Strongest Exercise(s)
             </p>
             <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
-            <p className="inter font-semibold text-lg leading-6 text-white mt-1">Deadlift</p>
+            <p className="inter font-semibold text-lg leading-6 text-white mt-1">
+              {
+                !isEmpty(strongestExercises) && map(strongestExercises, 'loggedExercise.displayName')?.join(', ')
+              }
+            </p>
           </div>
 
-          {/*weakest lift*/}
+          {/*weakest exercises*/}
           <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
-            <p className="inter font-normal text-white text-xs opacity-50 capitalize inline-block">
-              Weakest Lift
+            <p className="inter font-normal text-white text-xs opacity-50 inline-block">
+              Weakest Exercise(s)
             </p>
             <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
-            <p className="inter font-semibold text-lg leading-6 text-white mt-1">Back Squat</p>
+            <p className="inter font-semibold text-lg leading-6 text-white mt-1">
+              {
+                !isEmpty(weakestExercises) && map(weakestExercises, 'loggedExercise.displayName')?.join(', ')
+              }
+            </p>
           </div>
         </div>
 
@@ -55,7 +75,7 @@ export default function DashboardSidePanel() {
                     ? (
                       <tr className="leading-6 h-12" key={i}>
                         <td className="inter font-normal text-base text-white">{exercise?.exercise?.displayName}</td>
-                        <td align="center" className="inter font-normal text-base text-white">{exercise?.loggedExercise?.reps}</td>
+                        <td align="center" className="inter font-normal text-base text-white">{exercise?.loggedExercise?.quantity}</td>
                         <td align="right" className="inter font-normal text-base text-white">
                           <CustomChip classes={`uppercase text-black ${ proficiencyLevels[exercise?.loggedExercise?.level as keyof { [key: string]: string }] }`}>
                             { capitalize(exercise?.loggedExercise?.level) }

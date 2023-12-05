@@ -1,28 +1,31 @@
 import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
-import { cloneDeep, get } from 'lodash-es'
+import { cloneDeep, get, isArray, isEmpty } from 'lodash-es'
 import { Dialog } from '@headlessui/react'
 
 import { UpdateStatsTab } from '@/app/ui/UpdateStatsTab'
 import CustomButton from '@/app/ui/CustomButton'
 import UpdateUserStats from '@/app/components/dashboard/UpdateUserStats'
-import { getSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import { UserStats } from '@/common/frontend-types-and-constants'
 import { Alert } from '@/app/ui/Alert'
 import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 import { convertHeightToInches } from '@/app/components/auth/auth-helpers'
+import { setProficienciesForNonStandardExercises } from '@/common/standards-helpers'
+import { Profile } from '@prisma/client'
 
 interface Props {
   isOpen: boolean,
   setIsOpen: Dispatch<SetStateAction<boolean>>,
   userStats: UserStats,
-  setUserStats: Dispatch<SetStateAction<UserStats>>,
+  setUserStats: Dispatch<SetStateAction<UserStats | undefined>>,
 }
 
 export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUserStats }: Props ) {
   const [selectedTab, setSelectedTab] = useState({ workouts: true, stats: false })
   const [showAlert, setShowAlert] = useState(false)
   const { activeExercises, setActiveExercises } = useContext(ActiveExercisesContext)
+  const { data:session } = useSession()
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
@@ -34,6 +37,8 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
   }
 
   const constructBody = (userId: number, profileId: number) => {
+    if (!userStats) return
+
     const height = convertHeightToInches(userStats.heightFeet, userStats.heightInches)
     return {
       userId,
@@ -60,14 +65,24 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
 
   const saveChanges = async () => {
     try {
-      const session = await getSession()
+      if (!session) return
+
       const userId = get(session, 'userData.id')
       const profileId = get(session, 'userData.profileId')
 
       if (userId && profileId) {
-        const save = await saveAll(userId, profileId)
-        const res = await save.json()
-        setActiveExercises(res.mostRecentLoggedExercises)
+        const saveRes = await saveAll(userId, profileId)
+        const res = await saveRes.json()
+        let activeExercises = get(res, 'activeExercises')
+
+        if (!activeExercises || isEmpty(activeExercises)) {
+          console.log('UpdateStatsDialog', `Error saving changes: ${saveRes}`)
+        }
+
+        const userProfile = get(session, 'userData.profile') as unknown as Profile
+        activeExercises = setProficienciesForNonStandardExercises(activeExercises, userProfile)
+
+        setActiveExercises(activeExercises)
         setShowAlert(true)
         setTimeout(() => setShowAlert(false), 5000)
       } else {

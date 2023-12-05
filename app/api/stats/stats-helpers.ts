@@ -4,6 +4,7 @@ export interface SaveStats {
   gender: 'MALE' | 'FEMALE',
   bodyWeight: number,
   age: number,
+  height: number,
   exercises: UserSavedExercise[],
   userId: number,
   source: SAVED_EXERCISE_SOURCE_ENUM_VALUE

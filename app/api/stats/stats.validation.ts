@@ -20,6 +20,7 @@ export const SAVE_STATS_PAYLOAD = Joi.object().keys({
   gender     : Joi.string().valid('MALE', 'FEMALE'),
   bodyWeight : POSITIVE_NONZERO_INT,
   age        : POSITIVE_NONZERO_INT,
+  height     : POSITIVE_NONZERO_INT,
   exercises  : JSON_ARRAY,
   userId     : UI_DB_ID,
   source     : Joi.string().valid('UPDATE_STATS', 'LOG_EXERCISE'),
