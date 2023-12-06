@@ -1,11 +1,10 @@
 import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
-import { cloneDeep, get, isArray, isEmpty } from 'lodash-es'
+import { cloneDeep, get, isEmpty } from 'lodash-es'
 import { Dialog } from '@headlessui/react'
-
 import { UpdateStatsTab } from '@/app/ui/UpdateStatsTab'
 import CustomButton from '@/app/ui/CustomButton'
 import UpdateUserStats from '@/app/components/dashboard/UpdateUserStats'
-import { getSession, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { UserStats } from '@/common/frontend-types-and-constants'
 import { Alert } from '@/app/ui/Alert'
 import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'

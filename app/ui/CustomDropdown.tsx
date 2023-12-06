@@ -1,5 +1,4 @@
 'use client'
-
 import Image from 'next/image'
 import downArrow from '@/app/icons/down-arrow.svg'
 import upArrow from '@/app/icons/up-arrow.svg'
@@ -30,6 +29,7 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
     const el = document.querySelector(`[data-name="${ name }"]`)
     el && el.scrollIntoView({ block: 'nearest' })
   }
+
   function searchList(searchValue: string) {
     const regex = new RegExp(`^${ searchValue }`)
     const optionFound = options.find(option => {
@@ -53,6 +53,7 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
         if (options.indexOf(newSelection) === -1) return
         setSelectedOption(newSelection)
         setItemHovered(newSelection)
+        scrollToSelectedOption(newSelection)
         break
       }
       case 'down': {
@@ -61,6 +62,7 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
         if (options.indexOf(newSelection) === -1) return
         setSelectedOption(newSelection)
         setItemHovered(newSelection)
+        scrollToSelectedOption(newSelection)
         break
       }
     }
@@ -87,6 +89,7 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
       if (event.keyCode === 13) {
         setSelectedOption(itemHovered)
         setShowDropdown(false)
+        setValue({ [type]: itemHovered })
       } else if (event.keyCode === 38) {
         event.preventDefault()
         selectDropdownItem('up')
@@ -95,8 +98,8 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
         selectDropdownItem('down')
       }
     }
-    window.addEventListener('keydown', handleKeydown);
-    return () => window.removeEventListener('keydown', handleKeydown);
+    window.addEventListener('keydown', handleKeydown)
+    return () => window.removeEventListener('keydown', handleKeydown)
   }, [itemHovered, showDropdown]);
 
   function mouseEnter(event: any) {
@@ -126,8 +129,8 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
         setItemHovered(selectedOption)
       }
     }
-    window.addEventListener('click', handleClick);
-    return () => window.removeEventListener('click', handleClick);
+    window.addEventListener('click', handleClick)
+    return () => window.removeEventListener('click', handleClick)
   }, [showDropdown]);
 
   return (

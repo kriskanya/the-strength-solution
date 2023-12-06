@@ -16,9 +16,9 @@ export default function ExerciseDescription({ hoveredExercise, bodyPart, bodyPar
 
   return (
     <div>
-      <div className={`w-[333px] h-[190px] opacity-90 rounded-lg ${classes.container} pl-8 pr-3 pt-3`}>
+      <div className={`w-[333px] h-[190px] rounded-lg ${classes.container} pl-8 pr-3 pt-3`}>
         <h2 className="inter font-semibold text-base text-white">{bodyPartDisplayName}</h2>
-        <p className="inter font-normal text-xs leading-4 text-white opacity-70 mt-1">
+        <p className="inter font-normal text-xs leading-4 text-white mt-1">
           {getDescription()}
         </p>
         <hr className="mb-1 mt-3" />

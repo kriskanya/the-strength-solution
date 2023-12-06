@@ -61,9 +61,7 @@ export default function DashboardAvatarSection() {
                   ? <FemaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
                   : ''
             }
-            {/*<FemaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
-            {/*<MaleAvatarFront fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
-            <div className="absolute bottom-6 right-20 z-0">
+            <div className="absolute top-80 right-20 z-0">
               <Image src={proficiencyLegend} alt="legend"/>
             </div>
           </div>
@@ -75,8 +73,6 @@ export default function DashboardAvatarSection() {
                   ? <FemaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />
                   : ''
             }
-            {/*<FemaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
-            {/*<MaleAvatarRear fillColors={fillColors} setFillColors={setFillColors} originalFillColors={originalFillColors} />*/}
           </div>
           <DashboardSidePanel />
         </div>
