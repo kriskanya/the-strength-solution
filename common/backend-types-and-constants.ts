@@ -112,6 +112,13 @@ export interface ProfilePayload {
   height: number
 }
 
+export interface UpdateUserPayload {
+  id: number,
+  firstName: string,
+  lastName: string,
+  email: string
+}
+
 export interface ExerciseRecordPayload {
   exerciseName: ExerciseName,
   displayName: string,

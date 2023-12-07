@@ -17,14 +17,25 @@ interface Props {
 }
 
 export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, setUserStats }: Props) {
-  const { data: session } = useSession()
+  const { data: session, update } = useSession()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [showAlert, setShowAlert] = useState(false)
 
-  const saveChanges = () => {
-    console.log('save')
+  const saveChanges = async () => {
+    const body = { firstName, lastName, email }
+    const id = session?.user?.id
+    const res = await fetch(`/api/user/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    setShowAlert(true)
+    setTimeout(() => setShowAlert(false), 5000)
+    await update()
   }
 
   useEffect(() => {
@@ -60,9 +71,9 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
                 <div className="ml-4">
                   <p className="inter font-medium text-sm">Profile Image</p>
                   <p className="flex mt-2">
-                    <span className="text-brand-blue">Change Photo</span>
+                    <span className="text-brand-blue cursor-pointer">Change Photo</span>
                     <Image className="mx-2" src={ellipse} alt="profile-pic" height={4} width={4} />
-                    <span className="text-brand-blue">Remove Photo</span>
+                    <span className="text-brand-blue cursor-pointer">Remove Photo</span>
                   </p>
                 </div>
               </div>

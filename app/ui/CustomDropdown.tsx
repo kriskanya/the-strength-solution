@@ -114,12 +114,12 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
     setValue({ [type]: option })
   }
 
-  // listener for closing the dropdown if the user clicks outside of it
+  // listener for closing the dropdown if the user clicks outside of it - https://dev.to/mirfayekhossain/how-to-detect-clicks-outside-of-an-element-in-nextjs-or-react-301p
   useEffect(() => {
     // only add the event listener when the dropdown is opened
-    if (!showDropdown) return;
+    if (!showDropdown) return
 
-    function handleClick(event: any) {
+    function handleOutsideClick(event: any) {
       // @ts-ignore
       if (dropdown.current && !dropdown.current.contains(event.target)) {
         setShowDropdown(false);
@@ -129,9 +129,9 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
         setItemHovered(selectedOption)
       }
     }
-    window.addEventListener('click', handleClick)
-    return () => window.removeEventListener('click', handleClick)
-  }, [showDropdown]);
+    window.addEventListener('click', handleOutsideClick)
+    return () => window.removeEventListener('click', handleOutsideClick)
+  }, [showDropdown])
 
   return (
     <div className={`cursor-pointer ${ propClasses || '' }`} ref={dropdown}>

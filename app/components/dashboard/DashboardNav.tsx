@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import CustomButton from '@/app/ui/CustomButton'
 import UpdateStatusDialog from '@/app/components/dashboard/UpdateStatsDialog'
@@ -23,6 +23,7 @@ export default function DashboardNav() {
   const menuItems = ['Account Details', 'About', 'Log Out']
   const [showMenu, setShowMenu] = useState<boolean>()
   const [itemHovered, setItemHovered] = useState<string>()
+  const dropdown = useRef(null)
 
   const openDialog = async () => {
     const profileId = get(session, 'userData.profileId')
@@ -69,6 +70,21 @@ export default function DashboardNav() {
     }
   }
 
+  // listener for closing the dropdown if the user clicks outside of it
+  useEffect(() => {
+    // only add the event listener when the dropdown is opened
+    if (!showMenu) return
+
+    function handleOutsideClick(event: any) {
+      // @ts-ignore
+      if (dropdown.current && !dropdown.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    }
+    window.addEventListener('click', handleOutsideClick)
+    return () => window.removeEventListener('click', handleOutsideClick)
+  }, [showMenu])
+
   return (
     <div className="grid grid-cols-2 py-5 px-12 bg-black-russian relative">
       <UpdateStatusDialog isOpen={showStatsDialog} setIsOpen={setShowStatsDialog} userStats={userStats as UserStats} setUserStats={setUserStats} />
@@ -83,7 +99,10 @@ export default function DashboardNav() {
             onClick={openDialog}
           />
         </div>
-        <div className="flex ml-7 bg-[#333333] px-2 py-1 rounded cursor-pointer select-none" onClick={() => setShowMenu(!showMenu)}>
+        <div className="flex ml-7 bg-[#333333] px-2 py-1 rounded cursor-pointer select-none"
+             onClick={() => setShowMenu(!showMenu)}
+             ref={dropdown}
+        >
           <p className="inter font-medium text-white opacity-60 my-auto">
             { displayUserName() }
           </p>
