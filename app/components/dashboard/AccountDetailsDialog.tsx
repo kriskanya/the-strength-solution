@@ -75,8 +75,8 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
   useEffect(() => {
     if (!session) return
 
-    setFirstName(session?.userData?.firstName)
-    setLastName(session?.userData?.lastName)
+    setFirstName(get(session, 'userData.firstName', ''))
+    setLastName(get(session, 'userData.lastName', ''))
     setEmail(session?.userData?.email)
   }, [session])
 

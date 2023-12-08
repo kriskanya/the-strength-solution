@@ -1,9 +1,8 @@
-import { NextApiRequest } from 'next'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { validateIdParam } from '@/common/validation/constants/common_validation.constants'
 import { fetchMostRecentLoggedExercises } from '@/app/api/exercises/exercises-helpers'
 
-export async function GET(req: NextApiRequest, { params }: { params: { id: number } }) {
+export async function GET(req: NextRequest, { params }: { params: { id: number } }) {
   try {
     const { id } = params
     validateIdParam({ id })

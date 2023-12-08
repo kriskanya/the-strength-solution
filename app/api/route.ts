@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth/next'
 import { NextResponse } from 'next/server'
+// @ts-ignore
 import { authOptions } from './auth/[...nextauth]/route'
 
 export async function GET(request: Request) {

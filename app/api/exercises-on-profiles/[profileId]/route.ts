@@ -1,6 +1,5 @@
-import { NextApiRequest } from 'next'
 import { prisma } from '@/lib/prisma'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { validateIdParam } from '@/common/validation/constants/common_validation.constants'
 
 /**
@@ -8,7 +7,7 @@ import { validateIdParam } from '@/common/validation/constants/common_validation
  * @param req
  * @param { profileId }
  */
-export async function GET(req: NextApiRequest, { params }: { params: { profileId: number } }) {
+export async function GET(req: NextRequest, { params }: { params: { profileId: number } }) {
   try {
     const { profileId } = params
     validateIdParam({ id: profileId })

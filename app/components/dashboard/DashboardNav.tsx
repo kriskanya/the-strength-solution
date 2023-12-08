@@ -17,7 +17,7 @@ import AccountDetailsDialog from '@/app/components/dashboard/AccountDetailsDialo
 export default function DashboardNav() {
   const router = useRouter()
   const [showStatsDialog, setShowStatsDialog] = useState(false)
-  const [showAcctDetailsDialog, setShowAcctDetailsDialog] = useState(true)
+  const [showAcctDetailsDialog, setShowAcctDetailsDialog] = useState(false)
   const [userStats, setUserStats] = useState<UserStats>()
   const { data: session } = useSession()
   const menuItems = ['Account Details', 'About', 'Log Out']

@@ -42,10 +42,10 @@ export default function AboutYou() {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     (async () => {
       if (!session) return
-
       await fetchProfileInformation()
     })()
   }, [session])
