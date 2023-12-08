@@ -7,7 +7,8 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "npx prisma db seed"
+    "seed": "npx prisma db seed",
+    "vercel-build": "prisma generate && prisma migrate deploy && npx prisma db seed && next build"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -19,6 +20,7 @@
     "@vercel/postgres": "^0.5.1",
     "bcrypt": "^5.1.1",
     "csv-parse": "^5.5.2",
+    "dotenv": "^16.3.1",
     "joi": "^17.11.0",
     "lodash": "^4.17.21",
     "lodash-es": "4.17.21",
