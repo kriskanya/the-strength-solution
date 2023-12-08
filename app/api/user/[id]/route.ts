@@ -16,7 +16,6 @@ export async function PUT(req: NextRequest, { params }: { params: { id: number }
 
       return Response.json(updatedUser)
     })
-
   } catch (err: any) {
     return new NextResponse(
       JSON.stringify({

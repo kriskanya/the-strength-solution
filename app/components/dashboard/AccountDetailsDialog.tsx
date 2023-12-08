@@ -6,8 +6,9 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { UserStats } from '@/common/frontend-types-and-constants'
 import { useSession } from 'next-auth/react'
 import noProfilePic from '@/app/icons/no-profile-pic.svg'
-import ellipse from '../../icons/ellipse.svg'
 import CustomInput from '@/app/ui/CustomInput'
+import { FileUploader } from '@/app/ui/FileUploader'
+import { get } from 'lodash-es'
 
 interface Props {
   isOpen: boolean,
@@ -22,20 +23,53 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [showAlert, setShowAlert] = useState(false)
+  const [file, setFile] = useState<File>()
 
   const saveChanges = async () => {
+    try {
+      await uploadFile()
+
+      // const res = await Promise.all([uploadFile(), updateUserInfo()])
+
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 5000)
+      await update() // update the session
+
+      // if (!res.ok) throw new Error(await res.text())
+    } catch (e: any) {
+      console.error(e)
+    }
+  }
+
+  const updateUserInfo = () => {
     const body = { firstName, lastName, email }
     const id = session?.user?.id
-    const res = await fetch(`/api/user/${id}`, {
+
+    if (!id) {
+      console.log('AccountDetailsDialog: There was an issue getting the session id when updating user info', session)
+      return
+    }
+
+    return fetch(`/api/user/${id}`, {
       method: 'PUT',
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json'
       },
     })
-    setShowAlert(true)
-    setTimeout(() => setShowAlert(false), 5000)
-    await update()
+  }
+
+  const uploadFile = async () => {
+    if (!file) return
+
+    const data = new FormData()
+    data.set('file', file)
+    const userId = get(session, 'user.id')
+
+    return fetch(`/api/user/${userId}/profile-image`, {
+      method: 'POST',
+      body: data
+    })
   }
 
   useEffect(() => {
@@ -71,9 +105,7 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
                 <div className="ml-4">
                   <p className="inter font-medium text-sm">Profile Image</p>
                   <p className="flex mt-2">
-                    <span className="text-brand-blue cursor-pointer">Change Photo</span>
-                    <Image className="mx-2" src={ellipse} alt="profile-pic" height={4} width={4} />
-                    <span className="text-brand-blue cursor-pointer">Remove Photo</span>
+                    <FileUploader setFile={setFile} />
                   </p>
                 </div>
               </div>
@@ -96,6 +128,7 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
                 </div>
                 <div className="w-36">
                   <CustomButton
+                    type="submit"
                     label="Save Changes"
                     classes="bg-brand-blue h-10 mt-16"
                     textClasses="font-semibold text-sm text-white"
