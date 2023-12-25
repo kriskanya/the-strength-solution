@@ -16,7 +16,7 @@ export default function ChooseExercises() {
 
   const fetchExercises = async () => {
     try {
-      let res, data: any
+      let data: any
       const session = await getSession()
       const profileId =  toInteger(get(session, 'userData.profileId'))
       let chosenWorkoutsData, exercisesData
