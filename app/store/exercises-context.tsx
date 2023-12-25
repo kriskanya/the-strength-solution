@@ -40,12 +40,9 @@ export default function ActiveExerciseContextProvider({ children }: Props) {
       const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
       let activeExercises = await res.json()
 
-      console.log('session', session)
-
       if (activeExercises && (isArray(activeExercises) && activeExercises.length)) {
         const userProfile = get(session, 'userData.profile') as unknown as Profile
         activeExercises = setProficienciesForNonStandardExercises(activeExercises, userProfile)
-        console.log('active exercises', activeExercises)
         setActiveExercises(activeExercises)
       }
     } catch (err) {

@@ -27,15 +27,11 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
 
   const saveChanges = async () => {
     try {
-      await uploadFile()
-
-      // const res = await Promise.all([uploadFile(), updateUserInfo()])
+      const res: (Response | undefined)[] = await Promise.all([uploadFile(), updateUserInfo()])
 
       setShowAlert(true)
       setTimeout(() => setShowAlert(false), 5000)
-      await update() // update the session
-
-      // if (!res.ok) throw new Error(await res.text())
+      await update() // update the session to reflect changes
     } catch (e: any) {
       console.error(e)
     }

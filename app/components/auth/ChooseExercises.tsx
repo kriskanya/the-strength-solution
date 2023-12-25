@@ -12,12 +12,13 @@ import { useRouter } from 'next/navigation'
 export default function ChooseExercises() {
   const router = useRouter()
   const [selectedExercises, setSelectedExercises] = useState<UserSavedExercise[]>()
-  const { update } = useSession()
+  const { data: session, update } = useSession()
 
   const fetchExercises = async () => {
     try {
+      if (!session) return
+
       let data: any
-      const session = await getSession()
       const profileId =  toInteger(get(session, 'userData.profileId'))
       let chosenWorkoutsData, exercisesData
 
@@ -53,11 +54,12 @@ export default function ChooseExercises() {
     (async () => {
       await fetchExercises()
     })()
-  }, [])
+  }, [session])
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    const session = await getSession()
+    await update()
+
     try {
       const body = {
         exercises: selectedExercises,

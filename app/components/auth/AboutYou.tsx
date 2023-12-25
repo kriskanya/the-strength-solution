@@ -19,7 +19,7 @@ export default function AboutYou() {
   const router = useRouter()
   const [userStats, setUserStats] = useState<UserStats>()
   const [error, setError] = useState<string | null>(null)
-  const { data:session } = useSession()
+  const { data:session, update } = useSession()
 
   const fetchProfileInformation = async () => {
     const profileId = get(session, 'userData.profileId')
