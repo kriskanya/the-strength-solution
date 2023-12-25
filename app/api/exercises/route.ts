@@ -4,7 +4,7 @@ import { Exercise } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   try {
-    const exercises = await prisma.exercise.findMany({})
+    const exercises = await prisma.exercise.findMany()
 
     const sortedData = exercises.sort((a: Exercise, b: Exercise) => {
       return a.displayName.localeCompare(b.displayName)
