@@ -40,7 +40,9 @@ export default function LogIn() {
       const session = await getSession()
       const profileId = get(session, 'userData.profileId')
 
-      if (!profileId) {
+      if (res?.error) {
+        displayError('Invalid email or password')
+      } else if (!profileId) {
         router.push('about-you')
       } else if (profileId) {
         const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
@@ -51,10 +53,17 @@ export default function LogIn() {
         router.push(path)
       } else if (!res?.error) {
         router.push(callbackUrl)
-      } else {
-        setError('Invalid email or password')
       }
-    } catch (err: any) {}
+    } catch (err: any) {
+      displayError(err?.message)
+    }
+  }
+
+  const displayError = (text: string) => {
+    setError(text)
+    setTimeout(() => {
+      setError('')
+    }, 5000)
   }
 
   return (

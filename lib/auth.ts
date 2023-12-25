@@ -48,8 +48,6 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        console.log('authorize', credentials)
-
         const user = await prisma.user.findUnique({
           where: {
             email: credentials.email
@@ -64,8 +62,6 @@ export const authOptions: NextAuthOptions = {
           credentials.password,
           user.password as string
         )
-
-        console.log('password is valid', isPasswordValid)
 
         if (!isPasswordValid) {
           return null
@@ -83,7 +79,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     session: async ({ session, token }) => {
-      // console.log('Session Callback', { session, token })
       const email = _.get(session, 'user.email')
       let userData
 
@@ -106,8 +101,6 @@ export const authOptions: NextAuthOptions = {
       }
     },
     jwt: async ({ token, user , account }) => {
-      // console.log('JWT Callback', { token, user })
-
       if (user) {
         const u = user as unknown as User
         const fullName = _.get(user, 'name', '')

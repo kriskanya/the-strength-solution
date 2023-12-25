@@ -30,7 +30,7 @@ export default function CustomInput(props: Props) {
         <label className="inter font-semibold text-sm" htmlFor={props.fieldName}>{capitalize(props.fieldName)}</label>
         {
           props.showForgotPassword
-            ? <Link href="forgot-password" className="inter font-medium text-sm text-brand-blue">Forgot your password?</Link>
+            ? <Link href="forgot-password" className="inter font-medium text-sm text-brand-blue" tabIndex={-1}>Forgot your password?</Link>
             : ''
         }
       </div>
