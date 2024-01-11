@@ -58,12 +58,12 @@ export default function ChooseExercises() {
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    await update()
+    const refreshedSession = await update()
 
     try {
       const body = {
         exercises: selectedExercises,
-        profileId: get(session, 'userData.profileId') && toInteger(get(session, 'userData.profileId'))
+        profileId: get(refreshedSession, 'userData.profileId') && toInteger(get(refreshedSession, 'userData.profileId'))
       }
       const res = await fetch(`/api/exercises/choose`, {
         method: 'POST',

@@ -72,14 +72,14 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       if (userId && profileId) {
         const saveRes = await saveAll(userId, profileId)
         const res = await saveRes.json()
-        await update() // refresh the session so profile metadata is available for the dashboard
+        const refreshedSession = await update() // refresh the session so profile metadata is available for the dashboard
         let activeExercises = get(res, 'activeExercises')
 
         if (!activeExercises || isEmpty(activeExercises)) {
           console.log('UpdateStatsDialog', `Error saving changes: ${saveRes}`)
         }
 
-        const userProfile = get(session, 'userData.profile') as unknown as Profile
+        const userProfile = get(refreshedSession, 'userData.profile') as unknown as Profile
         activeExercises = setProficienciesForNonStandardExercises(activeExercises, userProfile)
 
         setActiveExercises(activeExercises)

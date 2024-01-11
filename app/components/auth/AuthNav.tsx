@@ -10,7 +10,7 @@ interface Props {
 export default function AuthNav({ path }: Props ) {
   const router = useRouter()
   function navigate() {
-    path ? router.push(path) : router.back()
+    path ? router.push(path) : router.push('create-account')
   }
 
   return (
