@@ -18,7 +18,9 @@ export default function AuthNav({ path }: Props ) {
       <div onClick={navigate} className="ml-6 cursor-pointer">
         <Image src={backArrow} alt="back-arrow" />
       </div>
-      <h2 className="inter font-extrabold text-lg uppercase mx-auto">The Strength Solution</h2>
+      <h2 className="inter font-extrabold text-lg uppercase mx-auto cursor-pointer" onClick={() => router.push('/')}>
+        The Strength Solution
+      </h2>
     </div>
   )
 }
