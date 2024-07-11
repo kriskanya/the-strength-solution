@@ -2,7 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, start postgres on your local Docker:
+`docker run -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust postgres`
+
+Then, run the development server:
 
 ```bash
 npm run dev
