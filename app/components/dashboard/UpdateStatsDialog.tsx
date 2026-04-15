@@ -124,7 +124,15 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       className="relative z-50 bg-white"
     >
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <Dialog.Panel className="w-3/5 h-8/12 rounded bg-white py-6 leading-6 border">
+        <Dialog.Panel className="relative w-3/5 h-8/12 rounded bg-white py-6 leading-6 border">
+          <button
+            type="button"
+            aria-label="Close update stats modal"
+            className="absolute right-4 top-4 text-2xl leading-none text-gray-500 hover:text-gray-700"
+            onClick={() => setIsOpen(false)}
+          >
+            ×
+          </button>
           <Dialog.Title>
             <div className="flex justify-center">
               <h1 className="inter font-semibold text-lg">Update My Stats</h1>

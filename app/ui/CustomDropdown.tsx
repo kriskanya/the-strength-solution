@@ -13,10 +13,11 @@ interface Props {
   dropdownHeight: string,
   units?: string,
   propClasses?: string,
+  disabled?: boolean,
   type: 'gender' | 'weight' | 'age'
 }
 
-export default function CustomDropdown({ options, initialValue, setValue, units, propClasses, dropdownHeight, type }: Props) {
+export default function CustomDropdown({ options, initialValue, setValue, units, propClasses, dropdownHeight, type, disabled }: Props) {
   const [showDropdown, setShowDropdown] = useState(false)
   const [selectedOption, setSelectedOption] = useState<string | number>(initialValue)
   const [itemHovered, setItemHovered] = useState(initialValue)
@@ -134,9 +135,9 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
   }, [showDropdown])
 
   return (
-    <div className={`cursor-pointer ${ propClasses || '' }`} ref={dropdown}>
+    <div className={`${ disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer' } ${ propClasses || '' }`} ref={dropdown}>
       <div className="w-[131px] h-[40px] border border-lighter-grey rounded flex justify-between bg-white select-none"
-           onClick={() => setShowDropdown(!showDropdown)}
+           onClick={() => !disabled && setShowDropdown(!showDropdown)}
       >
         <span className="mt-2 ml-2">
           {
@@ -146,13 +147,13 @@ export default function CustomDropdown({ options, initialValue, setValue, units,
           }
         </span>
         {
-          showDropdown
+          showDropdown && !disabled
             ? <Image src={upArrow} alt="up-arrow" className="mr-2" />
             : <Image src={downArrow} alt="down-arrow" className="mr-2" />
         }
       </div>
       {
-        showDropdown
+        showDropdown && !disabled
           ? (
             <div className={`bg-white ${ dropdownHeight } ${ classes.dropdownBody } absolute overflow-y-scroll border-b border-l border-r border-lighter-grey z-10`}>
               {
