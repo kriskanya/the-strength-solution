@@ -25,6 +25,8 @@ model User {
   google   Json?
   facebook Json?
 
+  hasSeenAssessmentGuide Boolean @default(false)
+
   ExercisePerformed            ExercisePerformed[]
 
   createdAt DateTime @default(now())

@@ -76,7 +76,7 @@ export default function ChooseExercises() {
 
       if (res?.status === 200 && data && (isArray(data) && data.length)) {
         await update() // refresh the session so profile metadata is available for the dashboard
-        router.push('/dashboard')
+        router.push('/assessment-guide')
       } else {
         console.error('error saving data in choose exercises component', data)
       }

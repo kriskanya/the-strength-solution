@@ -6,10 +6,10 @@ export default function LandingPageLeft() {
     <div className="flex items-center justify-center h-screen">
       <div>
         <h1 className="inter font-extrabold text-3xl">
-          Welcome to the <span className="text-brand-blue">Strength</span> Solution
+          Welcome to the Strength Solution
         </h1>
         <p className="inter font-normal text-dark-grey text-base mt-2">
-          Train your body and track your proficiency with bodyweight exercises
+          <span className="text-brand-blue">Your solution for building a bulletproof body and eliminating pain.</span>
         </p>
         <Link href="create-account">
           <CustomButton label="Get Started" classes="bg-brand-blue h-12 mt-16" textClasses="text-white" />
