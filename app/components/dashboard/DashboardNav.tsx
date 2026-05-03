@@ -58,8 +58,7 @@ export default function DashboardNav() {
   const onClickMenu = async (menuItem: string) => {
     switch (menuItem) {
       case 'Log Out':
-        await signOut()
-        router.push('/log-in')
+        await signOut({ callbackUrl: '/' })
         break
       case 'Account Details':
         setShowAcctDetailsDialog(true)

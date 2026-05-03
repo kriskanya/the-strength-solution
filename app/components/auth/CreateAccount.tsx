@@ -9,8 +9,7 @@ import CustomInput from "@/app/ui/CustomInput"
 import CustomButton from "@/app/ui/CustomButton"
 import classes from './CreateAccount.module.css'
 import { Alert } from '@/app/ui/Alert'
-import { getSession, signIn } from 'next-auth/react'
-import { get, isArray } from 'lodash-es'
+import { signIn } from 'next-auth/react'
 
 export default function CreateAccount() {
   const router = useRouter()
@@ -35,22 +34,13 @@ export default function CreateAccount() {
           redirect: false,
           email,
           password,
-          callbackUrl: '/dashboard'
+          callbackUrl: '/post-login'
         })
-        const session = await getSession()
-        const profileId = get(session, 'userData.profileId')
 
         if (signInRes?.error) {
           setError('Unable to sign in after account creation. Please log in manually.')
-        } else if (!profileId) {
-          router.push('about-you')
-        } else if (profileId) {
-          const exercisesRes = await fetch(`/api/exercises/choose/profile/${ profileId }`)
-          const chosenExercises = await exercisesRes.json()
-          const path = (isArray(chosenExercises) && chosenExercises?.length)
-            ? 'dashboard'
-            : 'choose-workouts'
-          router.push(path)
+        } else {
+          router.push('/post-login')
         }
       } else {
         setError((await res.json()).error)

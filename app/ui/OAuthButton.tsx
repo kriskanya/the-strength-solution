@@ -10,7 +10,7 @@ interface Props {
 
 export default function OAuthButton({ label, type }: Props) {
   function handleClick() {
-    signIn(type, { callbackUrl: '/dashboard/#' })
+    signIn(type, { callbackUrl: '/post-login' })
   }
 
   return (

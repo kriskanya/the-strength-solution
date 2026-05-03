@@ -7,14 +7,11 @@ import CustomInput from "@/app/ui/CustomInput"
 import CustomButton from "@/app/ui/CustomButton"
 import classes from './LogIn.module.css'
 import { Alert } from '@/app/ui/Alert'
-import { signIn, useSession, getSession } from 'next-auth/react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { get, isArray } from 'lodash-es'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export default function LogIn() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -26,33 +23,17 @@ export default function LogIn() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
     try {
-      // if user does not have a profileId, send them to the about-you page
-      // if user has filled in gender, weight, and age, send them to choose-exercises
-      // if user has filled in exercises, send them to the dashboard
-
       const res = await signIn('credentials', {
         redirect: false,
         email,
         password,
-        callbackUrl
+        callbackUrl: '/post-login'
       })
-
-      const session = await getSession()
-      const profileId = get(session, 'userData.profileId')
 
       if (res?.error) {
         displayError('Invalid email or password')
-      } else if (!profileId) {
-        router.push('about-you')
-      } else if (profileId) {
-        const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
-        const chosenExercises = await res.json()
-        const path = (isArray(chosenExercises) && chosenExercises?.length)
-          ? 'dashboard'
-          : 'choose-workouts'
-        router.push(path)
-      } else if (!res?.error) {
-        router.push(callbackUrl)
+      } else {
+        router.push('/post-login')
       }
     } catch (err: any) {
       displayError(err?.message)
