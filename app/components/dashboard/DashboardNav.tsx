@@ -13,9 +13,12 @@ import rightArrow from '../../icons/right-arrow.svg'
 import logOut from '../../icons/log-out.svg'
 import { useRouter } from 'next/navigation'
 import AccountDetailsDialog from '@/app/components/dashboard/AccountDetailsDialog'
+import TabataTimer, { TabataTimerNavButton } from '@/app/components/dashboard/TabataTimer'
 
 export default function DashboardNav() {
   const router = useRouter()
+  const [showTabataTimer, setShowTabataTimer] = useState(false)
+  const [tabataMinimized, setTabataMinimized] = useState(false)
   const [showStatsDialog, setShowStatsDialog] = useState(false)
   const [showAcctDetailsDialog, setShowAcctDetailsDialog] = useState(false)
   const [userStats, setUserStats] = useState<UserStats>()
@@ -89,8 +92,20 @@ export default function DashboardNav() {
       <UpdateStatusDialog isOpen={showStatsDialog} setIsOpen={setShowStatsDialog} userStats={userStats as UserStats} setUserStats={setUserStats} />
       <AccountDetailsDialog isOpen={showAcctDetailsDialog} setIsOpen={setShowAcctDetailsDialog} userStats={userStats as UserStats} setUserStats={setUserStats} />
       <h2 className="inter font-extrabold text-base uppercase my-auto text-white">The Strength Solution</h2>
-      <div className="flex justify-end">
-        <div className="w-44">
+      <TabataTimer
+        isOpen={showTabataTimer}
+        setIsOpen={setShowTabataTimer}
+        minimized={tabataMinimized}
+        setMinimized={setTabataMinimized}
+      />
+      <div className="flex flex-wrap justify-end gap-3 sm:flex-nowrap">
+        <TabataTimerNavButton
+          onClick={() => {
+            setShowTabataTimer(true)
+            setTabataMinimized(false)
+          }}
+        />
+        <div className="w-44 min-w-[11rem]">
           <CustomButton
             label="Update My Stats"
             classes="bg-brand-blue h-10"

@@ -6,7 +6,7 @@ export default function PageFooter() {
       <div className="flex flex-col justify-center">
         <h2 className="inter font-extrabold text-base uppercase my-auto text-white">The Strength Solution</h2>
         <p className="inter font-normal text-xs text-white opacity-70 w-4/5 mt-2">
-          An app designed to help you achieve your strength goals via functional bodyweight exercises
+          An app designed to help you achieve your strength goals via functional exercises
         </p>
       </div>
       <div className="flex flex-col justify-center">
