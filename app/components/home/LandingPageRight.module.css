@@ -1,5 +1,8 @@
 .container {
-  background-image: url("../../images/trainer-graphic.svg");
-  background-size: cover;
-  background-color: #cccccc;
+  overflow: hidden;
+  background-color: #0d1118;
+}
+
+.image {
+  user-select: none;
 }
