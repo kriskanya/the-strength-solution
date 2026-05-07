@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import dashboardScreenshot from '@/app/images/dashboard-screenshot.png'
+import dashboardScreenshot from '@/app/images/dashboard-screenshot.jpg'
 
 import classes from './LandingPageRight.module.css'
 
