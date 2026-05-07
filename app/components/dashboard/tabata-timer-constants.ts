@@ -3,7 +3,7 @@ export const TABATA_WORK_SEC = 20
 export const TABATA_REST_SEC = 10
 
 /** Initial countdown before Tabata intervals begin */
-export const COUNTDOWN_DURATION_SEC = 30
+export const COUNTDOWN_DURATION_SEC = 15
 
 export type TabataSegmentKind = 'work' | 'rest'
 
@@ -32,7 +32,7 @@ export function buildTabataSegments(): TabataSegment[] {
 
 export const TABATA_SEGMENTS = buildTabataSegments()
 
-/** Countdown (30s) followed by 8× (20s work / 10s rest). */
+/** Countdown (15s) followed by 8× (20s work / 10s rest). */
 export function buildAssessmentSegments(): AssessmentSegment[] {
   return [
     { kind: 'countdown', duration: COUNTDOWN_DURATION_SEC, round: 0 },

@@ -104,7 +104,7 @@ function segmentLabel(seg: AssessmentSegment, index: number): string {
     return `${n}. Countdown: ${seg.duration}s · before Tabata`
   }
   const kind = seg.kind === 'work' ? 'Work' : 'Rest'
-  const activity = seg.kind === 'work' ? 'Go' : 'Recover'
+  const activity = seg.kind === 'work' ? 'Work' : 'Recover'
   return `${n}. ${kind}: ${seg.duration} · ${activity}`
 }
 
@@ -269,6 +269,10 @@ export default function TabataTimer({ isOpen, setIsOpen, minimized, setMinimized
         ? currentSeg.round
         : null
 
+  /** Rest segment while assessment is actively in progress (not idle preview). */
+  const isActiveRestPhase =
+    (state.phase === 'running' || state.phase === 'paused') && currentSeg.kind === 'rest'
+
   const handleDialogClose = () => {
     if (state.phase === 'running' && !minimized) {
       setMinimized(true)
@@ -293,7 +297,9 @@ export default function TabataTimer({ isOpen, setIsOpen, minimized, setMinimized
           ? 'text-[#D2E5F2]'
           : currentSeg.kind === 'work'
             ? 'text-green-advanced'
-            : 'text-brand-blue'
+            : isActiveRestPhase
+              ? 'text-red-novice'
+              : 'text-brand-blue'
 
   if (!isOpen) return null
 
@@ -305,7 +311,11 @@ export default function TabataTimer({ isOpen, setIsOpen, minimized, setMinimized
           ? 'Ready'
           : currentSeg.kind === 'countdown'
             ? 'Countdown'
-            : `${currentSeg.kind === 'work' ? 'Work' : 'Rest'} · ${tabataRoundDisplay}/${TABATA_ROUNDS}`
+            : currentSeg.kind === 'work'
+              ? `Work · ${tabataRoundDisplay}/${TABATA_ROUNDS}`
+              : isActiveRestPhase
+                ? `STOP · ${tabataRoundDisplay}/${TABATA_ROUNDS}`
+                : `Rest · ${tabataRoundDisplay}/${TABATA_ROUNDS}`
 
     return (
       <div
@@ -330,7 +340,13 @@ export default function TabataTimer({ isOpen, setIsOpen, minimized, setMinimized
             >
               {state.phase === 'complete' ? '✓' : centerValue}
             </span>
-            <span className="text-base font-semibold text-[#D2E5F2]">{phaseLine}</span>
+            <span
+              className={`text-base font-semibold ${
+                isActiveRestPhase ? 'uppercase tracking-wide text-red-novice' : 'text-[#D2E5F2]'
+              }`}
+            >
+              {phaseLine}
+            </span>
             <span className="text-sm tabular-nums text-light-grey">{formatMmSs(remaining)} left</span>
           </div>
 
@@ -427,7 +443,9 @@ export default function TabataTimer({ isOpen, setIsOpen, minimized, setMinimized
                     ? 'bg-white/70'
                     : currentSeg.kind === 'work'
                       ? 'bg-brand-blue'
-                      : 'bg-[#D2E5F2]'
+                      : isActiveRestPhase
+                        ? 'bg-red-novice'
+                        : 'bg-[#D2E5F2]'
               }`}
               style={{ width: `${Math.min(100, Math.max(0, progress * 100))}%` }}
             />
@@ -444,18 +462,22 @@ export default function TabataTimer({ isOpen, setIsOpen, minimized, setMinimized
                       ? 'text-[#D2E5F2]'
                       : currentSeg.kind === 'work'
                         ? 'text-brand-blue'
-                        : 'text-[#D2E5F2]'
+                        : isActiveRestPhase
+                          ? 'text-red-novice'
+                          : 'text-[#D2E5F2]'
               }`}
             >
               {state.phase === 'idle'
-                ? '30s countdown · then 8× (20s go / 10s rest)'
+                ? `${COUNTDOWN_DURATION_SEC}s countdown · then 8× (20s go / 10s rest)`
                 : state.phase === 'complete'
                   ? 'Session complete'
                   : currentSeg.kind === 'countdown'
                     ? 'Countdown'
                     : currentSeg.kind === 'work'
                       ? `Work · Round ${currentSeg.round}`
-                      : `Rest · Round ${currentSeg.round}`}
+                      : isActiveRestPhase
+                        ? `STOP · Round ${currentSeg.round}`
+                        : `Rest · Round ${currentSeg.round}`}
             </p>
             <span
               className={`inter text-[clamp(5rem,22vw,10rem)] font-bold leading-none tabular-nums transition-colors duration-300 ${mainCounterColorClass}`}
@@ -579,7 +601,7 @@ export function TabataTimerNavButton({ onClick }: { onClick: () => void }) {
       aria-label="Open Tabata timer"
     >
       <ClockIcon className="text-brand-blue" />
-      <span className="hidden sm:inline">Tabata</span>
+      <span className="hidden sm:inline">Timer</span>
     </button>
   )
 }
