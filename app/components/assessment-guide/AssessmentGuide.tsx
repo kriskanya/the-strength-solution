@@ -3,8 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import CustomButton from '@/app/ui/CustomButton'
-import { get } from 'lodash-es'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const sections = [
   {
@@ -26,25 +25,15 @@ const sections = [
 
 export default function AssessmentGuide() {
   const router = useRouter()
-  const { data: session, status, update } = useSession()
+  const { status, update } = useSession()
   const [pending, setPending] = useState(false)
 
-  useEffect(() => {
-    if (status === 'loading') return
-    if (status === 'unauthenticated') {
-      router.replace('/log-in')
-      return
-    }
-    if (!get(session, 'userData.profileId')) {
-      router.replace('/about-you')
-      return
-    }
-    if (get(session, 'userData.hasSeenAssessmentGuide')) {
-      router.replace('/dashboard')
-    }
-  }, [session, status, router])
-
   const finish = async () => {
+    if (status !== 'authenticated') {
+      router.push('/dashboard')
+      return
+    }
+
     setPending(true)
     try {
       const res = await fetch('/api/user/assessment-guide', { method: 'POST' })
