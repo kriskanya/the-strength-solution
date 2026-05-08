@@ -10,6 +10,10 @@ interface Props {
 export default function AuthNav({ path }: Props ) {
   const router = useRouter()
   function navigate() {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back()
+      return
+    }
     path ? router.push(path) : router.push('create-account')
   }
 
