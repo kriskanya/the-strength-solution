@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { fetchMostRecentLoggedExercises, saveChosenExercises } from '@/app/api/exercises/exercises-helpers'
+import { saveChosenExercises } from '@/app/api/exercises/exercises-helpers'
 import { upsertNewExercisesPerformed } from '@/app/api/exercises-performed/exercises-performed-helpers'
 import { upsertProfile } from '@/app/api/profile/profile-helpers'
 import { validateStatsPayload } from '@/app/api/stats/stats.validation'
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     const { gender, bodyWeight, age, exercises, source, height }: SaveStats = await req.json()
     validateStatsPayload({ gender, bodyWeight, age, exercises, source, height })
 
-    let upsertedProfile, exercisesPerformed
+    let upsertedProfile, updatedExercises
 
     const userWithProfile = user as UserWithProfile
 
@@ -36,12 +36,10 @@ export async function POST(req: NextRequest) {
       })
       await saveChosenExercises({ tx, exercises, profileId })
       const updatedUser: UserWithProfile = _.set(userWithProfile, 'profile', upsertedProfile)
-      exercisesPerformed = await upsertNewExercisesPerformed({ tx, exercises, user: updatedUser, source })
+      updatedExercises = await upsertNewExercisesPerformed({ tx, exercises, user: updatedUser, source })
     })
 
-    const activeExercises = await fetchMostRecentLoggedExercises(profileId)
-
-    return Response.json({ profile: upsertedProfile, activeExercises, exercisesPerformed })
+    return Response.json({ profile: upsertedProfile, updatedExercises })
   } catch (err: unknown) {
     if (err instanceof ApiHttpError) {
       return NextResponse.json({ error: err.message }, { status: err.status })

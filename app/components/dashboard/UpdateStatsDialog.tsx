@@ -10,7 +10,7 @@ import { Alert } from '@/app/ui/Alert'
 import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 import { convertHeightToInches } from '@/app/components/auth/auth-helpers'
-import { setProficienciesForNonStandardExercises } from '@/common/standards-helpers'
+import { mergeActiveExerciseLoggedUpdates, setProficienciesForNonStandardExercises } from '@/common/standards-helpers'
 import { Profile } from '@prisma/client'
 
 interface Props {
@@ -69,18 +69,29 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
 
       if (userId && profileId) {
         const saveRes = await saveAll()
-        const res = await saveRes.json()
-        const refreshedSession = await update() // refresh the session so profile metadata is available for the dashboard
-        let activeExercises = get(res, 'activeExercises')
-
-        if (!activeExercises || isEmpty(activeExercises)) {
-          console.log('UpdateStatsDialog', `Error saving changes: ${saveRes}`)
+        if (!saveRes.ok) {
+          console.error('UpdateStatsDialog', `Error saving changes: ${saveRes.status}`)
+          return
         }
 
+        const res = await saveRes.json()
+        const refreshedSession = await update() // refresh the session so profile metadata is available for the dashboard
         const userProfile = get(refreshedSession, 'userData.profile') as unknown as Profile
-        activeExercises = setProficienciesForNonStandardExercises(activeExercises, userProfile)
+        let nextActiveExercises = mergeActiveExerciseLoggedUpdates(activeExercises, get(res, 'updatedExercises'))
 
-        setActiveExercises(activeExercises)
+        if (!nextActiveExercises || isEmpty(nextActiveExercises)) {
+          console.error('UpdateStatsDialog', 'No active exercises available after save')
+          return
+        }
+
+        nextActiveExercises = setProficienciesForNonStandardExercises(nextActiveExercises, userProfile)
+
+        if (!nextActiveExercises) {
+          console.error('UpdateStatsDialog', 'Unable to refresh exercise proficiencies after save')
+          return
+        }
+
+        setActiveExercises(nextActiveExercises)
         setShowAlert(true)
         setTimeout(() => setShowAlert(false), 5000)
       } else {

@@ -124,3 +124,26 @@ export const setProficienciesForNonStandardExercises = (input: UserSavedExercise
   })
   return activeExercises
 }
+
+export const mergeActiveExerciseLoggedUpdates = (
+  exercises: UserSavedExercise[] | undefined,
+  updates: UserSavedExercise[] | undefined
+): UserSavedExercise[] | undefined => {
+  if (!exercises) return exercises
+  if (!updates?.length) return exercises
+
+  const updatesByExerciseId = new Map(updates.map((update) => [update.exerciseId, update]))
+
+  return exercises.map((exercise) => {
+    const update = updatesByExerciseId.get(exercise.exerciseId)
+    if (!update?.loggedExercise) return exercise
+
+    return {
+      ...exercise,
+      loggedExercise: {
+        ...exercise.loggedExercise,
+        ...update.loggedExercise,
+      },
+    }
+  })
+}
