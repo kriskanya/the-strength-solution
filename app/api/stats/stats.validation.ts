@@ -1,7 +1,7 @@
 import Joi, { ValidationOptions } from 'joi'
 import {
   JSON_ARRAY,
-  POSITIVE_NONZERO_INT, UI_DB_ID,
+  POSITIVE_NONZERO_INT,
   validate
 } from '@/common/validation/constants/common_validation.constants'
 import { SaveStats } from '@/app/api/stats/stats-helpers'
@@ -22,7 +22,6 @@ export const SAVE_STATS_PAYLOAD = Joi.object().keys({
   age        : POSITIVE_NONZERO_INT,
   height     : POSITIVE_NONZERO_INT,
   exercises  : JSON_ARRAY,
-  userId     : UI_DB_ID,
   source     : Joi.string().valid('UPDATE_STATS', 'LOG_EXERCISE'),
 }).label('saveStatsPayload')
 

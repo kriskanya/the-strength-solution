@@ -1,14 +1,19 @@
-import { prisma } from '@/lib/prisma'
 import _ from 'lodash'
 import { ProfilePayload } from '@/common/backend-types-and-constants'
 import { Gender, Prisma } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
 
 export async function upsertProfile(tx: TransactionClient, { userId, gender, bodyWeight, age, height }: ProfilePayload) {
-  const user = await prisma.user.findFirst({
-    where: { id: userId }
+  const user = await tx.user.findFirst({
+    where: { id: userId },
+    select: { profileId: true },
   })
-  const userProfileId = _.get(user, 'profileId')
+
+  if (!user) {
+    throw new Error(`User ${userId} not found`)
+  }
+
+  const userProfileId = user.profileId
 
   const payload = {
     gender: _.upperCase(gender) as Gender,

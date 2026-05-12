@@ -6,46 +6,48 @@ import { upsertProfile } from '@/app/api/profile/profile-helpers'
 import { validateStatsPayload } from '@/app/api/stats/stats.validation'
 import { SaveStats } from '@/app/api/stats/stats-helpers'
 import { UserWithProfile } from '@/common/backend-types-and-constants'
+import { ApiHttpError, requireAuthenticatedUser } from '@/lib/api-auth'
 import _ from 'lodash'
 
 export async function POST(req: NextRequest) {
   try {
-    const { gender, bodyWeight, age, exercises, userId, source, height }: SaveStats = await req.json()
-    validateStatsPayload({ gender, bodyWeight, age, exercises, userId, source, height })
+    const user = await requireAuthenticatedUser()
+
+    if (!user.profileId) {
+      throw new ApiHttpError('Profile required', 400)
+    }
+
+    const profileId = user.profileId
+
+    const { gender, bodyWeight, age, exercises, source, height }: SaveStats = await req.json()
+    validateStatsPayload({ gender, bodyWeight, age, exercises, source, height })
+
     let upsertedProfile, exercisesPerformed
 
-    const user: UserWithProfile = await prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        profile: true
-      }
-    }) as UserWithProfile
-
-    if (!user) {
-      console.log(`Error in POST /stats: user record not found`)
-    }
+    const userWithProfile = user as UserWithProfile
 
     await prisma.$transaction(async (tx) => {
       upsertedProfile = await upsertProfile(tx, {
-        userId, gender, bodyWeight, age, height
+        userId: user.id,
+        gender,
+        bodyWeight,
+        age,
+        height,
       })
-      await saveChosenExercises({tx, exercises, profileId: user.profileId as number})
-      // need to update the age, weight, and gender to ensure correct standards are associated with exercisesPerformed
-      const updatedUser: UserWithProfile  = _.set(user, 'profile', upsertedProfile)
-      exercisesPerformed = await upsertNewExercisesPerformed({tx, exercises, user: updatedUser, source})
+      await saveChosenExercises({ tx, exercises, profileId })
+      const updatedUser: UserWithProfile = _.set(userWithProfile, 'profile', upsertedProfile)
+      exercisesPerformed = await upsertNewExercisesPerformed({ tx, exercises, user: updatedUser, source })
     })
 
-    const activeExercises = await fetchMostRecentLoggedExercises(user.profileId as number)
+    const activeExercises = await fetchMostRecentLoggedExercises(profileId)
 
     return Response.json({ profile: upsertedProfile, activeExercises, exercisesPerformed })
-  } catch (err: any) {
-    return new NextResponse(
-      JSON.stringify({
-        error: err?.message
-      }),
-      {
-        status: 500
-      }
-    )
+  } catch (err: unknown) {
+    if (err instanceof ApiHttpError) {
+      return NextResponse.json({ error: err.message }, { status: err.status })
+    }
+
+    const message = err instanceof Error ? err.message : 'Internal server error'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

@@ -6,6 +6,5 @@ export interface SaveStats {
   age: number,
   height: number,
   exercises: UserSavedExercise[],
-  userId: number,
   source: SAVED_EXERCISE_SOURCE_ENUM_VALUE
 }

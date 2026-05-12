@@ -35,24 +35,22 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
     }
   }
 
-  const constructBody = (userId: number, profileId: number) => {
+  const constructBody = () => {
     if (!userStats) return
 
     const height = convertHeightToInches(userStats.heightFeet, userStats.heightInches)
     return {
-      userId,
       exercises: activeExercises,
-      profileId,
       gender: userStats.gender.male ? 'MALE' : 'FEMALE',
       bodyWeight: userStats.bodyWeight,
       age: userStats.age,
       height,
-      source: 'UPDATE_STATS'
+      source: 'UPDATE_STATS',
     }
   }
 
-  const saveAll = (userId: number, profileId: number) => {
-    const body = constructBody(userId, profileId)
+  const saveAll = () => {
+    const body = constructBody()
     return fetch(`/api/stats`, {
       method: 'POST',
       body: JSON.stringify(body),
@@ -70,7 +68,7 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
       const profileId = get(session, 'userData.profileId')
 
       if (userId && profileId) {
-        const saveRes = await saveAll(userId, profileId)
+        const saveRes = await saveAll()
         const res = await saveRes.json()
         const refreshedSession = await update() // refresh the session so profile metadata is available for the dashboard
         let activeExercises = get(res, 'activeExercises')
