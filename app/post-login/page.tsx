@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { get, isArray, toInteger } from 'lodash-es'
+import { get, toInteger } from 'lodash-es'
 
 function shouldShowAssessmentGuide(session: unknown): boolean {
   return !get(session, 'userData.hasSeenAssessmentGuide')
@@ -28,10 +28,10 @@ export default function PostLoginPage() {
           return
         }
 
-        const chosenExercisesResponse = await fetch(`/api/exercises/choose/profile/${profileId}`)
-        const chosenExercises = await chosenExercisesResponse.json()
-
-        const hasWorkouts = isArray(chosenExercises) && chosenExercises.length
+        const chosenExercisesResponse = await fetch(
+          `/api/exercises/choose/profile/${profileId}?minimal=true`
+        )
+        const { hasWorkouts } = await chosenExercisesResponse.json()
 
         if (!hasWorkouts) {
           router.replace('/choose-workouts')

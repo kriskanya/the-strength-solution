@@ -40,7 +40,7 @@ export default function DashboardSidePanel() {
             <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
             <p className="inter font-semibold text-lg leading-6 text-white mt-1">
               {
-                !isEmpty(strongestExercises) && map(strongestExercises, 'loggedExercise.displayName')?.join(', ')
+                !isEmpty(strongestExercises) && map(strongestExercises, 'exercise.displayName')?.join(', ')
               }
             </p>
           </div>
@@ -53,7 +53,7 @@ export default function DashboardSidePanel() {
             <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
             <p className="inter font-semibold text-lg leading-6 text-white mt-1">
               {
-                !isEmpty(weakestExercises) && map(weakestExercises, 'loggedExercise.displayName')?.join(', ')
+                !isEmpty(weakestExercises) && map(weakestExercises, 'exercise.displayName')?.join(', ')
               }
             </p>
           </div>

@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import { get, isArray, toInteger } from 'lodash-es'
+import { get, toInteger } from 'lodash-es'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import DashboardNav from '@/app/components/dashboard/DashboardNav'
@@ -22,9 +22,9 @@ function DashboardGuard({ children }: { children: React.ReactNode }) {
 
     ;(async () => {
       try {
-        const res = await fetch(`/api/exercises/choose/profile/${profileId}`)
-        const chosen = await res.json()
-        if (isArray(chosen) && chosen.length) {
+        const res = await fetch(`/api/exercises/choose/profile/${profileId}?minimal=true`)
+        const { hasWorkouts } = await res.json()
+        if (hasWorkouts) {
           router.replace('/assessment-guide')
         }
       } catch (e) {
