@@ -5,7 +5,7 @@ import {
   GENDER,
   NON_STANDARD_EXERCISES_PERFORMED, UserWithProfile
 } from '@/common/backend-types-and-constants'
-import { Prisma, Profile, User } from '@prisma/client'
+import { Prisma, Profile, Standard, User } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
 import { SAVED_EXERCISE_SOURCE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types-and-constants'
 import _ from 'lodash'
@@ -21,6 +21,19 @@ export const findEnum = (enums: string[], reps: number) => {
     if (reps >= lowerBound && reps <= upperBound) return enums[i]
     i++
   }
+}
+
+function resolveStandardForQuantity(
+  standards: Standard[],
+  exerciseId: number,
+  quantity: number
+): Standard | undefined {
+  return standards.find(
+    (standard) =>
+      standard.exerciseId === exerciseId &&
+      standard.startRepRange <= quantity &&
+      standard.endRepRange >= quantity
+  )
 }
 
 export const upsertNewExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: UserWithProfile, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
@@ -49,36 +62,39 @@ export const upsertNewExercisesPerformed = async ({tx, exercises, user, source}:
  * @param source
  */
 export const upsertNewStandardExercisesPerformed = async ({tx, exercises, user, source}: { tx: TransactionClient, exercises: UserSavedExercise[], user: User & { profile: Profile }, source: SAVED_EXERCISE_SOURCE_ENUM_VALUE }) => {
-  let promises = []
-  for (const [key, value] of Object.entries(exercises)) {
-    const bodyWeightRange = findEnum(Object.keys(BODYWEIGHT_RANGES), (user?.profile as Profile).bodyWeight)
-    const ageRange = findEnum(Object.keys(AGE_RANGES), (user?.profile as Profile).age)
+  const profile = user.profile as Profile
+  const bodyWeightRange = findEnum(Object.keys(BODYWEIGHT_RANGES), profile.bodyWeight)
+  const ageRange = findEnum(Object.keys(AGE_RANGES), profile.age)
 
-    if (!bodyWeightRange || !ageRange) {
-      console.error(`POST ExercisesPerformed missing data: bodyWeightEnum: ${bodyWeightRange}, ageEnum: ${ageRange}`)
-      return
-    }
+  if (!bodyWeightRange || !ageRange) {
+    console.error(`POST ExercisesPerformed missing data: bodyWeightEnum: ${bodyWeightRange}, ageEnum: ${ageRange}`)
+    return
+  }
 
-    const where = {
-      exerciseId: value.exerciseId,
-      gender: GENDER[(user?.profile as Profile).gender],
+  const exerciseIds = Array.from(new Set(exercises.map((exercise) => exercise.exerciseId)))
+  const standards = await tx.standard.findMany({
+    where: {
+      exerciseId: { in: exerciseIds },
+      gender: GENDER[profile.gender],
       bodyWeight: BODYWEIGHT_RANGES[bodyWeightRange],
       ageRange: AGE_RANGES[ageRange],
-      startRepRange: {
-        lte: value?.loggedExercise?.quantity
-      },
-      endRepRange: {
-        gte: value?.loggedExercise?.quantity
-      }
+    },
+  })
+
+  const promises = []
+  for (const value of exercises) {
+    const quantity = value?.loggedExercise?.quantity
+    if (!_.isNumber(quantity)) {
+      continue
     }
 
-    const standard = await tx.standard.findFirst({
-      where
-    })
+    const standard = resolveStandardForQuantity(standards, value.exerciseId, quantity)
 
     if (!standard) {
-      console.error(`Issue fetching standard for following conditions: ${ JSON.stringify(where) }`)
-      return
+      console.error(
+        `Issue fetching standard for exerciseId ${value.exerciseId} at quantity ${quantity} (gender ${GENDER[profile.gender]}, bodyWeight ${BODYWEIGHT_RANGES[bodyWeightRange]}, ageRange ${AGE_RANGES[ageRange]})`
+      )
+      continue
     }
 
     const promise = tx.exercisePerformed.upsert({
