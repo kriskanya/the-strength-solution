@@ -11,7 +11,7 @@ interface Props {
 
 export default function ExerciseDescription({ hoveredExercise, bodyPart, bodyPartDisplayName }: Props) {
   const getDescription = () => {
-    return get(MUSCLE_PROFICIENCIES, `[${bodyPart}][${hoveredExercise?.loggedExercise?.level}]`)
+    return get(MUSCLE_PROFICIENCIES, `[${bodyPart}][${hoveredExercise?.loggedExercise?.level}]`, '') as string
   }
 
   return (
