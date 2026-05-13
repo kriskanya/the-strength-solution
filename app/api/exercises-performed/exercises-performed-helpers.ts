@@ -8,6 +8,7 @@ import {
 import { ExercisePerformed, Prisma, Profile, Standard, User } from '@prisma/client'
 import TransactionClient = Prisma.TransactionClient
 import { SAVED_EXERCISE_SOURCE_ENUM_VALUE, UserSavedExercise } from '@/common/shared-types-and-constants'
+import { ExercisePerformedChange } from '@/app/api/exercises-performed/exercises-performed.validation'
 import _ from 'lodash'
 
 export const findEnum = (enums: string[], reps: number) => {
@@ -74,6 +75,58 @@ export const upsertNewExercisesPerformed = async ({tx, exercises, user, source}:
   }
 
   return updatedExercises
+}
+
+export const upsertPerformedExerciseChanges = async ({
+  tx,
+  profileId,
+  user,
+  source,
+  changes,
+}: {
+  tx: TransactionClient
+  profileId: number
+  user: UserWithProfile
+  source: SAVED_EXERCISE_SOURCE_ENUM_VALUE
+  changes: ExercisePerformedChange[]
+}): Promise<UserSavedExercise[]> => {
+  if (!changes.length) {
+    return []
+  }
+
+  const exerciseIds = changes.map((change) => change.exerciseId)
+  const exercisesOnProfiles = await tx.exercisesOnProfiles.findMany({
+    where: {
+      profileId,
+      exerciseId: { in: exerciseIds },
+    },
+    include: {
+      exercise: true,
+    },
+  })
+
+  const exercises = changes.map((change) => {
+    const exercisesOnProfile = exercisesOnProfiles.find((row) => row.exerciseId === change.exerciseId)
+
+    if (!exercisesOnProfile) {
+      throw new Error(`Exercise ${change.exerciseId} is not on profile ${profileId}`)
+    }
+
+    return {
+      profileId: exercisesOnProfile.profileId,
+      exerciseId: exercisesOnProfile.exerciseId,
+      active: exercisesOnProfile.active,
+      createdAt: exercisesOnProfile.createdAt,
+      updatedAt: exercisesOnProfile.updatedAt,
+      exercise: exercisesOnProfile.exercise,
+      loggedExercise: {
+        id: change.performedId,
+        quantity: change.quantity,
+      } as UserSavedExercise['loggedExercise'],
+    }
+  })
+
+  return upsertNewExercisesPerformed({ tx, exercises, user, source })
 }
 
 /**

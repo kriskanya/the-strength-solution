@@ -11,6 +11,7 @@ import {
   UnitOfMeasurementForExercise,
 } from '@prisma/client'
 import { UserSavedExercise } from '@/common/shared-types-and-constants'
+import { ExerciseActiveChange } from '@/app/api/exercises/choose/choose-active.validation'
 import TransactionClient = Prisma.TransactionClient
 
 type LatestLoggedExerciseRow = {
@@ -210,6 +211,36 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
   `)
 
   return rows.map(mapLatestLoggedExerciseRow)
+}
+
+export const saveActiveExerciseChanges = async ({
+  tx,
+  profileId,
+  changes,
+}: {
+  tx: TransactionClient
+  profileId: number
+  changes: ExerciseActiveChange[]
+}) => {
+  if (!profileId || changes.length === 0) {
+    return
+  }
+
+  const promises = changes.map((change) =>
+    tx.exercisesOnProfiles.upsert({
+      where: { profileId_exerciseId: { profileId, exerciseId: change.exerciseId } },
+      update: {
+        active: change.active,
+      },
+      create: {
+        profileId,
+        exerciseId: change.exerciseId,
+        active: change.active,
+      },
+    })
+  )
+
+  await Promise.all(promises)
 }
 
 export const saveChosenExercises = async ({tx, exercises, profileId}: { tx: TransactionClient, exercises: UserSavedExercise[], profileId: number }) => {

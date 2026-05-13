@@ -9,9 +9,13 @@ import { UserStats } from '@/common/frontend-types-and-constants'
 import { Alert } from '@/app/ui/Alert'
 import UpdateStatusSelectExercises from '@/app/components/dashboard/UpdateStatsSelectExercises'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
-import { convertHeightToInches } from '@/app/components/auth/auth-helpers'
 import { mergeActiveExerciseLoggedUpdates, setProficienciesForNonStandardExercises } from '@/common/standards-helpers'
 import { Profile } from '@prisma/client'
+import { UserSavedExercise } from '@/common/shared-types-and-constants'
+import {
+  buildUpdateStatsSaveDeltas,
+  hasUpdateStatsSaveDeltas,
+} from '@/app/components/dashboard/update-stats-deltas'
 
 interface Props {
   isOpen: boolean,
@@ -20,11 +24,28 @@ interface Props {
   setUserStats: Dispatch<SetStateAction<UserStats | undefined>>,
 }
 
+interface UpdateStatsSaveBaseline {
+  userStats: UserStats
+  activeExercises: UserSavedExercise[]
+}
+
 export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUserStats }: Props ) {
   const [selectedTab, setSelectedTab] = useState({ workouts: true, stats: false })
   const [showAlert, setShowAlert] = useState(false)
+  const [saveBaseline, setSaveBaseline] = useState<UpdateStatsSaveBaseline>()
   const { activeExercises, setActiveExercises } = useContext(ActiveExercisesContext)
   const { data:session, update } = useSession()
+
+  useEffect(() => {
+    if (!isOpen || !activeExercises) {
+      return
+    }
+
+    setSaveBaseline({
+      userStats: cloneDeep(userStats),
+      activeExercises: cloneDeep(activeExercises),
+    })
+  }, [isOpen])
 
   function onChangeTab(event: ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
@@ -35,68 +56,90 @@ export default function UpdateStatusDialog({ isOpen, setIsOpen, userStats, setUs
     }
   }
 
-  const constructBody = () => {
-    if (!userStats) return
-
-    const height = convertHeightToInches(userStats.heightFeet, userStats.heightInches)
-    return {
-      exercises: activeExercises,
-      gender: userStats.gender.male ? 'MALE' : 'FEMALE',
-      bodyWeight: userStats.bodyWeight,
-      age: userStats.age,
-      height,
-      source: 'UPDATE_STATS',
-    }
-  }
-
-  const saveAll = () => {
-    const body = constructBody()
-    return fetch(`/api/stats`, {
+  const postJson = async (url: string, body: unknown) => {
+    const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
     })
+
+    if (!response.ok) {
+      throw new Error(`Request failed for ${url}: ${response.status}`)
+    }
+
+    return response.json()
   }
 
   const saveChanges = async () => {
     try {
-      if (!session) return
+      if (!session || !activeExercises || !saveBaseline) return
 
       const userId = get(session, 'userData.id')
       const profileId = get(session, 'userData.profileId')
 
-      if (userId && profileId) {
-        const saveRes = await saveAll()
-        if (!saveRes.ok) {
-          console.error('UpdateStatsDialog', `Error saving changes: ${saveRes.status}`)
-          return
-        }
-
-        const res = await saveRes.json()
-        const refreshedSession = await update() // refresh the session so profile metadata is available for the dashboard
-        const userProfile = get(refreshedSession, 'userData.profile') as unknown as Profile
-        let nextActiveExercises = mergeActiveExerciseLoggedUpdates(activeExercises, get(res, 'updatedExercises'))
-
-        if (!nextActiveExercises || isEmpty(nextActiveExercises)) {
-          console.error('UpdateStatsDialog', 'No active exercises available after save')
-          return
-        }
-
-        nextActiveExercises = setProficienciesForNonStandardExercises(nextActiveExercises, userProfile)
-
-        if (!nextActiveExercises) {
-          console.error('UpdateStatsDialog', 'Unable to refresh exercise proficiencies after save')
-          return
-        }
-
-        setActiveExercises(nextActiveExercises)
-        setShowAlert(true)
-        setTimeout(() => setShowAlert(false), 5000)
-      } else {
+      if (!userId || !profileId) {
         console.error(`UpdateStatsDialog: userId: ${ userId }, profileId: ${ profileId }`)
+        return
       }
+
+      const deltas = buildUpdateStatsSaveDeltas(
+        saveBaseline.userStats,
+        userStats,
+        saveBaseline.activeExercises,
+        activeExercises
+      )
+
+      if (!hasUpdateStatsSaveDeltas(deltas)) {
+        return
+      }
+
+      let performedResponse: { updatedExercises?: UserSavedExercise[] } | undefined
+
+      if (deltas.profile) {
+        await postJson('/api/profile/me', deltas.profile)
+      }
+
+      if (deltas.activeChanges.length > 0) {
+        await postJson('/api/exercises/choose/active', { changes: deltas.activeChanges })
+      }
+
+      if (deltas.performedChanges.length > 0) {
+        performedResponse = await postJson('/api/exercises-performed', {
+          source: 'UPDATE_STATS',
+          changes: deltas.performedChanges,
+        })
+      }
+
+      const refreshedSession = await update()
+      const userProfile = get(refreshedSession, 'userData.profile') as unknown as Profile
+      let nextActiveExercises = mergeActiveExerciseLoggedUpdates(
+        activeExercises,
+        get(performedResponse, 'updatedExercises')
+      )
+
+      if (!nextActiveExercises || isEmpty(nextActiveExercises)) {
+        console.error('UpdateStatsDialog', 'No active exercises available after save')
+        return
+      }
+
+      if (deltas.profile) {
+        nextActiveExercises = setProficienciesForNonStandardExercises(nextActiveExercises, userProfile)
+      }
+
+      if (!nextActiveExercises) {
+        console.error('UpdateStatsDialog', 'Unable to refresh exercise proficiencies after save')
+        return
+      }
+
+      setActiveExercises(nextActiveExercises)
+      setSaveBaseline({
+        userStats: cloneDeep(userStats),
+        activeExercises: cloneDeep(nextActiveExercises),
+      })
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 5000)
     } catch (err) {
       console.error(err);
     }
