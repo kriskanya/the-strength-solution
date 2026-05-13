@@ -26,35 +26,41 @@ export default function ActiveExerciseContextProvider({ children }: Props) {
     activeExercises,
     setActiveExercises
   }
-  const { data:session } = useSession()
+  const { data: session } = useSession()
+  const profileId = get(session, 'userData.profileId') as number | undefined
 
   /**
    * This data is used to show how many reps a user has logged for
    * a particular exercise in the Update Stats dialog
    */
-  const fetchLoggedExercisesForUpdateStats = async () => {
-    try {
-      if (!session) return
-
-      const profileId = get(session, 'userData.profileId')
-      const res = await fetch(`/api/exercises/choose/profile/${ profileId }`)
-      let activeExercises = await res.json()
-
-      if (activeExercises && (isArray(activeExercises) && activeExercises.length)) {
-        const userProfile = get(session, 'userData.profile') as unknown as Profile
-        activeExercises = setProficienciesForNonStandardExercises(activeExercises, userProfile)
-        setActiveExercises(activeExercises)
-      }
-    } catch (err) {
-      console.error('UpdateStatsDialog', err)
-    }
-  }
-
   useEffect(() => {
-    (async () => {
-      await fetchLoggedExercisesForUpdateStats()
-    })()
-  }, [session])
+    const fetchLoggedExercisesForUpdateStats = async () => {
+      try {
+        if (profileId == null || profileId === 0) {
+          setActiveExercises(undefined)
+          return
+        }
+
+        const res = await fetch(`/api/exercises/choose/profile/${profileId}`)
+        if (!res.ok) {
+          console.error('ActiveExerciseContextProvider', res.status)
+          return
+        }
+
+        let next = await res.json()
+
+        if (next && isArray(next) && next.length) {
+          const userProfile = get(session, 'userData.profile') as unknown as Profile
+          next = setProficienciesForNonStandardExercises(next, userProfile)
+          setActiveExercises(next)
+        }
+      } catch (err) {
+        console.error('ActiveExerciseContextProvider', err)
+      }
+    }
+
+    void fetchLoggedExercisesForUpdateStats()
+  }, [profileId, session])
 
   return (
     <ActiveExercisesContext.Provider value={ctxProvider}>

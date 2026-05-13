@@ -4,6 +4,7 @@ import {
   fetchMostRecentLoggedExercises,
   profileHasChosenWorkouts,
 } from '@/app/api/exercises/exercises-helpers'
+import { ApiHttpError, requireAuthenticatedUser } from '@/lib/api-auth'
 
 export async function GET(req: NextRequest, { params }: { params: { id: number } }) {
   try {
@@ -16,17 +17,21 @@ export async function GET(req: NextRequest, { params }: { params: { id: number }
       return Response.json({ hasWorkouts })
     }
 
-    const res = await fetchMostRecentLoggedExercises(profileId)
+    const user = await requireAuthenticatedUser()
+
+    if (!user.profileId || user.profileId !== profileId) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
+    const res = await fetchMostRecentLoggedExercises(profileId, user.id)
 
     return Response.json(res)
-  } catch (err: any) {
-    return new NextResponse(
-      JSON.stringify({
-        error: err?.message
-      }),
-      {
-        status: 500
-      }
-    )
+  } catch (err: unknown) {
+    if (err instanceof ApiHttpError) {
+      return NextResponse.json({ error: err.message }, { status: err.status })
+    }
+
+    const message = err instanceof Error ? err.message : 'Internal server error'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

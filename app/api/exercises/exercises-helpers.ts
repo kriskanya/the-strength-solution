@@ -4,7 +4,6 @@ import {
   ExercisePerformed,
   ExercisePerformedSource,
   ExercisesOnProfiles,
-  Gender,
   Level,
   Prisma,
   Standard,
@@ -23,10 +22,7 @@ type LatestLoggedExerciseRow = {
   exerciseRecordId: number
   exerciseName: string
   displayName: string
-  description: string
   unitOfMeasurement: UnitOfMeasurementForExercise
-  exerciseCreatedAt: Date
-  exerciseUpdatedAt: Date
   performedId: number | null
   quantity: number | null
   standardId: number | null
@@ -39,13 +35,8 @@ type LatestLoggedExerciseRow = {
   standardRecordId: number | null
   level: Level | null
   standardExerciseId: number | null
-  standardBodyWeight: string | null
   standardStartRepRange: number | null
   standardEndRepRange: number | null
-  standardGender: Gender | null
-  standardAgeRange: string | null
-  standardCreatedAt: Date | null
-  standardUpdatedAt: Date | null
 }
 
 export const profileHasChosenWorkouts = async (profileId: number): Promise<boolean> => {
@@ -64,10 +55,10 @@ function mapLatestLoggedExerciseRow(row: LatestLoggedExerciseRow): UserSavedExer
     id: row.exerciseRecordId,
     exerciseName: row.exerciseName as Exercise['exerciseName'],
     displayName: row.displayName,
-    description: row.description,
+    description: '',
     unitOfMeasurement: row.unitOfMeasurement,
-    createdAt: row.exerciseCreatedAt,
-    updatedAt: row.exerciseUpdatedAt,
+    createdAt: row.eopCreatedAt,
+    updatedAt: row.eopUpdatedAt,
   }
 
   const exercisesOnProfiles: ExercisesOnProfiles = {
@@ -102,13 +93,8 @@ function mapLatestLoggedExerciseRow(row: LatestLoggedExerciseRow): UserSavedExer
           id: row.standardRecordId,
           exerciseId: row.standardExerciseId as number,
           level: row.level as Level,
-          bodyWeight: row.standardBodyWeight as Standard['bodyWeight'],
           startRepRange: row.standardStartRepRange as number,
           endRepRange: row.standardEndRepRange as number,
-          gender: row.standardGender as Gender,
-          ageRange: row.standardAgeRange as Standard['ageRange'],
-          createdAt: row.standardCreatedAt as Date,
-          updatedAt: row.standardUpdatedAt as Date,
         }
 
     loggedExercise = {
@@ -125,21 +111,14 @@ function mapLatestLoggedExerciseRow(row: LatestLoggedExerciseRow): UserSavedExer
 }
 
 /**
- * Fetches a user's most recent saved exercises, including the associated Exercise record
- * and the number of reps
- * @param profileId
+ * Fetches a user's most recent UPDATE_STATS performed rows per chosen exercise.
+ * Pass userId from the authenticated session (must own profileId); avoids joining User.
  */
-export const fetchMostRecentLoggedExercises = async (profileId: number): Promise<UserSavedExercise[] | undefined> => {
+export const fetchMostRecentLoggedExercises = async (
+  profileId: number,
+  userId: number
+): Promise<UserSavedExercise[] | undefined> => {
   if (!profileId) return
-
-  const user = await prisma.user.findFirst({
-    where: { profileId },
-    select: { id: true },
-  })
-
-  if (!user) {
-    throw new Error(`No user found for profile ${profileId}`)
-  }
 
   const rows = await prisma.$queryRaw<LatestLoggedExerciseRow[]>(Prisma.sql`
     SELECT
@@ -151,10 +130,7 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
       e."id" AS "exerciseRecordId",
       e."exerciseName"::text AS "exerciseName",
       e."displayName" AS "displayName",
-      e."description" AS "description",
       e."unitOfMeasurement"::text AS "unitOfMeasurement",
-      e."createdAt" AS "exerciseCreatedAt",
-      e."updatedAt" AS "exerciseUpdatedAt",
       latest."performedId" AS "performedId",
       latest."quantity" AS "quantity",
       latest."standardId" AS "standardId",
@@ -167,16 +143,10 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
       latest."standardRecordId" AS "standardRecordId",
       latest."level"::text AS "level",
       latest."standardExerciseId" AS "standardExerciseId",
-      latest."standardBodyWeight"::text AS "standardBodyWeight",
       latest."standardStartRepRange" AS "standardStartRepRange",
-      latest."standardEndRepRange" AS "standardEndRepRange",
-      latest."standardGender"::text AS "standardGender",
-      latest."standardAgeRange"::text AS "standardAgeRange",
-      latest."standardCreatedAt" AS "standardCreatedAt",
-      latest."standardUpdatedAt" AS "standardUpdatedAt"
+      latest."standardEndRepRange" AS "standardEndRepRange"
     FROM "ExercisesOnProfiles" eop
     INNER JOIN "Exercise" e ON e."id" = eop."exerciseId"
-    INNER JOIN "User" u ON u."profileId" = eop."profileId"
     LEFT JOIN LATERAL (
       SELECT
         ep."id" AS "performedId",
@@ -191,16 +161,11 @@ export const fetchMostRecentLoggedExercises = async (profileId: number): Promise
         st."id" AS "standardRecordId",
         st."level" AS "level",
         st."exerciseId" AS "standardExerciseId",
-        st."bodyWeight" AS "standardBodyWeight",
         st."startRepRange" AS "standardStartRepRange",
-        st."endRepRange" AS "standardEndRepRange",
-        st."gender" AS "standardGender",
-        st."ageRange" AS "standardAgeRange",
-        st."createdAt" AS "standardCreatedAt",
-        st."updatedAt" AS "standardUpdatedAt"
+        st."endRepRange" AS "standardEndRepRange"
       FROM "ExercisePerformed" ep
       LEFT JOIN "Standard" st ON st."id" = ep."standardId"
-      WHERE ep."userId" = u."id"
+      WHERE ep."userId" = ${userId}
         AND ep."exerciseId" = eop."exerciseId"
         AND ep."source" = 'UPDATE_STATS'::"ExercisePerformedSource"
       ORDER BY ep."datePerformed" DESC, ep."id" DESC
