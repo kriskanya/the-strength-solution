@@ -13,7 +13,6 @@ export default function StrengthStandardsTable() {
   const [standards, setStandards] = useState<{ [key:string]: (Standard & { active?: boolean })[] }>({})
   const [selectedValues, setSelectedValues] = useState<StandardsDropdownSelection>()
   const [userProfile, setUserProfile] = useState<Profile>()
-  const [showNonStandard, setShowNonStandard] = useState(false)
   const weight: { [key: string]: number[] } = {
     male: Array.from({length: 201}, (_, i) => i + 110),
     female: Array.from({length: 171}, (_, i) => i + 90)
@@ -143,20 +142,9 @@ export default function StrengthStandardsTable() {
             selectedValues
               ?
                 <>
-                  <button
-                    type="button"
-                    onClick={() => setShowNonStandard(!showNonStandard)}
-                    className={`h-[40px] px-4 rounded border text-sm inter font-semibold transition-colors duration-150 focus:outline-none ${
-                      showNonStandard
-                        ? 'bg-brand-blue text-white border-brand-blue'
-                        : 'bg-white text-brand-blue border-brand-blue hover:bg-[#F3F8FF]'
-                    }`}
-                  >
-                    Non-standard Exercises
-                  </button>
-                  <CustomDropdown type="gender" options={genders} initialValue={selectedValues?.gender} setValue={setDropdownValue} dropdownHeight="h-[5.1em]" propClasses="ml-4" disabled={showNonStandard} />
-                  <CustomDropdown type="weight" options={weightOptions} initialValue={selectedValues?.weight} setValue={setDropdownValue} units="lbs" propClasses="ml-4" dropdownHeight="h-[10em]" disabled={showNonStandard} />
-                  <CustomDropdown type="age"    options={age} initialValue={selectedValues?.age} setValue={setDropdownValue} propClasses="ml-4" units="years"  dropdownHeight="h-[10em]" disabled={showNonStandard} />
+                  <CustomDropdown type="gender" options={genders} initialValue={selectedValues?.gender} setValue={setDropdownValue} dropdownHeight="h-[5.1em]" propClasses="ml-4" />
+                  <CustomDropdown type="weight" options={weightOptions} initialValue={selectedValues?.weight} setValue={setDropdownValue} units="lbs" propClasses="ml-4" dropdownHeight="h-[10em]" />
+                  <CustomDropdown type="age"    options={age} initialValue={selectedValues?.age} setValue={setDropdownValue} propClasses="ml-4" units="years"  dropdownHeight="h-[10em]" />
                 </>
               : ''
           }
@@ -203,43 +191,44 @@ export default function StrengthStandardsTable() {
           <tbody>
             <>
               {
-                showNonStandard
-                  ? nonStandardStandards.map((exercise: any) => {
-                      return (
-                        <tr className="h-12 border-b border-lighter-grey" key={exercise.displayName}>
-                          <td className="inter font-medium text-sm">{exercise.displayName}</td>
+                (() => {
+                  const arr = []
+                  for (const [exerciseName, standardsRecords] of Object.entries(standards)) {
+                    const isActive = get(standardsRecords, '[0].active')
+                    if (isActive) {
+                      const el = (
+                        <tr className="h-12 border-b border-lighter-grey" key={exerciseName}>
+                          <td className="inter font-medium text-sm">{get(standardsRecords, '[0].displayName')}</td>
                           {
-                            exercise.values.map((value: number, i: number) => {
+                            standardsRecords.map((record, i) => {
                               return (
-                                <td key={i}>{value} {exercise.unit}</td>
+                                <td key={i}>{record.startRepRange} { record.startRepRange === 1 ? 'rep' : 'reps' }</td>
                               )
                             })
                           }
                         </tr>
                       )
-                    })
-                  : (() => {
-                      const arr = []
-                      for (const [exerciseName, standardsRecords] of Object.entries(standards)) {
-                        const isActive = get(standardsRecords, '[0].active')
-                        if (isActive) {
-                          const el = (
-                            <tr className="h-12 border-b border-lighter-grey" key={exerciseName}>
-                              <td className="inter font-medium text-sm">{get(standardsRecords, '[0].displayName')}</td>
-                              {
-                                standardsRecords.map((record, i) => {
-                                  return (
-                                    <td key={i}>{record.startRepRange} { record.startRepRange === 1 ? 'rep' : 'reps' }</td>
-                                  )
-                                })
-                              }
-                            </tr>
+                      arr.push(el)
+                    }
+                  }
+                  return arr
+                })()
+              }
+              {
+                nonStandardStandards.map((exercise: any) => {
+                  return (
+                    <tr className="h-12 border-b border-lighter-grey" key={exercise.displayName}>
+                      <td className="inter font-medium text-sm">{exercise.displayName}</td>
+                      {
+                        exercise.values.map((value: number, i: number) => {
+                          return (
+                            <td key={i}>{value} {exercise.unit}</td>
                           )
-                          arr.push(el)
-                        }
+                        })
                       }
-                      return arr
-                    })()
+                    </tr>
+                  )
+                })
               }
             </>
           </tbody>
