@@ -2,7 +2,7 @@ import { NON_STANDARD_EXERCISES, UserSavedExercise } from '../common/shared-type
 
 const _ = require('lodash')
 
-import { Level, Profile, Standard } from '@prisma/client'
+import { ExerciseName, Level, Profile, Standard } from '@prisma/client'
 
 /**
  * Determine which range the input value is in
@@ -10,8 +10,10 @@ import { Level, Profile, Standard } from '@prisma/client'
  * @param inputValue e.g. '15'
  * @return '14-17'
  */
-export const determineRange = (ranges: string[], inputValue: string) => {
- return Object.keys(ranges).find(range => {
+export const determineRange = (ranges: string[] | Record<string, unknown>, inputValue: string) => {
+  const rangeKeys = Array.isArray(ranges) ? ranges : Object.keys(ranges)
+
+  return rangeKeys.find(range => {
     let [startRange, endRange] = range.split('-')
 
     if (+inputValue >= +startRange && +inputValue <= +endRange) {
@@ -92,6 +94,29 @@ const determineFarmerCarryProficiency = (weightCarried: number, userBodyWeight: 
   }
 }
 
+export const determineNonStandardExerciseLevel = ({
+  bodyWeight,
+  exerciseName,
+  height,
+  quantity,
+}: {
+  bodyWeight: number
+  exerciseName: ExerciseName
+  height: number
+  quantity: number
+}): Level | undefined => {
+  switch(exerciseName) {
+    case 'DEAD_HANG':
+      return determineDeadHangProficiency(quantity)
+    case 'BROAD_JUMP':
+      return determineBroadJumpProficiency(quantity, height)
+    case 'FARMER_CARRY':
+      return determineFarmerCarryProficiency(quantity, bodyWeight)
+    default:
+      return undefined
+  }
+}
+
 export const setProficienciesForNonStandardExercises = (input: UserSavedExercise[], userProfile: Profile) => {
   if (!input || _.isEmpty(input) || !userProfile || _.isEmpty(userProfile)) return
 
@@ -105,17 +130,12 @@ export const setProficienciesForNonStandardExercises = (input: UserSavedExercise
     let level
 
     if (quantityPerformed) {
-      switch(exerciseName) {
-        case 'DEAD_HANG':
-          level = determineDeadHangProficiency(quantityPerformed)
-          break
-        case 'BROAD_JUMP':
-          level = determineBroadJumpProficiency(quantityPerformed, userProfile.height)
-          break
-        case 'FARMER_CARRY':
-          level = determineFarmerCarryProficiency(quantityPerformed, userProfile.bodyWeight)
-          break
-      }
+      level = determineNonStandardExerciseLevel({
+        bodyWeight: userProfile.bodyWeight,
+        exerciseName,
+        height: userProfile.height,
+        quantity: quantityPerformed,
+      })
     }
 
     if (level) {

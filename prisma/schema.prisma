@@ -74,6 +74,7 @@ model Exercise {
 
   ExercisesOnProfiles          ExercisesOnProfiles[]
   ExercisePerformed            ExercisePerformed[]
+  ExerciseCohortProficiency    ExerciseCohortProficiency[]
 
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
@@ -114,6 +115,27 @@ model ExercisePerformed {
   updatedAt DateTime @updatedAt
 
   @@index([userId, source, exerciseId, datePerformed(sort: Desc)])
+}
+
+model ExerciseCohortProficiency {
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId Int
+
+  gender   Gender
+  ageRange AgeRange
+
+  sampleSize        Int
+  noviceCount       Int @default(0)
+  intermediateCount Int @default(0)
+  proficientCount   Int @default(0)
+  advancedCount     Int @default(0)
+  eliteCount        Int @default(0)
+
+  computedAt DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@id([exerciseId, gender, ageRange])
 }
 
 // ENUMS
