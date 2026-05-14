@@ -291,7 +291,7 @@ export default function RelativeStrengthBarGraph() {
                   </svg>
                 </div>
                 <p className="inter font-normal text-xs text-dark-grey mt-3">
-                  Colored bars show where similar users land by proficiency level; exercise labels show where your current results land.
+                  Percentages show how users in your same gender and age bracket are distributed across proficiency levels; exercise labels show where your current results land.
                 </p>
               </>
         }
