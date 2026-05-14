@@ -45,10 +45,11 @@ export interface AvatarColorsRear {
 }
 
 type MovementPattern =
+  | 'core stability'
+  | 'grip strength'
   | 'hinging'
   | 'horizontal pushing'
   | 'horizontal rowing'
-  | 'loaded carrying'
   | 'squatting'
   | 'vertical pressing'
   | 'vertical pulling'
@@ -69,35 +70,47 @@ const getMovementPatternCopy = (movementPattern: MovementPattern): ProficiencyDe
   ELITE: `You demonstrate exceptional mastery of ${movementPattern} through refined movement mechanics, and superior muscular endurance.`
 })
 
+const FOREARM_PROFICIENCY_COPY: ProficiencyDescription = {
+  NOVICE: 'You demonstrate limited grip strength and muscular endurance which is likely negatively affecting your expression of strength in horizontal rowing and vertical pulling.',
+  INTERMEDIATE: 'You display average grip strength and muscular endurance which may be negatively affecting your expression of strength in horizontal rowing and vertical pulling.',
+  PROFICIENT: 'You demonstrate well-balanced strength and muscular endurance, but a more focused approach to improving grip strength may positively impact your expression of strength in horizontal rowing and vertical pulling.',
+  ADVANCED: 'You exhibit above-average strength and muscular endurance which is certainly positively influencing your horizontal rowing and vertical pulling capacities.',
+  ELITE: 'You demonstrate exceptional strength and muscular endurance and efforts should be focused on bring other foundational movement patterns up to this level.'
+}
+
 const MUSCLE_GROUP_MOVEMENT_PATTERNS: { [key: string]: MovementPattern } = {
   // front
-  absFront: 'squatting',
+  absFront: 'core stability',
   biceps: 'vertical pulling',
   calvesFront: 'hinging',
   deltsFront: 'vertical pressing',
-  forearmsFront: 'vertical pulling',
-  obliquesFront: 'squatting',
+  forearmsFront: 'grip strength',
+  obliquesFront: 'core stability',
   pecs: 'horizontal pushing',
   quads: 'squatting',
-  trapsFront: 'loaded carrying',
+  trapsFront: 'horizontal rowing',
   // rear
-  absRear: 'squatting',
+  absRear: 'hinging',
   adductors: 'squatting',
   calvesRear: 'hinging',
   deltsRear: 'horizontal rowing',
   erectors: 'hinging',
-  forearmsRear: 'vertical pulling',
+  forearmsRear: 'grip strength',
   glutes: 'hinging',
   hamstrings: 'hinging',
   lats: 'vertical pulling',
-  obliquesRear: 'squatting',
+  obliquesRear: 'core stability',
   rhomboids: 'horizontal rowing',
-  trapsRear: 'loaded carrying',
+  trapsRear: 'horizontal rowing',
   triceps: 'vertical pressing'
 }
 
 export const MUSCLE_PROFICIENCIES = Object.fromEntries(
   Object.entries(MUSCLE_GROUP_MOVEMENT_PATTERNS).map(([muscleGroup, movementPattern]) => {
+    if (muscleGroup === 'forearmsFront' || muscleGroup === 'forearmsRear') {
+      return [muscleGroup, FOREARM_PROFICIENCY_COPY]
+    }
+
     return [muscleGroup, getMovementPatternCopy(movementPattern)]
   })
 )
