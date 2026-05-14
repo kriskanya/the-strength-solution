@@ -29,17 +29,29 @@ const levelCountFields: Record<PROFICIENCY_LEVELS, keyof Pick<CohortProficiencyD
   ELITE: 'eliteCount',
 }
 
-function calculateInclusivePercentile(level: PROFICIENCY_LEVELS | undefined, distribution: CohortProficiencyDistribution): number | undefined {
-  if (!level || distribution.sampleSize === 0) return
+function calculatePeerInclusivePercentile(level: PROFICIENCY_LEVELS | undefined, distribution: CohortProficiencyDistribution): number | undefined {
+  if (!level || distribution.sampleSize <= 1) return
 
   const levelIndex = proficiencyOrder.indexOf(level)
   if (levelIndex === -1) return
 
+  const adjustedDistribution = {
+    noviceCount: distribution.noviceCount,
+    intermediateCount: distribution.intermediateCount,
+    proficientCount: distribution.proficientCount,
+    advancedCount: distribution.advancedCount,
+    eliteCount: distribution.eliteCount,
+  }
+  const userLevelCountField = levelCountFields[level]
+
+  adjustedDistribution[userLevelCountField] = Math.max(0, adjustedDistribution[userLevelCountField] - 1)
+
   const countAtOrBelowLevel = proficiencyOrder
     .slice(0, levelIndex + 1)
-    .reduce((sum, currentLevel) => sum + distribution[levelCountFields[currentLevel]], 0)
+    .reduce((sum, currentLevel) => sum + adjustedDistribution[levelCountFields[currentLevel]], 0)
+  const peerSampleSize = distribution.sampleSize - 1
 
-  return Math.round((countAtOrBelowLevel / distribution.sampleSize) * 100)
+  return Math.round((countAtOrBelowLevel / peerSampleSize) * 100)
 }
 
 export default function RelativeStrengthBarGraph() {
@@ -84,7 +96,7 @@ export default function RelativeStrengthBarGraph() {
       .map((exercise) => {
         const distribution = distributionByExerciseId.get(exercise.exerciseId)
         const level = get(exercise, 'loggedExercise.level') as PROFICIENCY_LEVELS | undefined
-        const percentile = distribution ? calculateInclusivePercentile(level, distribution) : undefined
+        const percentile = distribution ? calculatePeerInclusivePercentile(level, distribution) : undefined
 
         if (percentile === undefined) return
 
@@ -120,7 +132,7 @@ export default function RelativeStrengthBarGraph() {
       <div className="mt-8">
         {
           exercises.length === 0
-            ? <p className="inter font-normal text-sm text-white opacity-50">No peer data yet.</p>
+            ? <p className="inter font-normal text-sm text-dark-grey opacity-70">No peer data yet.</p>
             : <table className="w-full">
                 <tbody>
                   {
