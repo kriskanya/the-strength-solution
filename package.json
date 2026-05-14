@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "rebuild:cohorts": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/rebuild-cohort-proficiencies.ts",
+    "seed:relative-strengths": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed/relative-strengths.ts",
     "seed": "npx prisma db seed",
     "vercel-build": "prisma generate && prisma migrate deploy && npx prisma db seed && next build"
   },
