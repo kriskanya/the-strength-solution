@@ -30,6 +30,28 @@ const PROFICIENCY_LEVELS: Level[] = [
   Level.ADVANCED,
   Level.ELITE,
 ]
+const NORMALLY_DISTRIBUTED_PROFICIENCY_LEVELS: Level[] = [
+  Level.NOVICE,
+  Level.NOVICE,
+  Level.INTERMEDIATE,
+  Level.INTERMEDIATE,
+  Level.INTERMEDIATE,
+  Level.INTERMEDIATE,
+  Level.INTERMEDIATE,
+  Level.PROFICIENT,
+  Level.PROFICIENT,
+  Level.PROFICIENT,
+  Level.PROFICIENT,
+  Level.PROFICIENT,
+  Level.PROFICIENT,
+  Level.PROFICIENT,
+  Level.ADVANCED,
+  Level.ADVANCED,
+  Level.ADVANCED,
+  Level.ADVANCED,
+  Level.ELITE,
+  Level.ELITE,
+]
 const NON_STANDARD_EXERCISE_NAMES: ExerciseName[] = [
   ExerciseName.BROAD_JUMP,
   ExerciseName.DEAD_HANG,
@@ -156,7 +178,7 @@ function resolveSeedQuantity({
   standardLookup: Map<string, { id: number, startRepRange: number }>
   userIndex: number
 }) {
-  const level = PROFICIENCY_LEVELS[(userIndex + exerciseIndex) % PROFICIENCY_LEVELS.length]
+  const level = NORMALLY_DISTRIBUTED_PROFICIENCY_LEVELS[(userIndex + exerciseIndex * 3) % NORMALLY_DISTRIBUTED_PROFICIENCY_LEVELS.length]
 
   if (!isStandardExercise(exercise.exerciseName)) {
     return {
