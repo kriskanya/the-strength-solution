@@ -1,6 +1,6 @@
-import LandingPageLeft from "@/app/components/home/LandingPageLeft";
-import LandingPageRight from "@/app/components/home/LandingPageRight";
-import LandingMarketingSections from "@/app/components/home/LandingMarketingSections";
+import LandingPageLeft from '@/app/components/home/LandingPageLeft'
+import LandingPageRight from '@/app/components/home/LandingPageRight'
+import LandingMarketingSections from '@/app/components/home/LandingMarketingSections'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'

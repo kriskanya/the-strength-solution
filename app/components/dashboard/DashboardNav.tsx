@@ -23,7 +23,7 @@ export default function DashboardNav() {
   const [showAcctDetailsDialog, setShowAcctDetailsDialog] = useState(false)
   const [userStats, setUserStats] = useState<UserStats>()
   const { data: session } = useSession()
-  const menuItems = ['Account Details', 'About', 'Log Out']
+  const menuItems = ['Account Details', 'Shop', 'About', 'Log Out']
   const [showMenu, setShowMenu] = useState<boolean>()
   const [itemHovered, setItemHovered] = useState<string>()
   const dropdown = useRef(null)
@@ -66,6 +66,9 @@ export default function DashboardNav() {
       case 'Account Details':
         setShowAcctDetailsDialog(true)
         break
+      case 'Shop':
+        router.push('/shop')
+        break
       case 'About':
         router.push('/about')
         break
@@ -91,14 +94,14 @@ export default function DashboardNav() {
     <div className="grid grid-cols-2 py-5 px-12 bg-black-russian relative">
       <UpdateStatusDialog isOpen={showStatsDialog} setIsOpen={setShowStatsDialog} userStats={userStats as UserStats} setUserStats={setUserStats} />
       <AccountDetailsDialog isOpen={showAcctDetailsDialog} setIsOpen={setShowAcctDetailsDialog} userStats={userStats as UserStats} setUserStats={setUserStats} />
-      <h2 className="inter font-extrabold text-base uppercase my-auto text-white">The Strength Solution</h2>
+      <h2 className="inter my-auto font-extrabold text-base uppercase text-white">The Strength Solution</h2>
       <TabataTimer
         isOpen={showTabataTimer}
         setIsOpen={setShowTabataTimer}
         minimized={tabataMinimized}
         setMinimized={setTabataMinimized}
       />
-      <div className="flex flex-wrap justify-end gap-3 sm:flex-nowrap">
+      <div className="flex flex-wrap items-center justify-end gap-3 sm:flex-nowrap">
         <TabataTimerNavButton
           onClick={() => {
             setShowTabataTimer(true)

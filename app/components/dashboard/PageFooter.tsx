@@ -11,7 +11,7 @@ export default function PageFooter() {
       </div>
       <div className="flex flex-col justify-center">
         <p className="inter font-normal text-xs text-white opacity-70">FAQ</p>
-        <p className="inter font-normal text-xs text-white opacity-70 mt-2">Strength Solution Store</p>
+        <p className="inter font-normal text-xs text-white opacity-70 mt-2">Strength Solution Shop</p>
       </div>
       <div className="flex flex-col justify-center">
         <p className="inter font-normal text-xs text-white opacity-70">Privacy Policy</p>
