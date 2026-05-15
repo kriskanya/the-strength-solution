@@ -1,5 +1,6 @@
 import LandingPageLeft from "@/app/components/home/LandingPageLeft";
 import LandingPageRight from "@/app/components/home/LandingPageRight";
+import LandingMarketingSections from "@/app/components/home/LandingMarketingSections";
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
@@ -11,9 +12,12 @@ export default async function Home() {
   }
 
   return (
-    <main className="grid grid-cols-2">
-      <LandingPageLeft />
-      <LandingPageRight />
+    <main>
+      <div className="grid min-h-screen grid-cols-2">
+        <LandingPageLeft />
+        <LandingPageRight />
+      </div>
+      <LandingMarketingSections />
     </main>
   )
 }
