@@ -105,7 +105,7 @@ export const EXERCISE_METADATA: any = {
 }
 
 export interface ProfilePayload {
-  userId: number
+  userId: string
   gender: Gender,
   bodyWeight: number,
   age: number,
@@ -113,7 +113,7 @@ export interface ProfilePayload {
 }
 
 export interface UpdateUserPayload {
-  id: number,
+  id: string,
   firstName: string,
   lastName: string,
   email: string

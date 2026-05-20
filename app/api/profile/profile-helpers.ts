@@ -54,6 +54,6 @@ export interface CreateProfilePayload {
   gender: 'MALE' | 'FEMALE',
   bodyWeight: number,
   age: number,
-  userId: number,
+  userId: string,
   height: number
 }

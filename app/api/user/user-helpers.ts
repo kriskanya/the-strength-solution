@@ -9,7 +9,7 @@ export async function updateUser(tx: TransactionClient, { id, email, firstName, 
 }
 
 export interface UpdateUserPayload {
-  id        : number,
+  id        : string,
   email     : string,
   firstName : string,
   lastName  : string

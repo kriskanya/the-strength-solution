@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { updateUser } from '@/app/api/user/user-helpers'
 import { validateUpdateUserPayload } from '@/app/api/user/user.validation'
 
-export async function PUT(req: NextRequest, { params }: { params: { id: number }}) {
+export async function PUT(req: NextRequest, { params }: { params: { id: string }}) {
   try {
     const { email, firstName, lastName } = await req.json()
     const { id } = params
@@ -11,7 +11,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: number }
 
     return prisma.$transaction(async (tx) => {
       const updatedUser = await updateUser(tx, {
-        id: +id, email, firstName, lastName
+        id, email, firstName, lastName
       })
 
       return Response.json(updatedUser)

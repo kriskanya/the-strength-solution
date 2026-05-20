@@ -1,6 +1,6 @@
 import Joi, { ValidationOptions } from 'joi'
 import {
-  POSITIVE_NONZERO_INT, UI_DB_ID,
+  POSITIVE_NONZERO_INT, UI_DB_ID, UI_USER_ID,
   validate
 } from '@/common/validation/constants/common_validation.constants'
 import { CreateProfilePayload } from '@/app/api/profile/profile-helpers'
@@ -20,7 +20,7 @@ export const CREATE_PROFILE_PAYLOAD = Joi.object().keys({
   bodyWeight : POSITIVE_NONZERO_INT,
   age        : POSITIVE_NONZERO_INT,
   height     : POSITIVE_NONZERO_INT,
-  userId     : UI_DB_ID
+  userId     : UI_USER_ID
 }).label('createProfilePayload')
 
 export function validateCreateProfilePayload(params: CreateProfilePayload) {

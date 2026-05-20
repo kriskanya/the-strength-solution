@@ -26,7 +26,7 @@ type LatestLoggedExerciseRow = {
   performedId: number | null
   quantity: number | null
   standardId: number | null
-  performedUserId: number | null
+  performedUserId: string | null
   performedExerciseId: number | null
   datePerformed: Date | null
   performedSource: ExercisePerformedSource | null
@@ -78,7 +78,7 @@ function mapLatestLoggedExerciseRow(row: LatestLoggedExerciseRow): UserSavedExer
     id: row.performedId,
     quantity: row.quantity,
     standardId: row.standardId,
-    userId: row.performedUserId as number,
+    userId: row.performedUserId as string,
     exerciseId: row.performedExerciseId as number,
     datePerformed: row.datePerformed as Date,
     source: row.performedSource as ExercisePerformedSource,
@@ -116,7 +116,7 @@ function mapLatestLoggedExerciseRow(row: LatestLoggedExerciseRow): UserSavedExer
  */
 export const fetchMostRecentLoggedExercises = async (
   profileId: number,
-  userId: number
+  userId: string
 ): Promise<UserSavedExercise[] | undefined> => {
   if (!profileId) return
 
