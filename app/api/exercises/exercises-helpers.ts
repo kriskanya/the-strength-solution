@@ -165,7 +165,7 @@ export const fetchMostRecentLoggedExercises = async (
         st."endRepRange" AS "standardEndRepRange"
       FROM "ExercisePerformed" ep
       LEFT JOIN "Standard" st ON st."id" = ep."standardId"
-      WHERE ep."userId" = ${userId}
+      WHERE ep."userId" = CAST(${userId} AS UUID)
         AND ep."exerciseId" = eop."exerciseId"
         AND ep."source" = 'UPDATE_STATS'::"ExercisePerformedSource"
       ORDER BY ep."datePerformed" DESC, ep."id" DESC
