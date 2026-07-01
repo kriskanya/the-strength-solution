@@ -42,7 +42,7 @@ jobs:
             --service-account cloud-run-web@the-strength-solution-501103.iam.gserviceaccount.com
             --allow-unauthenticated
             --set-build-env-vars "POSTGRES_URL=postgresql://build:build@localhost:5432/build"
-            --set-env-vars "NEXTAUTH_URL=https://thestrengthsolution.app"
+            --set-env-vars "NEXTAUTH_URL=https://thestrengthsolution.app,CRON_SERVICE_ACCOUNT_EMAIL=cron-scheduler@the-strength-solution-501103.iam.gserviceaccount.com,CRON_OIDC_AUDIENCE=https://thestrengthsolution.app/api/internal/rebuild-cohort-proficiencies"
             --set-secrets "POSTGRES_URL=POSTGRES_URL:latest,NEXTAUTH_SECRET=NEXTAUTH_SECRET:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,FACEBOOK_CLIENT_ID=FACEBOOK_CLIENT_ID:latest,FACEBOOK_CLIENT_SECRET=FACEBOOK_CLIENT_SECRET:latest")
           if [ -n "${GCP_PROJECT}" ]; then
             DEPLOY_CMD+=(--project "${GCP_PROJECT}")

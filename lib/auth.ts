@@ -5,7 +5,7 @@ import { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
-import { Prisma, User } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import _ from 'lodash'
 import InputJsonValue = Prisma.InputJsonValue
 
@@ -58,6 +58,10 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
+        if (!user.password) {
+          return null
+        }
+
         const isPasswordValid = await compare(
           credentials.password,
           user.password as string
@@ -83,12 +87,20 @@ export const authOptions: NextAuthOptions = {
       let userData
 
       if (_.isString(email) && email.length) {
-        userData = await prisma.user.findUnique({
+        const dbUser = await prisma.user.findUnique({
           where: { email },
           include: {
             profile: true
           }
         })
+
+        if (dbUser) {
+          const { password: _password, google: _google, facebook: _facebook, ...safeUser } = dbUser
+          userData = {
+            ...safeUser,
+            hasPassword: Boolean(dbUser.password),
+          }
+        }
       }
 
       return {
@@ -102,7 +114,6 @@ export const authOptions: NextAuthOptions = {
     },
     jwt: async ({ token, user , account }) => {
       if (user) {
-        const u = user as unknown as User
         const fullName = _.get(user, 'name', '')
         const imageUrl = _.get(user, 'image', '')
         let firstName = '', lastName = ''
@@ -112,8 +123,10 @@ export const authOptions: NextAuthOptions = {
           lastName = _.get(splitFullName, '[1]', '')
         }
 
+        let userId = user.id
+
         if (user.email) {
-          await prisma.user.upsert({
+          const dbUser = await prisma.user.upsert({
             where: { email: user.email },
             update: {},
             create: {
@@ -125,6 +138,8 @@ export const authOptions: NextAuthOptions = {
             }
           })
 
+          userId = dbUser.id
+
           if (!_.isEmpty(account) && ['google', 'facebook'].includes(account?.provider)) {
             await prisma.user.update({
               where: { email: user.email },
@@ -134,8 +149,7 @@ export const authOptions: NextAuthOptions = {
         }
         return {
           ...token,
-          id: u.id,
-          anotherProp: 'hello'
+          id: userId,
         }
       }
 

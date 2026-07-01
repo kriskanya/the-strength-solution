@@ -22,18 +22,57 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('Changes saved successfully')
+  const [passwordError, setPasswordError] = useState<string | null>(null)
   const [file, setFile] = useState<File>()
+
+  const hasPassword = Boolean(session?.userData?.hasPassword)
 
   const saveChanges = async () => {
     try {
       const res: (Response | undefined)[] = await Promise.all([uploadFile(), updateUserInfo()])
 
       setShowAlert(true)
+      setAlertMessage('Changes saved successfully')
       setTimeout(() => setShowAlert(false), 5000)
       await update() // update the session to reflect changes
     } catch (e: any) {
       console.error(e)
+    }
+  }
+
+  const savePassword = async () => {
+    setPasswordError(null)
+    try {
+      const body = hasPassword
+        ? { currentPassword, newPassword, confirmPassword }
+        : { newPassword, confirmPassword }
+
+      const res = await fetch('/api/user/password', {
+        method: 'PATCH',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+      })
+      const data = await res.json()
+
+      if (!res.ok) {
+        setPasswordError(data.error ?? 'Unable to update password.')
+        return
+      }
+
+      setCurrentPassword('')
+      setNewPassword('')
+      setConfirmPassword('')
+      setAlertMessage(hasPassword ? 'Password updated successfully' : 'Password set successfully')
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 5000)
+      await update()
+    } catch (e: any) {
+      setPasswordError(e?.message ?? 'Unable to update password.')
     }
   }
 
@@ -73,7 +112,7 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
 
     setFirstName(get(session, 'userData.firstName', ''))
     setLastName(get(session, 'userData.lastName', ''))
-    setEmail(session?.userData?.email)
+    setEmail(session?.userData?.email ?? '')
   }, [session])
 
   return (
@@ -112,6 +151,55 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
                 <CustomInput fieldName="email" type="text" placeholder="Enter your email" inputValue={email} changeHandler={setEmail} />
               </div>
 
+              <div className="mt-8 border-t pt-6">
+                <p className="inter font-medium text-sm mb-4">
+                  {hasPassword ? 'Change password' : 'Set a password'}
+                </p>
+                {!hasPassword && (
+                  <p className="inter text-sm text-gray-600 mb-4">
+                    Add a password if you want to log in with email and password in addition to Google or Facebook.
+                  </p>
+                )}
+                <div className="flex flex-col gap-4">
+                  {hasPassword && (
+                    <CustomInput
+                      fieldName="currentPassword"
+                      type="password"
+                      placeholder="Current password"
+                      inputValue={currentPassword}
+                      changeHandler={setCurrentPassword}
+                    />
+                  )}
+                  <CustomInput
+                    fieldName="newPassword"
+                    type="password"
+                    placeholder={hasPassword ? 'New password' : 'Password'}
+                    inputValue={newPassword}
+                    changeHandler={setNewPassword}
+                  />
+                  <CustomInput
+                    fieldName="confirmPassword"
+                    type="password"
+                    placeholder="Confirm password"
+                    inputValue={confirmPassword}
+                    changeHandler={setConfirmPassword}
+                  />
+                </div>
+                {passwordError && (
+                  <div className="mt-4">
+                    <Alert>{passwordError}</Alert>
+                  </div>
+                )}
+                <div className="w-40 mt-4">
+                  <CustomButton
+                    label={hasPassword ? 'Update Password' : 'Set Password'}
+                    classes="border border-brand-blue h-10"
+                    textClasses="font-semibold text-sm text-brand-blue"
+                    onClick={savePassword}
+                  />
+                </div>
+              </div>
+
               {/*buttons*/}
               <div className="flex justify-center gap-6">
                 <div className="w-36">
@@ -134,7 +222,7 @@ export default function AccountDetailsDialog({ isOpen, setIsOpen, userStats, set
               </div>
               <div className="mx-6 mt-10">
                 <p>
-                  {showAlert && <Alert customClasses="bg-green-200 text-sm">Changes saved successfully</Alert>}
+                  {showAlert && <Alert customClasses="bg-green-200 text-sm">{alertMessage}</Alert>}
                 </p>
               </div>
             </div>

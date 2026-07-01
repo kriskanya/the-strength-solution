@@ -31,7 +31,13 @@ export default function LogIn() {
       })
 
       if (res?.error) {
-        displayError('Invalid email or password')
+        const hintRes = await fetch('/api/auth/sign-in-hint', {
+          method: 'POST',
+          body: JSON.stringify({ email }),
+          headers: { 'Content-Type': 'application/json' },
+        })
+        const hint = await hintRes.json()
+        displayError(hint.message ?? 'Invalid email or password')
       } else {
         router.push('/post-login')
       }

@@ -1,9 +1,15 @@
-import { capitalize } from 'lodash-es'
 import Link from 'next/link'
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import Image from 'next/image'
 import eye from '../icons/eye-solid.svg'
 import eyeSlash from '../icons/eye-slash-solid.svg'
+
+function fieldNameToLabel(fieldName: string): string {
+  return fieldName
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, (char) => char.toUpperCase())
+    .trim()
+}
 
 interface Props {
   fieldName: string,
@@ -27,7 +33,7 @@ export default function CustomInput(props: Props) {
   return (
     <div>
       <div className="flex justify-between">
-        <label className="inter font-semibold text-sm" htmlFor={props.fieldName}>{capitalize(props.fieldName)}</label>
+        <label className="inter font-semibold text-sm" htmlFor={props.fieldName}>{fieldNameToLabel(props.fieldName)}</label>
         {
           props.showForgotPassword
             ? <Link href="forgot-password" className="inter font-medium text-sm text-brand-blue" tabIndex={-1}>Forgot your password?</Link>

@@ -10,14 +10,18 @@ import CustomButton from "@/app/ui/CustomButton"
 import classes from './CreateAccount.module.css'
 import { Alert } from '@/app/ui/Alert'
 import { signIn } from 'next-auth/react'
+import { REGISTER_ERROR } from '@/common/auth-messages'
 
 export default function CreateAccount() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [errorCode, setErrorCode] = useState<string | null>(null)
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
+    setError(null)
+    setErrorCode(null)
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
@@ -29,6 +33,7 @@ export default function CreateAccount() {
           'Content-Type': 'application/json'
         }
       })
+      const data = await res.json()
       if (res.ok) {
         const signInRes = await signIn('credentials', {
           redirect: false,
@@ -43,7 +48,8 @@ export default function CreateAccount() {
           router.push('/post-login')
         }
       } else {
-        setError((await res.json()).error)
+        setError(data.error)
+        setErrorCode(data.code ?? null)
       }
     } catch (e: any) {
       setError(e?.message)
@@ -73,7 +79,23 @@ export default function CreateAccount() {
           <CustomInput fieldName="password" required={true} type="password" placeholder="Enter your password" inputValue={password} changeHandler={setPassword} />
         </div>
         <div className="mt-6">
-          {error && <Alert>{error}</Alert>}
+          {error && (
+            <Alert>
+              {errorCode === 'EMAIL_LINKED_TO_OAUTH' ? (
+                <>
+                  {REGISTER_ERROR.EMAIL_LINKED_TO_OAUTH}{' '}
+                  <Link className="underline font-semibold" href="/log-in">Sign in</Link>
+                </>
+              ) : errorCode === 'EMAIL_ALREADY_EXISTS' ? (
+                <>
+                  {REGISTER_ERROR.EMAIL_ALREADY_EXISTS}{' '}
+                  <Link className="underline font-semibold" href="/log-in">Log in</Link>
+                </>
+              ) : (
+                error
+              )}
+            </Alert>
+          )}
         </div>
         <CustomButton type="submit" label="Create Account" classes="bg-brand-blue h-12 mt-16" textClasses="text-white" />
         <div className="flex justify-center mt-5">

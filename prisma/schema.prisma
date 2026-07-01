@@ -97,6 +97,8 @@ model Standard {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([exerciseId, gender, bodyWeight, ageRange])
 }
 
 model ExercisePerformed {
