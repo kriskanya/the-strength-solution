@@ -4,8 +4,7 @@
 # - Secret: GCP_SA_KEY — JSON key for a service account with permission to deploy
 #   to Cloud Run and run Cloud Build (e.g. roles/run.admin, roles/cloudbuild.builds.editor,
 #   roles/iam.serviceAccountUser on the runtime SA, and access to the referenced secrets).
-# - Variable (optional): GCP_PROJECT — Google Cloud project ID if it should not be taken
-#   from the service account’s default project.
+# - Variable: GCP_PROJECT — the-strength-solution-501103
 
 name: Deploy
 
@@ -39,9 +38,11 @@ jobs:
           DEPLOY_CMD=(gcloud run deploy the-strength-solution-web
             --source .
             --region us-central1
-            --add-cloudsql-instances the-strength-solution:us-central1:strength-solution-db
-            --service-account cloud-run-web@the-strength-solution.iam.gserviceaccount.com
+            --add-cloudsql-instances the-strength-solution-501103:us-central1:the-strength-solution-prod-db
+            --service-account cloud-run-web@the-strength-solution-501103.iam.gserviceaccount.com
             --allow-unauthenticated
+            --set-build-env-vars "POSTGRES_URL=postgresql://build:build@localhost:5432/build"
+            --set-env-vars "NEXTAUTH_URL=https://thestrengthsolution.app"
             --set-secrets "POSTGRES_URL=POSTGRES_URL:latest,NEXTAUTH_SECRET=NEXTAUTH_SECRET:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,FACEBOOK_CLIENT_ID=FACEBOOK_CLIENT_ID:latest,FACEBOOK_CLIENT_SECRET=FACEBOOK_CLIENT_SECRET:latest")
           if [ -n "${GCP_PROJECT}" ]; then
             DEPLOY_CMD+=(--project "${GCP_PROJECT}")
