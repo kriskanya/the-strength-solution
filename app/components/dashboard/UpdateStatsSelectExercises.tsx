@@ -61,6 +61,7 @@ export default function UpdateStatusSelectExercises() {
                   quantity={loggedExercise?.quantity}
                   checkboxHandler={checkboxHandler}
                   inputHandler={inputHandler}
+                  inputAutoComplete="off"
                   label={exercise.displayName}
                   name={exercise.exerciseName}
                   id={exercise.id+''}

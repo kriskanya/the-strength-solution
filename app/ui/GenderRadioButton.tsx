@@ -8,7 +8,8 @@ import checkmark from '../icons/checkmark.svg'
 interface Props {
   gender: 'male' | 'female',
   checked: boolean,
-  onChange: (event: any) => void
+  onChange: (event: any) => void,
+  autoComplete?: string,
 }
 
 export function GenderRadioButton(props: Props) {
@@ -25,6 +26,7 @@ export function GenderRadioButton(props: Props) {
         value={props.gender}
         onChange={props.onChange}
         checked={props.checked}
+        autoComplete={props.autoComplete}
       />
       <div className={`flex justify-between items-center px-3 border bg-white ${borderColor} w-[201px] h-[48px] rounded`}>
         <Image src={imgSrc} alt="male" />

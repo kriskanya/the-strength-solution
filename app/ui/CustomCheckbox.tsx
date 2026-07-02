@@ -11,10 +11,11 @@ interface Props {
   id: string,
   showInputBox?: boolean,
   inputBoxLabel?: MEASUREMENT_DISPLAY_VALUE,
-  quantity?: number
+  quantity?: number,
+  inputAutoComplete?: string,
 }
 
-export default function CustomCheckbox({ isChecked, checkboxHandler, inputHandler, label, name, id, showInputBox, inputBoxLabel, quantity }: Props) {
+export default function CustomCheckbox({ isChecked, checkboxHandler, inputHandler, label, name, id, showInputBox, inputBoxLabel, quantity, inputAutoComplete }: Props) {
   return (
     <div className={`${classes.checkboxWrapper} flex items-center justify-between h-16 w-80 px-3 border border-lighter-grey rounded bg-white`}>
       <label className="flex justify-center" htmlFor={id}>
@@ -40,6 +41,7 @@ export default function CustomCheckbox({ isChecked, checkboxHandler, inputHandle
                 className="inter font-bold text-sm w-28 h-10 border rounded-lg text-right px-2"
                 value={quantity}
                 onChange={inputHandler}
+                autoComplete={inputAutoComplete}
               />
               <span className="absolute top-2.5 left-3 inter font-medium text-sm text-custom-black opacity-80">
                 {inputBoxLabel}

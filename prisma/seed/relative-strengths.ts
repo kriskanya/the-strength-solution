@@ -280,6 +280,9 @@ async function main() {
   await prisma.$transaction(async (tx) => {
     await deleteExistingSeedUsers(tx)
     await createSeedUsers(tx)
+  }, {
+    timeout: 120_000,
+    maxWait: 10_000,
   })
 
   const result = await rebuildExerciseCohortProficiencies()

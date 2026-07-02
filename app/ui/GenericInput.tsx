@@ -3,6 +3,7 @@ interface Props {
   displayName: string,
   value: string | number | undefined,
   onChange: (event: any) => void,
+  autoComplete?: string,
 }
 
 const maxLength = (field: string): number => {
@@ -26,7 +27,7 @@ const determineUnitOfMeasurement = (field: string) => {
   }
 }
 
-export default function GenericInput({ field, displayName, value, onChange }: Props) {
+export default function GenericInput({ field, displayName, value, onChange, autoComplete }: Props) {
   const unitOfMeasurement = determineUnitOfMeasurement(field)
 
   return (
@@ -40,6 +41,7 @@ export default function GenericInput({ field, displayName, value, onChange }: Pr
         value={value}
         onChange={onChange}
         maxLength={maxLength(field)}
+        autoComplete={autoComplete}
       />
       {
         unitOfMeasurement

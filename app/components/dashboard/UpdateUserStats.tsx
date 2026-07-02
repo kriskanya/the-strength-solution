@@ -18,16 +18,16 @@ export default function UpdateUserStats({ userStats, onChangeStat }: Props) {
       <div>
         <p className="mt-10 -mb-4 inter font-medium text-sm">Your gender</p>
         <div className="md:flex md:gap-6">
-          <GenderRadioButton gender="male" checked={userStats.gender.male} onChange={onChangeStat} />
-          <GenderRadioButton gender="female" checked={userStats.gender.female} onChange={onChangeStat} />
+          <GenderRadioButton gender="male" checked={userStats.gender.male} onChange={onChangeStat} autoComplete="off" />
+          <GenderRadioButton gender="female" checked={userStats.gender.female} onChange={onChangeStat} autoComplete="off" />
         </div>
         <div className="mt-5 md:flex md:gap-6">
-          <GenericInput field="bodyWeight" displayName="Body Weight" value={userStats.bodyWeight} onChange={onChangeStat} />
-          <GenericInput field="age" displayName="Age" value={userStats.age} onChange={onChangeStat} />
+          <GenericInput field="bodyWeight" displayName="Body Weight" value={userStats.bodyWeight} onChange={onChangeStat} autoComplete="off" />
+          <GenericInput field="age" displayName="Age" value={userStats.age} onChange={onChangeStat} autoComplete="off" />
         </div>
         <div className="mt-5 md:flex md:gap-6">
-          <GenericInput field="heightFeet" displayName="Feet" value={userStats.heightFeet} onChange={onChangeStat} />
-          <GenericInput field="heightInches" displayName="Inches" value={userStats.heightInches} onChange={onChangeStat} />
+          <GenericInput field="heightFeet" displayName="Feet" value={userStats.heightFeet} onChange={onChangeStat} autoComplete="off" />
+          <GenericInput field="heightInches" displayName="Inches" value={userStats.heightInches} onChange={onChangeStat} autoComplete="off" />
         </div>
       </div>
     </div>
