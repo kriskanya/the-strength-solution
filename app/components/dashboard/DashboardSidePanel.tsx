@@ -1,6 +1,4 @@
 'use client'
-import Image from 'next/image'
-import questionMark from '@/app/icons/question-mark.svg'
 import { CustomChip } from '@/app/ui/CustomChip'
 import { capitalize, isEmpty, map } from 'lodash-es'
 import { useContext, useEffect, useState } from 'react'
@@ -34,10 +32,9 @@ export default function DashboardSidePanel() {
         <div className="flex justify-between w-[35.1em]">
           {/*strongest exercises*/}
           <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
-            <p className="inter font-normal text-white text-xs opacity-50 inline-block">
+            <p className="inter font-normal text-white text-xs opacity-50">
               Strongest Exercise(s)
             </p>
-            <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
             <p className="inter font-semibold text-lg leading-6 text-white mt-1">
               {
                 !isEmpty(strongestExercises) && map(strongestExercises, 'exercise.displayName')?.join(', ')
@@ -47,10 +44,9 @@ export default function DashboardSidePanel() {
 
           {/*weakest exercises*/}
           <div className="h-[5.5em] w-[17em] px-5 py-3 border border-white border-opacity-10 rounded-lg">
-            <p className="inter font-normal text-white text-xs opacity-50 inline-block">
+            <p className="inter font-normal text-white text-xs opacity-50">
               Weakest Exercise(s)
             </p>
-            <Image src={questionMark} alt="question-mark" className="inline-block ml-3" />
             <p className="inter font-semibold text-lg leading-6 text-white mt-1">
               {
                 !isEmpty(weakestExercises) && map(weakestExercises, 'exercise.displayName')?.join(', ')

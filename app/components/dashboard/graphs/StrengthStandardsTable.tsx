@@ -1,12 +1,49 @@
 'use client'
 import CustomDropdown from '@/app/ui/CustomDropdown'
 import { useContext, useEffect, useState } from 'react'
-import { get, isEmpty, map } from 'lodash-es'
+import { capitalize, get, isEmpty, map } from 'lodash-es'
 import { ExercisesOnProfiles, Profile, Standard } from '@prisma/client'
 import { getSession } from 'next-auth/react'
 import { StandardsDropdownSelection } from '@/common/frontend-types-and-constants'
 import { ActiveExercisesContext } from '@/app/store/exercises-context'
 import { NON_STANDARD_EXERCISES, UserSavedExercise } from '@/common/shared-types-and-constants'
+import { STRENGTH_CLASSIFICATIONS } from '@/app/components/dashboard/dashboard-helpers-and-constants'
+
+const CLASSIFICATION_SWATCH_CLASSES: Record<string, string> = {
+  novice: 'bg-red-novice',
+  intermediate: 'bg-orange-intermediate',
+  proficient: 'bg-yellow-proficient',
+  advanced: 'bg-green-advanced',
+  elite: 'bg-blue-elite',
+}
+
+function ClassificationHeader({
+  level,
+  description,
+}: {
+  level: string
+  description: string
+}) {
+  return (
+    <th align="left" className="inter font-normal text-xs uppercase text-dark-grey">
+      <div className="group relative inline-flex cursor-default items-center">
+        <div className="inline-flex items-center opacity-80">
+          <div className={`h-[12px] w-[12px] ${CLASSIFICATION_SWATCH_CLASSES[level]}`} />
+          <span className="ml-1 mt-[.2em]">{capitalize(level)}</span>
+        </div>
+        <div
+          role="tooltip"
+          className="pointer-events-none absolute left-0 top-full z-50 mt-2 hidden w-64 rounded-lg border border-lighter-grey bg-white px-4 py-3 text-left opacity-100 shadow-xl group-hover:block"
+        >
+          <p className="inter text-sm font-semibold text-[#111111]">{capitalize(level)}</p>
+          <p className="inter mt-1.5 text-sm font-normal normal-case leading-6 text-dark-grey">
+            {description}
+          </p>
+        </div>
+      </div>
+    </th>
+  )
+}
 
 export default function StrengthStandardsTable() {
   const { activeExercises } = useContext(ActiveExercisesContext)
@@ -151,41 +188,14 @@ export default function StrengthStandardsTable() {
         </div>
       </div>
 
-      <div className="flex justify-center pb-20 px-[2.35em] rounded">
-        <table className={`w-full table-fixed border bg-white border-collapse`} cellPadding="20">
-          <thead className="">
-            <tr className="">
+      <div className="flex justify-center overflow-visible px-[2.35em] pb-20">
+        <table className="w-full table-fixed border-collapse overflow-visible rounded border bg-white" cellPadding="20">
+          <thead>
+            <tr>
               <th align="left" className="w-1/3 inter font-normal text-xs uppercase opacity-80 text-dark-grey">Exercise Name</th>
-              <th align="left" className="inter font-normal text-xs uppercase opacity-80 text-dark-grey">
-                <div className="flex items-center">
-                  <div className="w-[12px] h-[12px] bg-red-novice"></div>
-                  <span className="ml-1 mt-[.2em]">Novice</span>
-                </div>
-              </th>
-              <th align="left" className="inter font-normal text-xs uppercase opacity-80 text-dark-grey">
-                <div className="flex items-center">
-                  <div className="w-[12px] h-[12px] bg-orange-intermediate"></div>
-                  <span className="ml-1 mt-[.2em]">Intermediate</span>
-                </div>
-              </th>
-              <th align="left" className="inter font-normal text-xs uppercase opacity-80 text-dark-grey">
-                <div className="flex items-center">
-                  <div className="w-[12px] h-[12px] bg-yellow-proficient"></div>
-                  <span className="ml-1 mt-[.2em]">Proficient</span>
-                </div>
-              </th>
-              <th align="left" className="inter font-normal text-xs uppercase opacity-80 text-dark-grey">
-                <div className="flex items-center">
-                  <div className="w-[12px] h-[12px] bg-green-advanced"></div>
-                  <span className="ml-1 mt-[.2em]">Advanced</span>
-                </div>
-              </th>
-              <th align="left" className="inter font-normal text-xs uppercase opacity-80 text-dark-grey">
-                <div className="flex items-center">
-                  <div className="w-[12px] h-[12px] bg-blue-elite"></div>
-                  <span className="ml-1 mt-[.2em]">Elite</span>
-                </div>
-              </th>
+              {STRENGTH_CLASSIFICATIONS.map(({ level, description }) => (
+                <ClassificationHeader key={level} level={level} description={description} />
+              ))}
             </tr>
           </thead>
           <tbody>

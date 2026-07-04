@@ -244,11 +244,11 @@ export const determineStrongestAndWeakestExercises = (activeExercises: UserSaved
 }
 
 export const STRENGTH_CLASSIFICATIONS = [
-  { level: 'novice', color: 'red', description: 'Individual has demonstrated insufficient muscular endurance in these particular muscle groups' },
-  { level: 'intermediate', color: 'orange', description: 'Individual has demonstrated less than average muscular endurance in these particular muscle groups.' },
-  { level: 'proficient', color: 'yellow', description: 'Individual has demonstrated average muscular endurance in these particular muscle groups.' },
-  { level: 'advanced', color: 'green', description: 'Individual has demonstrated greater than average muscular endurance in these particular muscle groups.' },
-  { level: 'elite', color: 'blue', description: 'Individual has demonstrated ideal muscular endurance in these particular muscle groups.' },
+  { level: 'novice', color: 'red', description: 'Entry level. Below the minimum rep standard for this exercise.' },
+  { level: 'intermediate', color: 'orange', description: 'Less than average for your age, gender, and body weight.' },
+  { level: 'proficient', color: 'yellow', description: 'Average performance for your cohort.' },
+  { level: 'advanced', color: 'green', description: 'Above average for your cohort.' },
+  { level: 'elite', color: 'blue', description: 'Top tier — meets the highest standard for your cohort.' },
 ]
 
 export const MEASUREMENT_DISPLAY_VALUES = {
