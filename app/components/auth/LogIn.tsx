@@ -1,5 +1,6 @@
 'use client'
 import { FormEvent, useState } from "react"
+import Link from 'next/link'
 
 import OAuthButton from "@/app/ui/OAuthButton"
 import Divider from "@/app/ui/Divider"
@@ -78,6 +79,12 @@ export default function LogIn() {
           {error && <Alert>{error}</Alert>}
         </div>
         <CustomButton type="submit" label="Log In" classes="bg-brand-blue h-12 mt-16" textClasses="text-white" />
+        <div className="flex justify-center mt-5">
+          <p className="inter font-normal text-sm">
+            Don&apos;t have an account?{' '}
+            <Link className="underline text-brand-blue font-bold" href="/create-account">Create an account</Link>
+          </p>
+        </div>
       </div>
     </form>
   )

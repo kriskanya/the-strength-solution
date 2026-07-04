@@ -7,6 +7,7 @@ import backArrow from '../../icons/back-arrow.svg'
 
 interface Props {
   path?: string
+  hideBack?: boolean
 }
 
 function BackNavSpinner() {
@@ -19,7 +20,7 @@ function BackNavSpinner() {
   )
 }
 
-export default function AuthNav({ path }: Props) {
+export default function AuthNav({ path, hideBack }: Props) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -35,20 +36,24 @@ export default function AuthNav({ path }: Props) {
 
   return (
     <div className="grid grid-cols-3 p-5 border-b border-light-grey bg-off-white">
-      <button
-        type="button"
-        onClick={navigate}
-        disabled={isPending}
-        aria-label="Go back"
-        aria-busy={isPending}
-        className="ml-6 flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-light-grey disabled:cursor-wait"
-      >
-        {isPending ? (
-          <BackNavSpinner />
-        ) : (
-          <Image src={backArrow} alt="" width={24} height={24} aria-hidden />
-        )}
-      </button>
+      {hideBack ? (
+        <div className="ml-6 h-10 w-10 shrink-0" aria-hidden />
+      ) : (
+        <button
+          type="button"
+          onClick={navigate}
+          disabled={isPending}
+          aria-label="Go back"
+          aria-busy={isPending}
+          className="ml-6 flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-light-grey disabled:cursor-wait"
+        >
+          {isPending ? (
+            <BackNavSpinner />
+          ) : (
+            <Image src={backArrow} alt="" width={24} height={24} aria-hidden />
+          )}
+        </button>
+      )}
       <h2
         className="inter font-extrabold text-lg uppercase mx-auto cursor-pointer"
         onClick={() => router.push('/')}

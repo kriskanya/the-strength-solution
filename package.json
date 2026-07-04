@@ -30,6 +30,7 @@
     "next-auth": "^4.23.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "resend": "^6.17.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
